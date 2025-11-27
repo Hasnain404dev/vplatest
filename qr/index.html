@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Plus Opticians</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --brand-blue: #066eed;
+            /* Primary Blue */
+            --brand-indigo: #2e3192;
+            /* Primary Deep Blue */
+            --brand-yellow: #fdef08;
+            /* Secondary Yellow */
+            --brand-black: #000000;
+            /* Accent Black */
+
+            /* Gradients */
+            --primary-gradient: linear-gradient(135deg, var(--brand-blue), var(--brand-indigo));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(6, 110, 237, 0.16) 0%, transparent 50%),
+                /* brand blue */
+                radial-gradient(circle at 80% 20%, rgba(46, 49, 146, 0.12) 0%, transparent 50%),
+                /* brand indigo */
+                radial-gradient(circle at 40% 40%, rgba(253, 239, 8, 0.06) 0%, transparent 50%);
+            /* brand yellow */
+
+            /* background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.2) 0%, transparent 50%); */
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(46, 49, 146, 0.15);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            /*border: 1px solid rgba(46, 49, 146, 0.3);*/
+            border: 1px solid  #fdef08;
+        }
+
+        /*.logo {*/
+        /*    width: 80px;*/
+        /*    height: 80px;*/
+        /*    background: var(--primary-gradient);*/
+        /*    border-radius: 50%;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    margin: 0 auto 20px;*/
+        /*    font-size: 36px;*/
+        /*    color: white;*/
+            /*box-shadow: 0 0 25px rgba(6, 110, 237, 0.6);*/
+        /*    position: relative;*/
+        /*}*/
+
+        /*.logo::after {*/
+        /*    content: '';*/
+        /*    position: absolute;*/
+        /*    inset: -2px;*/
+        /*    background: var(--primary-gradient);*/
+        /*    border-radius: 50%;*/
+        /*    z-index: -1;*/
+        /*    filter: blur(8px);*/
+        /*    opacity: 0.5;*/
+        /*}*/
+        .logos{
+filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        }
+        
+        
+
+        .vp{
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: rgba(46, 49, 146, 0.6);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            background: var(--primary-gradient);
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .website-btn {
+            background: var(--primary-gradient);
+            box-shadow: 0 8px 32px rgba(0, 184, 148, 0.4);
+            color:  #fdef08;
+            /* ensure text visible */
+        }
+
+        .website-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(6, 110, 237, 0.6);
+            filter: brightness(1.05);
+        }
+
+        .location-btn {
+            background: linear-gradient(135deg, #2e3192 0%, #066eed 100%);
+            box-shadow: 0 8px 32px rgba(46, 49, 146, 0.4);
+            color:  #fdef08;
+            /* text visible */
+        }
+
+        .location-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(46, 49, 146, 0.6);
+            filter: brightness(1.05);
+        }
+
+        .dropdown {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .dropdown-content {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(6, 110, 237, 0.25);
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(46, 49, 146, 0.3);
+        }
+
+        .branch-header {
+            padding: 18px 20px;
+            background: linear-gradient(135deg, rgba(6, 110, 237, 0.05) 0%, rgba(46, 49, 146, 0.05) 100%);
+            border-bottom: 1px solid rgba(46, 49, 146, 0.15);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .branch-header:hover {
+            background: linear-gradient(135deg, rgba(6, 110, 237, 0.1) 0%, rgba(46, 49, 146, 0.1) 100%);
+            transform: translateX(2px);
+        }
+
+        .branch-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .location-icon {
+            background: linear-gradient(135deg, #066eed 0%, #2e3192 100%);
+            color: white;
+            padding: 8px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 4px 16px rgba(6, 110, 237, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+        }
+
+        .location-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 20px rgba(46, 49, 146, 0.5);
+        }
+
+        .branch-details {
+            display: none;
+            padding: 24px;
+            border-bottom: 1px solid rgba(46, 49, 146, 0.15);
+            animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.6) 0%,
+                    rgba(253, 239, 8, 0.08) 100%);
+        }
+
+        .branch.active .branch-details {
+            display: block;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            color: #066eed;
+            font-weight: bold;
+        }
+
+        .branch.active .expand-icon {
+            transform: rotate(180deg);
+            color: gold;
+        }
+
+        .branch:last-child .branch-header {
+            border-bottom: none;
+        }
+
+        .branch:last-child .branch-details {
+            border-bottom: none;
+        }
+
+        .branch-name {
+            font-weight: 700;
+            background: linear-gradient(135deg, #066eed, #2e3192);
+            color: #111;
+            background-clip: text;
+            font-size: 18px;
+        }
+
+        .branch-address {
+            color: #000000;
+            font-size: 14px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .branch-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .branch-location-btn {
+            background: linear-gradient(135deg, #066eed 0%, #2e3192 100%);
+            color: white;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(46, 49, 146, 0.3);
+        }
+
+        .branch-location-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 49, 146, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .branch-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        }
+
+        .branch-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .review-section {
+            margin: 20px 0;
+        }
+
+        .review-main-btn {
+            color:  #fdef08;
+            box-shadow: 0 8px 32px rgba(33, 150, 243, 0.3);
+        }
+
+        .review-main-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .social-section {
+            margin: 20px 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .social-title {
+            color: #111;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            flex: 1;
+            max-width: 120px;
+            padding: 16px 15px;
+            border: none;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 8px 32px rgba(6, 110, 237, 0.3);
+        }
+
+        .instagram-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(46, 49, 146, 0.4);
+        }
+
+        .facebook-btn {
+            background: linear-gradient(135deg, #1877f2 0%, #0d5ac4 100%);
+            /* Official FB colors */
+            box-shadow: 0 8px 32px rgba(6, 110, 237, 0.3);
+        }
+
+        .facebook-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(46, 49, 146, 0.4);
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .footer {
+            margin-top: 24px;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 44px;
+            }
+
+            .button {
+                padding: 14px 16px;
+                font-size: 15px;
+            }
+
+            .branch-buttons {
+                flex-direction: column;
+            }
+
+            .social-buttons {
+                /* flex-direction: column; */
+                align-items: center;
+            }
+
+            .social-btn {
+                max-width: 150px;
+            }
+        }
+
+        /* Glassmorphism enhancement */
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(6, 110, 237, 0.3), rgba(46, 49, 146, 0.2));
+            /* Vision Plus Blue Gradient */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logos"><img src="/imgs/logo" alt="logo"></div>
+          <p class="vp" style="font-family: Arial, Helvetica, sans-serif; font-weight:700; font-size:38px; margin:0;">
+    <span style="font-size:50px;">V</span>ISION 
+    <span style="font-size:50px;">P</span>LUS
+  </p>
+        <p class="subtitle">All Eyes On You </p>
+
+
+        <a href="https://wa.me/923391339339?text=Hello, I scanned your QR code and would like to know more about your services"
+            class="button whatsapp-btn" target="_blank">
+            <span class="icon"><i class="fa-brands fa-whatsapp"></i></span>Support via WhatsApp
+        </a>
+
+        <!-- Website Visit Button -->
+        <a href="https://visionplus.pk/" class="button website-btn" target="_blank">
+            <span class="icon"><i class="fa-solid fa-globe"></i></span>Visit Our Website
+        </a>
+
+        <!-- Locations Dropdown -->
+        <div class="dropdown">
+            <button class="button location-btn" onclick="toggleDropdown()">
+                <span class="icon"><i class="fa-solid fa-location-dot"></i></span>Our Locations
+            </button>
+            <div class="dropdown-content" id="locationDropdown">
+                <!-- Branch 1 -->
+                <div class="branch">
+                    <div class="branch-header" onclick="toggleBranch(this)">
+                        <div class="branch-header-left">
+                            <a href="https://share.google/nGNYOXIgE1ToKzvOr" target="_blank" class="location-icon"
+                                onclick="event.stopPropagation()">📍</a>
+                            <div class="branch-name">Gulberg Lahore</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="branch-details">
+                        <div class="branch-address">
+                            <ul>
+                                <li>
+                                    Shop 6,7 sheraz plaza Hali Rd,<br>
+                                    Gulberg 2 Lahore.<br>
+                                </li>
+                                <li>
+                                    Phone:03400003135
+
+                                </li>
+                            </ul>
+
+
+                        </div>
+                        <div class="branch-buttons">
+                            <button class="branch-location-btn"
+                                onclick="openLocation('vision+plus+opticians+Sheraz Plaza, Hali Rd, Block B Block A Gulberg 2, Lahore, 54000')">
+                                <i class="fa-solid fa-location-dot"></i> Directions
+                            </button>
+                            <button class="branch-whatsapp" onclick="contactBranch('923400003135', ' Gulberg Branch')">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch 2 -->
+                <div class="branch">
+                    <div class="branch-header" onclick="toggleBranch(this)">
+                        <div class="branch-header-left">
+                            <a href="https://share.google/tBPlEoFcGEIMfNBVi" target="_blank" class="location-icon"
+                                onclick="event.stopPropagation()">📍</a>
+                            <div class="branch-name">Allama Iqbal Town</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="branch-details">
+                        <div class="branch-address">
+                            <ul>
+                                <li>
+                                    Javed Centre, Allama Iqbal Rd,<br>
+                                    Kashmir Block, Allama Iqbal Town
+                                    Lahore.<br>
+                                </li>
+                                <li>
+                                    Phone:03400003137
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="branch-buttons">
+                            <button class="branch-location-btn"
+                                onclick="openLocation('visionplusopticians+Centre+Allama+Iqbal+Rd+Kashmir+Block+Allama+Iqbal+Town+Lahore+54570')">
+                                <i class="fa-solid fa-location-dot"></i> Directions
+                            </button>
+                            <button class="branch-whatsapp"
+                                onclick="contactBranch('923400003137', 'Allama Iqbal Town')">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch 3 -->
+                <div class="branch">
+                    <div class="branch-header" onclick="toggleBranch(this)">
+                        <div class="branch-header-left">
+                            <a href="https://share.google/ElOV6MB7i0FW568f6" target="_blank" class="location-icon"
+                                onclick="event.stopPropagation()">📍</a>
+                            <div class="branch-name">TownShip</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="branch-details">
+                        <div class="branch-address">
+                            <ul>
+                                <li>
+                                    779D Maulana Shaukat Ali Rd,<br>
+                                    Sector B-1 Block 1
+                                    Lahore<br>
+                                </li>
+                                <li>
+                                    Phone:03400003138
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="branch-buttons">
+                            <button class="branch-location-btn"
+                                onclick="openLocation('visionplusopticians+779D+Maulana+Shaukat+Ali+Rd+Sector+B-1+Block+1+Sector+B+1+Lahore+54600')">
+                                <i class="fa-solid fa-location-dot"></i> Directions
+                            </button>
+                            <button class="branch-whatsapp" onclick="contactBranch('923400003138', 'TownShip')">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Section -->
+        <div class="review-section">
+            <a href="https://g.page/r/CTIeR913J6z8EBM/review" target="_blank" class="button review-main-btn">
+                <span class="icon">⭐</span>Drop us a Review
+            </a>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="social-section">
+            <div class="social-title">Follow Us</div>
+            <div class="social-buttons">
+                <a href="https://www.instagram.com/visionplusopticianspk/" target="_blank"
+                    class="social-btn instagram-btn">
+                    <!-- <span>📷</span> -->
+                    <span><i class="fa-brands fa-instagram"></i></span>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/VisionPlusOpticianpk/" target="_blank"
+                    class="social-btn facebook-btn">
+                    <!-- <span>👥</span> -->
+                    <span><i class="fa-brands fa-facebook"></i></span>
+                    <span>Facebook</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            Thank you for choosing us for your optical needs!
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleBranch(headerElement) {
+            const branch = headerElement.closest('.branch');
+            branch.classList.toggle('active');
+        }
+
+        function openLocation(address) {
+            const googleMapsUrl = `https://maps.google.com/?q=${address}`;
+            window.open(googleMapsUrl, '_blank');
+        }
+
+        function contactBranch(phoneNumber, branchName) {
+            const message = `Hello, I scanned your QR code and would like to visit your ${branchName}. Can you please provide more information?`;
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Auto open dropdown on page load to show branches
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.add('active');
+        });
+    </script>
+</body>
+
+</html>

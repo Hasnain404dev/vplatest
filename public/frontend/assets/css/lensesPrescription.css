@@ -1,0 +1,288 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  background: #fff;
+  margin: 0;
+  padding: 30px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.lenspres-main-container {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  width: 100%;
+  max-width: 1300px;
+  gap: 20px;
+  /* flex-wrap: wrap; */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px 20px;
+  border-radius: 20px;
+
+
+}
+
+.lenspres-image-container {
+  flex: 1;
+  min-width: 400px;
+  max-width: 500px;
+}
+
+.lenspres-product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  max-width: 500px;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  object-fit: cover;
+}
+
+
+.lenspres-container {
+  background: #fff;
+  border: 2px solid #1e1f1f1e;
+  padding: 40px 30px 30px 30px;
+  border-radius: 15px;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+  /* min-width: 300px; */
+  max-width: 600px;
+  animation: lenspresFadeIn 0.5s ease-in;
+}
+
+@keyframes lenspresFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lenspres-section {
+  width: 48%;
+  margin-bottom: 20px;
+}
+
+.lenspres-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.lenspres-custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.lenspres-select {
+  padding: 12px 40px 12px 15px;
+  font-size: 15px;
+  border: 1px solid #bdc3c7;
+  border-radius: 10px;
+  color: #34495e;
+  background: linear-gradient(90deg, #ecf0f1, #fff);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%2334495e" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.lenspres-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(147, 240, 208, 0.4);
+}
+
+.lenspres-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  max-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  z-index: 10;
+}
+
+.lenspres-custom-dropdown.open .lenspres-options {
+  max-height: 180px;
+  opacity: 1;
+}
+
+.lenspres-option {
+  border-bottom: 1px solid #bdc3c7;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #34495e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lenspres-option.lenspres-placeholder {
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+.lenspres-option:hover {
+  background: linear-gradient(90deg, #8a8b8b, #a8a9a9);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+  transform: translateX(5px);
+}
+
+.lenspres-container > div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.lenspres-quantity-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#lens-product-price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.pre-cart {
+  position: relative;
+  overflow: hidden;
+  color: #3e3d3dca;
+  border: 1px solid #1f1f1f4c;
+  background: #fff;
+  border-radius: 30px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0, 102, 255, 0.15);
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+  margin-top: 24px;
+  z-index: 1;
+}
+
+.pre-cart::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 0 0 #fff;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.pre-cart:hover::before,
+.pre-cart:focus::before {
+  width: 100%;
+}
+
+.pre-cart:hover,
+.pre-cart:focus {
+  background: linear-gradient(90deg, #4b4b4b 0%, #1e1f1f 100%);
+  color: #fff;
+  outline: none;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(0, 102, 255, 0.25);
+}
+
+.pre-cart:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.15);
+}
+@media(max-width: 990px){
+    .lenspres-main-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0px;
+    /* flex-wrap: wrap; */
+
+  }
+  .lenspres-container {
+    padding: 35px 20px 20px 20px;
+    /* border: none; */
+    flex-wrap: nowrap;
+  }
+}
+@media (max-width: 768px) {
+  .lenspres-main-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    /* flex-wrap: wrap; */
+
+  }
+  .lenspres-image-container {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .lenspres-container {
+    padding: 35px 20px 20px 20px;
+    border: none;
+    /* flex-wrap: nowrap; */
+  }
+  .lenspres-section {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .lenspres-custom-dropdown.open .lenspres-options {
+    max-height: 150px;
+  }
+  .lenspres-option {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .lenspres-select {
+    padding: 10px 35px 10px 12px;
+    font-size: 14px;
+  }
+  #lens-product-price {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lenspres-container {
+    padding: 30px 15px 15px 15px;
+  }
+  .lenspres-custom-dropdown.open .lenspres-options {
+    max-height: 120px;
+  }
+  .lenspres-option {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .lenspres-select {
+    padding: 8px 30px 8px 10px;
+    font-size: 13px;
+  }
+  .lenspres-label {
+    font-size: 14px;
+  }
+  #lens-product-price {
+    font-size: 14px;
+  }
+  .lenspres-image-container {
+    min-width: 100%;
+  }
+}

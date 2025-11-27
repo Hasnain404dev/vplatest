@@ -1,0 +1,611 @@
+.banner-btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 30px;
+  border-radius: 4px;
+  color: #fff;
+  border: 1px solid #565757;
+  background-color: #565757;
+  cursor: pointer;
+  -webkit-transition: all 300ms linear 0s;
+  transition: all 300ms linear 0s;
+}
+.banner-btn:hover {
+  background-color: #414141;
+  border-color: #414141;
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .banner-btn {
+    padding: 4px 12px;
+    font-size: 10px;
+    background: none;
+    color: #414141;
+  }
+  .banner-img .banner-text .new-banner-h1 {
+    font-weight: 600;
+    margin-bottom: 5px !important;
+    font-size: 16px !important;
+  }
+  .banner-img .banner-text .new-banner-h4 {
+    font-weight: 600;
+    margin-bottom: 3px !important;
+  }
+}
+.easysight-hero-section {
+  padding: 50px 0;
+  background: linear-gradient(135deg, #066eed 0%,  #fdef08
+ 100%);
+}
+
+.easysight-hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fdef08;
+  margin-bottom: 0.5rem;
+}
+
+.easysight-hero-subtitle {
+  font-size: 1.25rem;
+  color: #2e3192;
+  font-weight: 300;
+}
+.section-title span {
+  color:  #2e3192;
+}
+
+.easysight-cards-container {
+  padding: 40px 0;
+}
+
+.easysight-product-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  height: 400px;
+}
+
+.easysight-product-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* .easysight-card-luxury {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #2c3e50;
+        }
+
+        .easysight-card-chill {
+            background: linear-gradient(135deg, #87ceeb 0%, #f0e68c 100%);
+            color: #2c3e50;
+        }
+
+        .easysight-card-bold {
+            background: linear-gradient(135deg, #2c3e50 0%, #C2E0D6 100%);
+            color: white;
+        } */
+
+.easysight-card-metal {
+   background: linear-gradient(135deg, #066eed 0%, #333333 100%);
+  color: white;
+}
+
+.easysight-card-content {
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Model Image Container */
+.easysight-model-image {
+  position: absolute;
+  top: 20px;
+  /* right: 10px; */
+  bottom: 0px;
+  width: 100%;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  /* backdrop-filter: blur(10px); */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  z-index: 1;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.easysight-model-image img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+}
+
+.easysight-product-card:hover .easysight-model-image {
+  transform: scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.easysight-product-card:hover .easysight-model-image img {
+  transform: scale(1.1);
+}
+
+/* Placeholder for when no image is provided */
+.easysight-image-placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.easysight-card-luxury .easysight-image-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.easysight-card-chill .easysight-image-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.easysight-card-image {
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+  width: 180px;
+  height: 180px;
+  opacity: 0.2;
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.easysight-product-card:hover .easysight-card-image {
+  opacity: 0.3;
+  transform: translateY(-50%) rotate(5deg) scale(1.1);
+}
+
+.easysight-card-title-text {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.easysight-card-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.easysight-shop-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+}
+
+.easysight-shop-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  color: inherit;
+  text-decoration: none;
+}
+
+.easysight-card-luxury .easysight-shop-btn {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #2c3e50;
+}
+
+.easysight-card-luxury .easysight-shop-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.3);
+  color: #2c3e50;
+}
+
+.easysight-card-chill .easysight-shop-btn {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #2c3e50;
+}
+
+.easysight-card-chill .easysight-shop-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.3);
+  color: #2c3e50;
+}
+
+.easysight-floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.easysight-floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: easysightFloat 6s ease-in-out infinite;
+}
+
+.easysight-circle-1 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: -50px;
+  animation-delay: 0s;
+}
+
+.easysight-circle-2 {
+  width: 60px;
+  height: 60px;
+  top: 60%;
+  right: -30px;
+  animation-delay: 2s;
+}
+
+.easysight-circle-3 {
+  width: 80px;
+  height: 80px;
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes easysightFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(240deg);
+  }
+}
+
+.easysight-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.easysight-product-card:hover .easysight-card-overlay {
+  transform: translateX(100%);
+}
+
+@media (max-width: 768px) {
+  .easysight-hero-title {
+    font-size: 2rem;
+  }
+
+  .easysight-card-title-text {
+    font-size: 2rem;
+  }
+
+  .easysight-product-card {
+    height: 420px;
+    margin-bottom: 20px;
+  }
+
+  .easysight-card-content {
+    padding: 20px;
+  }
+
+  .easysight-model-image {
+    /* width: 90%; */
+    /* max-width: 450px; */
+    top: 10px;
+    /* right: 15px;
+                bottom: 0px; */
+  }
+  .easysight-model-image img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+  }
+}
+/* sunglasses men and women poster btn css */
+.deal-bottom .sunglass-btn{
+    display: inline-block;
+    border: 1px solid transparent;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 32px;
+    border-radius: 50px;
+    color: #363636;
+    border: 1px solid #565757;
+    background-color: #ebecec;
+    cursor: pointer;
+    -webkit-transition: all 300ms linear 0s;
+    transition: all 300ms linear 0s;
+}
+.sunglass-btn:hover {
+    background-color: #414141;
+    border-color: #414141;
+    color: #fff;
+}
+.deal-bottom .sunglass-heading{
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+}
+/* popular catagory section btn css */
+.banner-text .text-white {
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+/* new-card-css */
+ .prod-grid {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .prod-card {
+            position: relative;
+            height: 430px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .prod-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .prod-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s ease;
+        }
+        .prod-img-2{
+                width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.6s ease;
+        }
+
+        .prod-card:hover .prod-img {
+            transform: scale(1.1);
+        }
+
+        .prod-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom, 
+                rgba(0, 0, 0, 0) 0%, 
+                rgba(0, 0, 0, 0.1) 60%, 
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prod-card:hover .prod-overlay {
+            opacity: 1;
+        }
+
+        .prod-btn-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(0, 0, 0, 0.4) 70%,
+                transparent 100%
+            );
+            transform: translateY(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .prod-btn {
+            background: #ffffff;
+            color: #1f2937;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .prod-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+        }
+
+        .prod-btn:active {
+            transform: translateY(0);
+        }
+
+        .prod-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .prod-card:hover .prod-badge {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .prod-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .prod-card:hover .prod-shine {
+            left: 100%;
+        }
+
+        .fader-effect {
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .prod-grid {
+                padding: 1rem;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .prod-card {
+                height: 400px;
+            }
+
+            .prod-img {
+                object-position: center;
+            }
+        .prod-img-2{
+                object-position: top;
+            }
+
+            .prod-btn {
+                padding: 10px 24px;
+                font-size: 0.85rem;
+            }
+        }
+        @media screen and (min-width: 490px) and (max-width: 600px) {
+            .prod-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .prod-card {
+                height: 380px;
+            }
+
+            .prod-img {
+                object-position: center;
+            }
+
+            .prod-btn {
+                padding: 8px 20px;
+                font-size: 0.8rem;
+            }
+            
+        }
+        @media (max-width: 480px) {
+            .prod-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prod-card {
+                max-height: 450px;
+            }
+
+            .prod-img {
+                object-position: center;
+            }
+        .prod-img-2{
+                object-position: top;
+            }
+
+            .prod-btn {
+                padding: 8px 20px;
+                font-size: 0.8rem;
+            }
+
+            .prod-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
