@@ -496,6 +496,23 @@ class CartController extends BaseFrontendController
             return redirect()->route('frontend.cart')->with('error', 'Your cart is empty');
         }
 
-        return view('frontend.checkout', compact('cartItems', 'prescription', 'lensesPrescription'));
+        // Get active sale coupons (only those marked to show as sale cards)
+        $saleCoupons = \App\Models\Coupon::where('status', 1)
+            ->where('show_sale_card', 1)
+            ->whereNotNull('title')
+            ->where(function($q) {
+                $q->whereNull('valid_from')->orWhere('valid_from', '<=', now());
+            })
+            ->where(function($q) {
+                $q->whereNull('valid_until')->orWhere('valid_until', '>=', now());
+            })
+            ->where(function($q) {
+                $q->whereNull('usage_limit')->orWhereRaw('usage_count < usage_limit');
+            })
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('frontend.checkout', compact('cartItems', 'prescription', 'lensesPrescription', 'saleCoupons'));
     }
 }

@@ -200,20 +200,20 @@ class OrderController extends Controller
                 ]
             );
 
-            // Always get fresh cart items
-            $cartItems = Cart::with('product')
+            // Always get fresh cart items with categories loaded
+            $cartItems = Cart::with('product.categories')
                 ->where(function ($query) use ($userId, $sessionId) {
                     $userId ? $query->where('user_id', $userId)
                         : $query->where('session_id', $sessionId);
                 })->get();
 
-            // Get fresh prescription data
+            // Get fresh prescription data with categories loaded
             $prescription = $request->session()->get('prescription_id')
-                ? Prescription::find($request->session()->get('prescription_id'))
+                ? Prescription::with('product.categories')->find($request->session()->get('prescription_id'))
                 : null;
 
             $lensPrescription = $request->session()->get('lenses_prescription_id')
-                ? LensesPrescription::find($request->session()->get('lenses_prescription_id'))
+                ? LensesPrescription::with('product.categories')->find($request->session()->get('lenses_prescription_id'))
                 : null;
 
             if ($cartItems->isEmpty() && !$prescription && !$lensPrescription) {
@@ -221,6 +221,78 @@ class OrderController extends Controller
                     'cart' => 'Your cart is empty',
                 ]);
             }
+
+            // Calculate base total
+            $baseTotal = $cartItems->sum('total_price')
+                + optional($prescription)->total_price
+                + optional($lensPrescription)->total_price;
+
+            // Handle coupon if provided
+            $couponCode = $request->input('coupon_code');
+            $couponDiscount = 0;
+            $coupon = null;
+            $couponId = null;
+
+            if ($couponCode) {
+                try {
+                    $couponService = new \App\Services\CouponService();
+                    
+                    // Prepare cart items for coupon validation
+                    $cartItemsForCoupon = $cartItems->map(function($item) {
+                        return [
+                            'product' => $item->product,
+                            'price' => $item->total_price / $item->quantity,
+                            'quantity' => $item->quantity,
+                            'total_price' => $item->total_price,
+                        ];
+                    })->toArray();
+
+                    // Add prescription to cart items if exists
+                    if ($prescription && $prescription->product) {
+                        $cartItemsForCoupon[] = [
+                            'product' => $prescription->product,
+                            'price' => $prescription->total_price,
+                            'quantity' => 1,
+                            'total_price' => $prescription->total_price,
+                        ];
+                    }
+
+                    // Add lens prescription to cart items if exists
+                    if ($lensPrescription && $lensPrescription->product) {
+                        $cartItemsForCoupon[] = [
+                            'product' => $lensPrescription->product,
+                            'price' => $lensPrescription->total_price,
+                            'quantity' => 1,
+                            'total_price' => $lensPrescription->total_price,
+                        ];
+                    }
+
+                    $user = Auth::user();
+                    // Get phone and email from request for guest customer validation
+                    // Normalize phone number (remove spaces, dashes, etc.)
+                    $phone = isset($validated['phone']) ? preg_replace('/[^0-9]/', '', trim($validated['phone'])) : null;
+                    $email = isset($validated['email']) ? trim(strtolower($validated['email'])) : null;
+                    $validation = $couponService->validate($couponCode, $cartItemsForCoupon, $user, $phone, $email);
+                    
+                    if ($validation['valid']) {
+                        $coupon = \App\Models\Coupon::where('code', strtoupper(trim($couponCode)))->first();
+                        if ($coupon) {
+                            $couponId = $coupon->id;
+                            $couponDiscount = $validation['discount_amount'];
+                            
+                            // Apply coupon (increment usage count)
+                            $couponService->apply($coupon, $cartItemsForCoupon, $user, null);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    // Coupon validation failed, continue without coupon
+                    \Log::warning("Coupon validation failed for order: " . $e->getMessage());
+                }
+            }
+
+            // Calculate final total and always round up (e.g., 245.05 → 246)
+            $finalTotal = max(0, $baseTotal - $couponDiscount);
+            $finalTotal = ceil($finalTotal);
 
             // Generate unique order number
             do {
@@ -232,9 +304,9 @@ class OrderController extends Controller
                 'user_id' => $userId,
                 'order_number' => $orderNumber,
                 'session_id' => $userId ? null : $sessionId,
-                'total_amount' => $cartItems->sum('total_price')
-                    + optional($prescription)->total_price
-                    + optional($lensPrescription)->total_price,
+                'total_amount' => $finalTotal,
+                'coupon_code' => $couponCode,
+                'discount_amount' => $couponDiscount,
                 'status' => 'pending',
                 'payment_method' => $request->payment_option,
                 'first_name' => $validated['fname'],
@@ -255,6 +327,15 @@ class OrderController extends Controller
                 'shipping_state' => $request->shipping_state,
                 'shipping_zipcode' => $request->shipping_zipcode,
             ]);
+            
+            // Update coupon usage with order_id if coupon was applied
+            if ($coupon && $order->id) {
+                \App\Models\CouponUsage::where('coupon_id', $coupon->id)
+                    ->whereNull('order_id')
+                    ->latest()
+                    ->first()
+                    ?->update(['order_id' => $order->id]);
+            }
 
             // Create new order items
             foreach ($cartItems as $item) {

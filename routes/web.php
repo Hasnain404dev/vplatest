@@ -15,18 +15,19 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\BulkDiscountController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+// use App\Http\Controllers\Auth\ForgotPasswordController;
+// use App\Http\Controllers\Auth\ResetPasswordController;
+
 // Auth::routes();
-// use Illuminate\Support\Facades\Artisan;
 
 
 
-// Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('login', [FrontendController::class, 'loginForm'])->name('login');
 
 Route::post('login', [LoginController::class, 'login']);
@@ -38,18 +39,17 @@ Route::get('register', [FrontendController::class, 'loginForm'])->name('register
 Route::post('register', [RegisterController::class, 'register']);
 
 // Password Reset Routes...
-Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+// Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+// Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
 
+Route::get('/', [FrontendController::class, 'underWorking'])->name('frontend.underWorking');
 
-// Route::get('/', [FrontendController::class, 'underWorking'])->name('frontend.underWorking');
 
-
-Route::get('/', [FrontendController::class, 'index'])->name('frontend.home');
+Route::get('/index', [FrontendController::class, 'index'])->name('frontend.home');
 Route::get('/about-us', [FrontendController::class, 'aboutUs'])->name('frontend.aboutUs');
 Route::get('/terms-conditions', [FrontendController::class, 'termsConditions'])->name('frontend.termsConditions');
 Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('frontend.privacyPolicy');
@@ -69,8 +69,7 @@ Route::post('/wishlist/add/{product}', [CartController::class, 'addToWishList'])
 Route::delete('/wishlist/{wishlist}', [CartController::class, 'removeFromWishList'])->name('frontend.removeFromWishList');
 Route::post('/wishlist/move-to-cart/{wishlistItem}', [CartController::class, 'moveToCart'])->name('frontend.wishlist.moveToCart');
 Route::get('/wishlist/count', [CartController::class, 'getWishlistCount'])->name('frontend.getWishlistCount');
-Route::get('/cart', [CartController::class, 'cart'])->name('frontend.cart');
-Route::get('/prescription', [CartController::class, 'prescription'])->name('frontend.prescription');
+// Single cart route pointing to existing method viewCart (removed duplicate + non-existent methods)
 Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart');
 Route::post('/remove-from-cart', [CartController::class, 'removeFromCart'])->name('frontend.removeFromCart');
 Route::post('/update-cart', [CartController::class, 'updateCart'])->name('frontend.updateCart');
@@ -91,7 +90,6 @@ Route::get('/products/{id}', [PrescriptionController::class, 'getProductData']);
 Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('frontend.placeOrder');
 Route::get('/order-complete', [FrontendController::class, 'orderComplete'])->name('frontend.orderComplete');
 
-
 // Cart routes
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('frontend.addToCart');
 Route::post('/remove-cart-item', [CartController::class, 'removeCartItem'])->name('frontend.removeCartItem');
@@ -107,18 +105,18 @@ Route::post('/product/{product}/review', [App\Http\Controllers\ReviewController:
 All Normal Users Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:user'])->group(function () {
+ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     // Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [FrontendController::class, 'account'])->name('home');
-});
+ });
 
 /*------------------------------------------
 --------------------------------------------
 All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
+// Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
@@ -187,11 +185,26 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/orders/{id}/print', [OrderController::class, 'print'])->name('admin.orders.print');
 
-    // Payments
-    Route::get('/admin/payments', [PaymentController::class, 'index'])->name('admin.payments.index');
-    Route::get('/admin/payments/{payment}', [PaymentController::class, 'show'])->name('admin.payments.show');
-    Route::put('/admin/payments/{payment}/status', [PaymentController::class, 'updateStatus'])->name('admin.payments.updateStatus');
-});
+    // Coupon Management Routes
+    Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
+    Route::post('/admin/coupons/store', [CouponController::class, 'store'])->name('admin.coupons.store');
+    Route::post('/admin/coupons/bulk-generate', [CouponController::class, 'bulkGenerate'])->name('admin.coupons.bulk-generate');
+    Route::get('/admin/coupons/{id}/analytics', [CouponController::class, 'analytics'])->name('admin.coupons.analytics');
+    Route::get('/admin/coupons/{id}/edit', [CouponController::class, 'edit'])->name('admin.coupons.edit');
+    Route::put('/admin/coupons/{id}', [CouponController::class, 'update'])->name('admin.coupons.update');
+    Route::post('/admin/coupons/{id}/toggle-status', [CouponController::class, 'toggleStatus'])->name('admin.coupons.toggle-status');
+    Route::delete('/admin/coupons/{id}', [CouponController::class, 'destroy'])->name('admin.coupons.destroy');
+
+    // Bulk Discount Routes
+    Route::get('/admin/bulk-discounts', [BulkDiscountController::class, 'index'])->name('admin.bulk-discounts.index');
+    Route::get('/admin/bulk-discounts/create', [BulkDiscountController::class, 'create'])->name('admin.bulk-discounts.create');
+    Route::post('/admin/bulk-discounts/store', [BulkDiscountController::class, 'store'])->name('admin.bulk-discounts.store');
+    Route::get('/admin/bulk-discounts/{id}/edit', [BulkDiscountController::class, 'edit'])->name('admin.bulk-discounts.edit');
+    Route::put('/admin/bulk-discounts/{id}', [BulkDiscountController::class, 'update'])->name('admin.bulk-discounts.update');
+    Route::post('/admin/bulk-discounts/{id}/toggle-status', [BulkDiscountController::class, 'toggleStatus'])->name('admin.bulk-discounts.toggle-status');
+    Route::delete('/admin/bulk-discounts/{id}', [BulkDiscountController::class, 'destroy'])->name('admin.bulk-discounts.destroy');
+// });
 
 Route::get('/virtual-try-on/{product:slug}', [VirtualTryOnController::class, 'index'])->name('virtual.try.on');
 
@@ -200,19 +213,6 @@ Route::get('/3d-try-on/{product:slug}', [VirtualTryOnController::class, 'threeDT
 // Popup route - make sure this is outside any middleware groups
 Route::get('/get-active-popup', [PopupProductController::class, 'getActivePopup'])->name('get-active-popup');
 
-
-// Fallback route for 404 - must be last!
-Route::fallback(function () {
-    return redirect()->route('frontend.home');
-});
-
-
-// Route::get('/maintenance-clear', function () {
-
-//     Artisan::call('route:clear');
-//     Artisan::call('config:clear');
-//     Artisan::call('cache:clear');
-//     Artisan::call('view:clear');
-
-//     return 'All cleared successfully!';
-// });
+// Frontend Coupon Validation API
+Route::post('/api/validate-coupon', [CouponController::class, 'validateCoupon'])->name('api.validate-coupon');
+Route::post('/api/remove-coupon', [CouponController::class, 'removeCoupon'])->name('api.remove-coupon');

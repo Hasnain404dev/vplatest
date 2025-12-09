@@ -4,7 +4,8 @@
 <head>
    <meta charset="utf-8" />
     <title>
-        Buy Eyeglasses, Blue Light Glasses, Lenses & Sunglasses Online
+        VisionPlusOpticians Pakistan | Prescription Glasses, Contact Lenses &
+        Sunglasses
     </title>
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="robots" content="index, follow" />
@@ -17,121 +18,80 @@
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
 
     <meta property="og:title" content="VisionPlusOpticians Pakistan | Stylish Eyewear & Expert Eye Care" />
-    <meta property="og:description" content="Pakistan’s #1 online optical store for premium glasses, lenses, and sunglasses. Free delivery, expert eye care, and virtual try-on available." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://visionplus.pk/" />
-    <!--<meta property="og:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />-->
+    <meta property="og:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="VisionPlusOpticians Pakistan | Stylish Eyewear & Expert Eye Care" />
     <meta name="twitter:description"
         content="Pakistan’s #1 online optical store for glasses, lenses, and sunglasses. Try online, buy with ease." />
-    <!--<meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />-->
+    <meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-  <!-- Preconnect for Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Preload + Load only required weights -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Spartan:wght@400;600&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Spartan:wght@400;600&display=swap" media="all">
-<noscript>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Spartan:wght@400;600&display=swap">
-</noscript>
-
-
-    <!--banner image preloader-->
-     <link rel="preload" as="image" href="{{ asset('slider/1755516715.jpg') }}">
-     
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/assets/imgs/theme/vp_favicon.png')}}" />
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}"></noscript>
-    
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-03LLVGZMRD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-03LLVGZMRD');
-</script>
-
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}" />
     <!-- Custom CSS -->
-    <link rel="preload" href="{{ asset('frontend/assets/css/custom.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}"></noscript>
-
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/custome.css') }}" />
-    <!--new-->
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-        crossorigin="anonymous"></script>
-         
-         <!--schema-->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Optician",
-  "name": "Vision Plus Optical",
-  "url": "https://visionplus.pk",
-  "logo": "https://visionplus.pk/frontend/assets/imgs/theme/bluelogo-vision.png",
-  "image": "https://visionplus.pk/frontend/assets/imgs/theme/bluelogo-vision.png",
-  "email": "visionplus492@gmail.com",
-  "telephone": "+92-339-1339339",
-  "sameAs": [
-    "https://www.facebook.com/VisionPlusOpticiansPK",
-    "https://www.instagram.com/visionplusopticianspk"
-  ],
-  "address": [
-    {
-      "@type": "PostalAddress",
-      "streetAddress": "Sheraz Plaza, Hali Road, Gulberg 2",
-      "addressLocality": "Lahore",
-      "addressCountry": "PK"
-    },
-    {
-      "@type": "PostalAddress",
-      "streetAddress": "Township",
-      "addressLocality": "Lahore",
-      "addressCountry": "PK"
-    },
-    {
-      "@type": "PostalAddress",
-      "streetAddress": "Iqbal Town",
-      "addressLocality": "Lahore",
-      "addressCountry": "PK"
-    }
-  ],
-  "openingHoursSpecification": [
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "10:00",
-      "closes": "22:00"
-    }
-  ]
-}
-</script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+
+    <script type="application/ld+json">
+@verbatim
+        {
+            "@context": "https://schema.org/",
+            "@type": "Organization",
+            "name": "VisionPlusOpticians",
+            "url": "https://visionplus.pk",
+            "logo": "https://visionplus.pk/evara-frontend/assets/imgs/theme/logo.svg",
+            "sameAs": [
+            "https://www.facebook.com/VisionPlusOpticianPK",
+            "https://www.instagram.com/visionplusopticianspk/"
+            ]
+        }
+@endverbatim
+    </script>
+    <!-- Product Schema  (for glasses): -->
+    <script type="application/ld+json">
+@verbatim
+        {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "Classic Black Frame",
+        "image": "https://visionplus.pk/evara-frontend/assets/imgs/cards/new-card-img-1.jpg",
+        "description": "Stylish black frame with premium lenses.",
+        "brand": {
+            "@type": "Brand",
+            "name": "VisionPlusOpticians"
+        },
+        "sku": "VP1234",
+        "offers": {
+            "@type": "Offer",
+            "url": "https://visionplus.pk/evara-frontend/assets/imgs/cards/new-card-img-1.jpg",
+            "priceCurrency": "PKR",
+            "price": "3500",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock"
+        }
+        }
+@endverbatim
+    </script>
 
 </head>
 
 <body>
 
-  
+
     <!-- Quick view -->
     <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
         aria-hidden="true">
@@ -172,8 +132,9 @@
                         <div class="text-center">
                             <div id="news-flash" class="d-inline-block">
                                 <ul>
-                                    <li>👁️ Book Your Eye Test Today!</li>
-                                    <li>🚚 Free Shipping Across Pakistan!</li>
+                                <li>👁️ Book Your Eye Test Today!</li>
+                                <li>🚚 Free Shipping Across Pakistan!</li>
+                                <li>Free Shipping Across Pakistan! 🚚</li>
                                 </ul>
                             </div>
                         </div>
@@ -183,21 +144,20 @@
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info header-info-right">
                             <ul>
-                                <!--<li>-->
-                                <!--    <a class="language-dropdown-active" href="#" onclick="setLanguage('en')">-->
-                                <!--        <i class="fi-rs-world"></i> English-->
-                                <!--        <i class="fi-rs-angle-small-down"></i>-->
-                                <!--    </a>-->
-                                <!--    <ul class="language-dropdown">-->
-                                <!--        <li>-->
-                                <!--            <a href="#" onclick="setLanguage('ur')" style="font-size: larger;">-->
-                                <!--                <img src="assets/imgs/theme/flag-fr.png"-->
-                                <!--                    alt="Flag Icon" loading="lazy">-->
-                                <!--                اردو-->
-                                <!--            </a>-->
-                                <!--        </li>-->
-                                <!--    </ul>-->
-                                <!--</li>-->
+                                <li>
+                                    <a class="language-dropdown-active" href="#" onclick="setLanguage('en')">
+                                        <i class="fi-rs-world"></i> English
+                                        <i class="fi-rs-angle-small-down"></i>
+                                    </a>
+                                    <ul class="language-dropdown">
+                                        <li>
+                                            <a href="#" onclick="setLanguage('ur')" style="font-size: larger;">
+                                                <img src="assets/imgs/theme/flag-fr.png" alt="PAKISTAN dropdown image">
+                                                اردو
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li>
                                     @guest
                                         @if (Route::has('login'))
@@ -212,36 +172,34 @@
                                             </a>
                                         @endif
                                     @else
-                                    <li class="dropdown">
-                                        <i class="fi-rs-user"></i><a id="navbarDropdown" href="#" role="button"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span>{{ Auth::user()->name }}</span>
-                                        </a>
-
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            @if (Auth::user()->getRawOriginal('type') == 1)
-                                                <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
-                                                    <span data-lang-en="Dashboard"
-                                                        data-lang-ur="ڈیش بورڈ">Dashboard</span>
-                                                </a>
-                                            @else
-                                                <a class="dropdown-item" href="{{ url('/home') }}">
-                                                    <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
-                                                </a>
-                                            @endif
-
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                <span data-lang-en="Logout" data-lang-ur="لاگ آؤٹ">Logout</span>
+                                        <li class="dropdown">
+                                            <i class="fi-rs-user"></i><a id="navbarDropdown" href="#" role="button"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                <span>{{ Auth::user()->name }}</span>
                                             </a>
 
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endguest
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                               @if(Auth::user()->getRawOriginal('type') == 1)
+                                                    <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
+                                                        <span data-lang-en="Dashboard" data-lang-ur="ڈیش بورڈ">Dashboard</span>
+                                                    </a>
+                                                @else
+                                                    <a class="dropdown-item" href="{{ url('/home') }}">
+                                                        <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
+                                                    </a>
+                                                @endif
+
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    <span data-lang-en="Logout" data-lang-ur="لاگ آؤٹ">Logout</span>
+                                                </a>
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </li>
+                                    @endguest
                                 </li>
                             </ul>
                         </div>
@@ -254,8 +212,8 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="{{ route('frontend.home') }}"><img
-                                src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager" ></a>
+                        <a href="{{route('frontend.home')}}"><img
+                                src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo"></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -263,8 +221,7 @@
                                 <select class="select-active" name="category">
                                     <option value="">All Categories</option>
                                     @foreach (\App\Models\Category::all() as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
@@ -275,8 +232,7 @@
                             </form>
 
                             <!-- Search results dropdown container -->
-                            <div id="search-results-dropdown" class="search-results-dropdown" style="display: none;">
-                            </div>
+                            <div id="search-results-dropdown" class="search-results-dropdown" style="display: none;"></div>
                         </div>
 
                         <div class="header-action-right">
@@ -289,7 +245,10 @@
                                             @if (auth()->check())
                                                 {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
                                             @else
-                                                {{ \App\Models\Wishlist::where('session_id', session()->getId())->count() }}
+                                                                                        {{ \App\Models\Wishlist::where(
+                                                    'session_id',
+                                                    session()->getId()
+                                                )->count() }}
                                             @endif
                                         </span>
                                     </a>
@@ -302,7 +261,10 @@
                                             @if (auth()->check())
                                                 {{ \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') }}
                                             @else
-                                                {{ \App\Models\Cart::where('session_id', session()->getId())->sum('quantity') }}
+                                                                                        {{ \App\Models\Cart::where(
+                                                    'session_id',
+                                                    session()->getId()
+                                                )->sum('quantity') }}
                                             @endif
                                         </span>
                                     </a>
@@ -328,30 +290,28 @@
                                             @endphp
 
                                             @forelse($cartItems as $item)
-                                                @php $cartTotal += $item->total_price; @endphp
-                                                <li>
-                                                    <div class="shopping-cart-img">
-                                                        <a
-                                                            href="{{ route('frontend.productDetail', $item->product) }}">
-                                                            <img alt="{{ $item->product->name }}"
-                                                                src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="shopping-cart-title">
-                                                        <h4>
-                                                            <a
-                                                                href="{{ route('frontend.productDetail', $item->product) }}">{{ Str::limit($item->product->name, 20) }}</a>
-                                                        </h4>
-                                                        <h4><span>{{ $item->quantity }} × </span>Rs.
-                                                            {{ number_format($item->product->price, 2) }}
-                                                        </h4>
-                                                    </div>
-                                                    <div class="shopping-cart-delete">
-                                                        <a href="#" class="remove-from-cart-header"
-                                                            data-id="{{ $item->id }}"><i
-                                                                class="fi-rs-cross-small"></i></a>
-                                                    </div>
-                                                </li>
+                                                                                    @php $cartTotal += $item->total_price; @endphp
+                                                                                    <li>
+                                                                                        <div class="shopping-cart-img">
+                                                                                            <a href="{{ route('frontend.productDetail', $item->product) }}">
+                                                                                                <img alt="{{ $item->product->name }}"
+                                                                                                    src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="shopping-cart-title">
+                                                                                            <h4>
+                                                                                                <a href="{{ route('frontend.productDetail', $item->product) }}">{{
+                                                Str::limit($item->product->name, 20) }}</a>
+                                                                                            </h4>
+                                                                                            <h4><span>{{ $item->quantity }} × </span>Rs.
+                                                                                                {{ number_format($item->product->price, 2) }}
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                        <div class="shopping-cart-delete">
+                                                                                            <a href="#" class="remove-from-cart-header"
+                                                                                                data-id="{{ $item->id }}"><i class="fi-rs-cross-small"></i></a>
+                                                                                        </div>
+                                                                                    </li>
                                             @empty
                                                 <li>
                                                     <div class="text-center p-2">
@@ -383,8 +343,8 @@
             <div class="container">
                 <div class="header-wrap header-space-between  position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="{{ route('frontend.home') }}"><img
-                                src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager"></a>
+                        <a href="{{ route('frontend.home')}}"><img
+                                src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
                         <div class="main-categori-wrap d-none d-lg-block">
@@ -393,67 +353,67 @@
                         </a> -->
                             <a class="active" href="{{ route('frontend.perchaseGuide') }}">
                                 <span class="fi-rs-apps"></span>
-                               <span data-lang-en="Purchase Guide" data-lang-ur="خریداری کی رہنمائی">Order Guide</span>
+                                <span data-lang-en="Purchase Guide" data-lang-ur="خریداری کی رہنمائی">Purchase
+                                    Guide</span>
                             </a>
                         </div>
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
-                                <ul>
-                                    <li>
-                                        <a class="active" href="{{ route('frontend.home') }}">
-                                            <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
-                                        </a>
-                                    </li>
+                                    <ul>
+                                        <li>
+                                            <a class="active" href="{{ route('frontend.home') }}">
+                                                <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
+                                            </a>
+                                        </li>
 
-                                    @if(isset($categories) && $categories->count() > 0)
-                                        @foreach($categories as $category)
-                                            <li class="position-static">
-                                                <a href="{{ route('frontend.shop', ['category' => $category->slug]) }}">
-                                                    <span data-lang-en="{{ $category->name }}"
-                                                        data-lang-ur="{{ $category->name_ur ?? $category->name }}">
-                                                        {{ $category->name }}
-                                                    </span>
-                                                    @if ($category->children->count())
-                                                        <i class="fi-rs-angle-down"></i>
-                                                    @endif
-                                                </a>
-
+                                        @foreach ($categories as $category)
+                                        <li class="position-static">
+                                            <a href="{{ route('frontend.shop', ['category' => $category->slug]) }}">
+                                                <span data-lang-en="{{ $category->name }}"
+                                                    data-lang-ur="{{ $category->name_ur ?? $category->name }}">
+                                                    {{ $category->name }}
+                                                </span>
                                                 @if ($category->children->count())
-                                                    <ul class="mega-menu">
-                                                        @foreach ($category->children->chunk(ceil($category->children->count() / 3)) as $chunk)
-                                                            <li class="sub-mega-menu sub-mega-menu-width-22">
-                                                                @foreach ($chunk as $subcategory)
-                                                                    <a class="menu-title"
-                                                                        href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
-                                                                        {{ $subcategory->name }}
-                                                                    </a>
-                                                                    <ul>
-                                                                        @foreach ($subcategory->children as $child)
-                                                                            <li>
-                                                                                <a
-                                                                                    href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
-                                                                                    {{ $child->name }}
-                                                                                </a>
-                                                                            </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                @endforeach
-                                                            </li>
-                                                        @endforeach
-
-                                                        <!-- Banner areas -->
-                                                        <li class="sub-mega-menu sub-mega-menu-width-34">
-                                                            <div class="menu-banner-wrap">
-                                                                <!-- Your banner content -->
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                <i class="fi-rs-angle-down"></i>
                                                 @endif
-                                            </li>
+                                            </a>
+
+                                            @if ($category->children->count())
+                                            <ul class="mega-menu">
+                                                @foreach ($category->children->chunk(ceil($category->children->count() /
+                                                3)) as $chunk)
+                                                <li class="sub-mega-menu sub-mega-menu-width-22">
+                                                    @foreach ($chunk as $subcategory)
+                                                    <a class="menu-title"
+                                                        href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
+                                                        {{ $subcategory->name }}
+                                                    </a>
+                                                    <ul>
+                                                        @foreach ($subcategory->children as $child)
+                                                        <li>
+                                                            <a
+                                                                href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
+                                                                {{ $child->name }}
+                                                            </a>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
+                                                    @endforeach
+                                                </li>
+                                                @endforeach
+
+                                                <!-- Banner areas -->
+                                                <li class="sub-mega-menu sub-mega-menu-width-34">
+                                                    <div class="menu-banner-wrap">
+                                                        <!-- Your banner content -->
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            @endif
+                                        </li>
                                         @endforeach
-                                    @endif
-                                </ul>
-                            </nav>
+                                    </ul>
+                                </nav>
                         </div>
                     </div>
                     <div class="hotline d-none d-lg-block">
@@ -470,7 +430,10 @@
                                         @if (auth()->check())
                                             {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
                                         @else
-                                            {{ \App\Models\Wishlist::where('session_id', session()->getId())->count() }}
+                                                                                {{ \App\Models\Wishlist::where(
+                                                'session_id',
+                                                session()->getId()
+                                            )->count() }}
                                         @endif
                                     </span>
                                 </a>
@@ -483,7 +446,10 @@
                                         @if (auth()->check())
                                             {{ \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') }}
                                         @else
-                                            {{ \App\Models\Cart::where('session_id', session()->getId())->sum('quantity') }}
+                                                                                {{ \App\Models\Cart::where(
+                                                'session_id',
+                                                session()->getId()
+                                            )->sum('quantity') }}
                                         @endif
                                     </span>
                                 </a>
@@ -496,7 +462,10 @@
                                                     ->take(2)
                                                     ->get();
                                             } else {
-                                                $cartItems = \App\Models\Cart::where('session_id', session()->getId())
+                                                $cartItems = \App\Models\Cart::where(
+                                                    'session_id',
+                                                    session()->getId(),
+                                                )
                                                     ->with('product')
                                                     ->take(2)
                                                     ->get();
@@ -506,29 +475,28 @@
                                         @endphp
 
                                         @forelse($cartItems as $item)
-                                            @php $cartTotal += $item->total_price; @endphp
-                                            <li>
-                                                <div class="shopping-cart-img">
-                                                    <a href="{{ route('frontend.productDetail', $item->product) }}">
-                                                        <img alt="{{ $item->product->name }}"
-                                                            src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
-                                                    </a>
-                                                </div>
-                                                <div class="shopping-cart-title">
-                                                    <h4>
-                                                        <a
-                                                            href="{{ route('frontend.productDetail', $item->product) }}">{{ Str::limit($item->product->name, 20) }}</a>
-                                                    </h4>
-                                                    <h4><span>{{ $item->quantity }} × </span>Rs.
-                                                        {{ number_format($item->product->price, 2) }}
-                                                    </h4>
-                                                </div>
-                                                <div class="shopping-cart-delete">
-                                                    <a href="#" class="remove-from-cart-header"
-                                                        data-id="{{ $item->id }}"><i
-                                                            class="fi-rs-cross-small"></i></a>
-                                                </div>
-                                            </li>
+                                                                            @php $cartTotal += $item->total_price; @endphp
+                                                                            <li>
+                                                                                <div class="shopping-cart-img">
+                                                                                    <a href="{{ route('frontend.productDetail', $item->product) }}">
+                                                                                        <img alt="{{ $item->product->name }}"
+                                                                                            src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="shopping-cart-title">
+                                                                                    <h4>
+                                                                                        <a href="{{ route('frontend.productDetail', $item->product) }}">{{
+                                            Str::limit($item->product->name, 20) }}</a>
+                                                                                    </h4>
+                                                                                    <h4><span>{{ $item->quantity }} × </span>Rs.
+                                                                                        {{ number_format($item->product->price, 2) }}
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div class="shopping-cart-delete">
+                                                                                    <a href="#" class="remove-from-cart-header" data-id="{{ $item->id }}"><i
+                                                                                            class="fi-rs-cross-small"></i></a>
+                                                                                </div>
+                                                                            </li>
                                         @empty
                                             <li>
                                                 <div class="text-center p-2">
@@ -566,8 +534,8 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="{{ route('frontend.home') }}"><img
-                            src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager"></a>
+                    <a href="{{route('frontend.home')}}"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
+                            alt="logo"></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -579,16 +547,16 @@
             <div class="mobile-header-content-area">
                 <div class="mobile-search search-style-3 mobile-header-border">
                     <form action="{{ route('frontend.search') }}" method="GET">
-                        <input type="text" name="query" id="search-input" placeholder="Search for products..."
-                            autocomplete="off" value="{{ request('query') }}" />
+                        <input type="text" name="query" id="search-input"
+                            placeholder="Search for products..." autocomplete="off"
+                            value="{{ request('query') }}" />
                     </form>
                     <!-- This dropdown must be immediately after the form -->
                     <div class="search-results-dropdown" style="display: none;"></div>
                 </div>
                 <div class="mobile-menu-wrap mobile-header-border">
                     <div class="main-categori-wrap mobile-header-border">
-                        <a class="active" href="{{ route('frontend.perchaseGuide') }}"><span
-                                class="fi-rs-apps"></span>Purchase
+                        <a class="active" href="{{route('frontend.perchaseGuide')}}"><span class="fi-rs-apps"></span>Purchase
                             Guide</a>
 
 
@@ -597,12 +565,11 @@
                     <nav>
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children"><span class="menu-expand"></span>
-                                <a href="{{ route('frontend.home') }}">Home</a>
+                                <a href="{{route('frontend.home')}}">Home</a>
 
                             </li>
 
-                            @if(isset($categories) && $categories->count() > 0)
-                                @foreach($categories as $category)
+                            @foreach ($categories as $category)
                                     <li class="menu-item-has-children">
                                         <span class="menu-expand"></span>
                                         <a href="{{ route('frontend.shop', ['category' => $category->slug]) }}">
@@ -612,22 +579,19 @@
                                         @if ($category->children->count())
                                             <ul class="dropdown">
                                                 @foreach ($category->children as $subcategory)
-                                                    <li
-                                                        class="@if ($subcategory->children->count()) menu-item-has-children @endif">
-                                                        @if ($subcategory->children->count())
+                                                    <li class="@if($subcategory->children->count()) menu-item-has-children @endif">
+                                                        @if($subcategory->children->count())
                                                             <span class="menu-expand"></span>
                                                         @endif
-                                                        <a
-                                                            href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
+                                                        <a href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
                                                             {{ $subcategory->name }}
                                                         </a>
 
-                                                        @if ($subcategory->children->count())
+                                                        @if($subcategory->children->count())
                                                             <ul class="dropdown">
                                                                 @foreach ($subcategory->children as $child)
                                                                     <li>
-                                                                        <a
-                                                                            href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
+                                                                        <a href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
                                                                             {{ $child->name }}
                                                                         </a>
                                                                     </li>
@@ -639,8 +603,7 @@
                                             </ul>
                                         @endif
                                     </li>
-                                @endforeach
-                            @endif
+                            @endforeach
 
 
                         </ul>
@@ -649,13 +612,13 @@
                 </div>
                 <div class="mobile-header-info-wrap mobile-header-border">
                     <div class="single-mobile-header-info mt-30">
-                        <a href="{{ route('frontend.contactUs') }}"> Our location </a>
+                        <a href="{{route('frontend.contactUs')}}"> Our location </a>
                     </div>
                     <div class="single-mobile-header-info">
-                        <a href="{{ route('frontend.aboutUs') }}"> About us </a>
+                        <a href="{{route('frontend.aboutUs')}}"> About us </a>
                     </div>
                     <div class="single-mobile-header-info">
-                        <a href="{{ route('login') }}">Log In / Sign Up </a>
+                        <a href="{{route('login')}}">Log In / Sign Up </a>
                     </div>
                     <div class="single-mobile-header-info">
                         <a href="#">+92 339 1339339 </a>
@@ -663,28 +626,17 @@
                 </div>
                 <div class="mobile-social-icon">
                     <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                    <!--<a href="https://www.facebook.com/VisionPlusOpticianPK"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt="facebook logo"></a>-->
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
                     <!-- <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a> -->
-                    <!--<a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>-->
-                    <!--<a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>-->
-                    <!--<a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>-->
-                    <a href="https://www.facebook.com/VisionPlusOpticianPK" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}"
-                            alt="Facebook logo" loading="lazy" />
-                    </a>
-                    <a href="https://www.instagram.com/visionplusopticianspk/" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}"
-                            alt="Instagram logo" loading="lazy" />
-                    </a>
-                    <a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}"
-                            alt="YouTube logo"  />
-                    </a>
-
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     @yield('content')
 
@@ -697,12 +649,12 @@
                             <div class="col flex-horizontal-center">
                                 {{-- <img class="icon-email"
                                     src="{{ asset('frontend/assets/imgs/theme/icons/icon-email.svg') }}" alt="" />
-                                <h4 class="font-size-20 mb-0 ml-3"></h4> --}}
+                                <h4 class="font-size-20 mb-0 ml-3">Update me Shayan</h4> --}}
                             </div>
                             <div class="col my-4 my-md-0 des">
                                 {{-- <h5 class="font-size-15 ml-4 mb-0">
-                                    <strong>
-                                        </strong>
+                                    shyan please make this functional<strong>
+                                        but please dont remove this section</strong>
                                 </h5> --}}
                             </div>
                         </div>
@@ -727,7 +679,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="widget-about font-md mb-md-5 mb-lg-0">
                             <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="{{ route('frontend.home') }}"><img src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}"
+                                <a href="{{ route('frontend.home') }}"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}"
                                         alt="logo" /></a>
                             </div>
                             <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
@@ -746,16 +698,15 @@
                                 Follow Us
                             </h5>
                             <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
-                               <a href="https://www.facebook.com/VisionPlusOpticianPK" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt="Facebook logo" />
-</a>
-<a href="https://www.instagram.com/visionplusopticianspk/" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}" alt="Instagram logo" loading="lazy"/>
-</a>
-<a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}" alt="YouTube logo" loading="lazy"/>
-</a>
-
+                                <a href="https://www.facebook.com/VisionPlusOpticianPK"><img
+                                        src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}"
+                                        alt="Facebook logo" /></a>
+                                <a href="https://www.instagram.com/visionplusopticianspk/"><img
+                                        src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}"
+                                        alt="" /></a>
+                                <a href="https://www.youtube.com/@VisionPlusOptician"><img
+                                        src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}"
+                                        alt="" /></a>
                             </div>
                         </div>
                     </div>
@@ -807,7 +758,7 @@
                                     Secured Payment Gateways
                                 </p>
                                 <img class="wow fadeIn animated"
-                                    src="{{ asset('frontend/assets/imgs/theme/payment-method.png') }}" alt="payment method" loading="lazy" />
+                                    src="{{ asset('frontend/assets/imgs/theme/payment-method.png') }}" alt="" />
                             </div>
                         </div>
                     </div>
@@ -830,11 +781,27 @@
                 <div class="col-lg-6">
                     <p class="text-lg-end text-start font-sm text-muted mb-0">
                         Designed by
-                        <a href="#"><strong class="text-brand">Ahsan Saeed:<small style="font-size:13px">03228717170</small></strong></a>. All rights reserved</p><br>
+                        <a href="#"><strong class="text-brand">Ahsan Saeed</strong></a>. All rights reserved
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <h5 class="mb-10">Sharpening your vision… Please wait</h5>
+                    <div class="loader">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Elegant WhatsApp Floating Button -->
     <a href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20need%20assistance."
@@ -847,9 +814,170 @@
         </svg>
     </a>
     <!-- End Elegant WhatsApp Floating Button -->
+    <!--Live sales notification  start-->
+    <div id="sales-notification" class="sales-popup">
+        <span id="sales-text">🛍️ A customer just made a purchase!</span>
+    </div>
+    <!--Live sales notification  End-->
 
 
+    <!-- Vendor JS-->
+    <!-- Vendor JS -->
+    <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/vendor/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/slick.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery.syotimer.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/wow.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery-ui.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/magnific-popup.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/select2.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/waypoints.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/counterup.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/images-loaded.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/isotope.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/scrollup.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}"></script>
 
+    <!-- Template JS -->
+    <script src="{{ asset('frontend/assets/js/main.js') }}?v=3.4"></script>
+    <script src="{{ asset('frontend/assets/js/shop.js') }}?v=3.4"></script>
+    <script src="{{ asset('frontend/assets/js/custom.js') }}?v=3.4"></script>
+
+
+    <!-- Start language button  -->
+    <script>
+        function setLanguage(lang) {
+            const elements = document.querySelectorAll("[data-lang-en]");
+            elements.forEach((el) => {
+                el.textContent = el.getAttribute(`data-lang-${lang}`);
+            });
+
+            localStorage.setItem("preferredLang", lang);
+        }
+
+        // Auto apply language on page load
+        window.onload = () => {
+            const savedLang = localStorage.getItem("preferredLang") || "en";
+            setLanguage(savedLang);
+        };
+    </script>
+
+    <!-- End language button  -->
+
+    <!-- Animated curser -->
+    {{-- <script>
+        const cursor = document.createElement("div");
+        cursor.classList.add("custom-cursor");
+        document.body.appendChild(cursor);
+
+        const numDots = 8; // Number of legs
+        const radius = 20; // Orbit radius
+        const dots = [];
+
+        for (let i = 0; i < numDots; i++) {
+            const dot = document.createElement("div");
+            dot.classList.add("cursor-dot");
+            cursor.appendChild(dot);
+            dots.push(dot);
+        }
+
+        let mouseX = 0,
+            mouseY = 0;
+
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+
+        function animateDots() {
+            const time = performance.now() / 500;
+            dots.forEach((dot, index) => {
+                const angle = ((Math.PI * 2) / numDots) * index + time;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                dot.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            requestAnimationFrame(animateDots);
+        }
+
+        animateDots();
+    </script> --}}
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = "https://embed.tawk.to/680094e91d1b06190d6f921f/1ip14bchr";
+            s1.charset = "UTF-8";
+            s1.setAttribute("crossorigin", "*");
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+    <!--Live sales notification  start-->
+    <script>
+const messages = [
+  "👓 Zoya from Karachi got Eyeglasses",
+  "🛍 Sara from Karachi bought Screen Glasses",
+  "👓 Ali from Lahore got Eyeglasses",
+  "📦 Aysha from Islamabad ordered Lenses 🔥",
+  "🛒 Hamza from Multan placed an order 🔥",
+  "💼 Ahsan from Faisalabad got Sunglasses",
+  "👓 Saqib from Lahore picked Club Master 🔥",
+  "👓 Farah from Lahore got New Frames",
+  "🛍 Bilal from Islamabad bought Glasses",
+  "📦 Umar from Multan got Lenses 🔥",
+  "🛒 Sana from Faisalabad checked out",
+  "💼 Rehan from Peshawar got Shades",
+  "👓 Hira from Rawalpindi chose Cat Eye",
+  "🛍 Daniyal from Gujranwala got Screen Glasses",
+  "📦 Anum from Sialkot got Daily Lenses",
+  "🛒 Taimoor from Hyderabad bought Eyewear",
+  "👓 Laiba from Lahore got Bold Frames 🔥",
+  "💼 Faizan from Quetta picked Polarized",
+  "🛍 Iqra from Bahawalpur got Anti-Glare",
+  "📦 Yasir from Sargodha got Lenses – 1d ago",
+  "👓 Areeba from Lahore got Eyeglasses – 1d ago",
+  "🛍 Fahad from Karachi bought Glasses – 2d ago",
+  "💼 Muneeb from Islamabad got Shades – 1d ago",
+  "📦 Mehwish from Multan got Lenses – 2d ago",
+  "🛒 Imran from Faisalabad ordered – 1d ago"
+];
+
+function showSalePopup() {
+  const popup = document.getElementById("sales-notification");
+  const text = document.getElementById("sales-text");
+
+  const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+  text.textContent = randomMsg;
+
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 5000);
+}
+
+// Show the first popup after 10 seconds
+setTimeout(() => {
+  showSalePopup();
+  // Then keep showing every 10 seconds
+  setInterval(showSalePopup, 12000);
+}, 12000);
+    </script>
+    <!--Live sales notification  End-->
 
     <script>
         $(document).ready(function () {
@@ -1068,36 +1196,6 @@
     @stack('scripts')
 
     <!-- Search Functionality -->
-
-    
-    
-  <!-- Vendor JS -->
-    <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/vendor/bootstrap.bundle.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/slick.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.syotimer.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/wow.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-ui.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/perfect-scrollbar.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/magnific-popup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/select2.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/waypoints.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/counterup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.countdown.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/images-loaded.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/isotope.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/scrollup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}" defer ></script>
-
-    <!-- Template JS -->
-    <script src="{{ asset('frontend/assets/js/main.js') }}?v=3.5" defer ></script>
-    <script src="{{ asset('frontend/assets/js/shop.js') }}?v=3.5" defer ></script>
-    <script src="{{ asset('frontend/assets/js/custom.js') }}?v=3.5" defer ></script>
-    
 
 </body>
 

@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+   <meta charset="utf-8" />
+    <title>
+        VisionPlusOpticians Pakistan | Prescription Glasses, Contact Lenses &
+        Sunglasses
+    </title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description"
+        content="Shop premium prescription glasses, contact lenses, and stylish sunglasses with virtual try-on. Trusted by thousands across Pakistan for fast delivery & expert eye care." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://visionplus.pk/" />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+
+    <meta property="og:title" content="VisionPlusOpticians Pakistan | Stylish Eyewear & Expert Eye Care" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://visionplus.pk/" />
+    <meta property="og:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VisionPlusOpticians Pakistan | Stylish Eyewear & Expert Eye Care" />
+    <meta name="twitter:description"
+        content="Pakistan’s #1 online optical store for glasses, lenses, and sunglasses. Try online, buy with ease." />
+    <meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('frontend/assets/imgs/theme/vp_favicon.png')); ?>" />
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/main.css')); ?>" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custom.css')); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custome.css')); ?>" />
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+
+    <script type="application/ld+json">
+
+        {
+            "@context": "https://schema.org/",
+            "@type": "Organization",
+            "name": "VisionPlusOpticians",
+            "url": "https://visionplus.pk",
+            "logo": "https://visionplus.pk/evara-frontend/assets/imgs/theme/logo.svg",
+            "sameAs": [
+            "https://www.facebook.com/VisionPlusOpticianPK",
+            "https://www.instagram.com/visionplusopticianspk/"
+            ]
+        }
+
+    </script>
+    <!-- Product Schema  (for glasses): -->
+    <script type="application/ld+json">
+
+        {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "Classic Black Frame",
+        "image": "https://visionplus.pk/evara-frontend/assets/imgs/cards/new-card-img-1.jpg",
+        "description": "Stylish black frame with premium lenses.",
+        "brand": {
+            "@type": "Brand",
+            "name": "VisionPlusOpticians"
+        },
+        "sku": "VP1234",
+        "offers": {
+            "@type": "Offer",
+            "url": "https://visionplus.pk/evara-frontend/assets/imgs/cards/new-card-img-1.jpg",
+            "priceCurrency": "PKR",
+            "price": "3500",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock"
+        }
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+
+    <!-- Quick view -->
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <!-- Content will be loaded here via AJAX -->
+                    <div class="text-center py-5">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- navbar start -->
+    <header class="header-area header-style-1 header-height-2">
+        <div class="header-top header-top-ptb-1 d-none d-lg-block ">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info">
+                            <ul>
+                                <li><i class="fi-rs-smartphone"></i> <a href="#">042 35197464</a></li>
+                                <li>
+                                    <i class="fi-rs-marker"></i>
+                                    <a href="<?php echo e(route('frontend.contactUs')); ?>">
+                                        <span data-lang-en="Our location" data-lang-ur="ہمارا پتہ">Our location</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="text-center">
+                            <div id="news-flash" class="d-inline-block">
+                                <ul>
+                                <li>👁️ Book Your Eye Test Today!</li>
+                                <li>🚚 Free Shipping Across Pakistan!</li>
+                                <li>Free Shipping Across Pakistan! 🚚</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Language button -->
+
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="header-info header-info-right">
+                            <ul>
+                                <li>
+                                    <a class="language-dropdown-active" href="#" onclick="setLanguage('en')">
+                                        <i class="fi-rs-world"></i> English
+                                        <i class="fi-rs-angle-small-down"></i>
+                                    </a>
+                                    <ul class="language-dropdown">
+                                        <li>
+                                            <a href="#" onclick="setLanguage('ur')" style="font-size: larger;">
+                                                <img src="assets/imgs/theme/flag-fr.png" alt="PAKISTAN dropdown image">
+                                                اردو
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <?php if(auth()->guard()->guest()): ?>
+                                        <?php if(Route::has('login')): ?>
+                                            <i class="fi-rs-user"></i><a href="<?php echo e(route('login')); ?>">
+                                                <span data-lang-en="Log In" data-lang-ur="لاگ اِن">Log In</span>
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <?php if(Route::has('register')): ?>
+                                            <i class="fi-rs-user"></i><a href="<?php echo e(route('register')); ?>">
+                                                <span data-lang-en="Sign Up" data-lang-ur="سائن اپ">Sign Up</span>
+                                            </a>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <li class="dropdown">
+                                            <i class="fi-rs-user"></i><a id="navbarDropdown" href="#" role="button"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                <span><?php echo e(Auth::user()->name); ?></span>
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                               <?php if(Auth::user()->getRawOriginal('type') == 1): ?>
+                                                    <a class="dropdown-item" href="<?php echo e(url('/admin/dashboard')); ?>">
+                                                        <span data-lang-en="Dashboard" data-lang-ur="ڈیش بورڈ">Dashboard</span>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <a class="dropdown-item" href="<?php echo e(url('/home')); ?>">
+                                                        <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
+                                                    </a>
+                                                <?php endif; ?>
+
+                                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
+                                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    <span data-lang-en="Logout" data-lang-ur="لاگ آؤٹ">Logout</span>
+                                                </a>
+
+                                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                                    <?php echo csrf_field(); ?>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    <?php endif; ?>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Language button End -->
+                </div>
+            </div>
+        </div>
+        <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
+            <div class="container">
+                <div class="header-wrap">
+                    <div class="logo logo-width-1">
+                        <a href="<?php echo e(route('frontend.home')); ?>"><img
+                                src="<?php echo e(asset('frontend/assets/imgs/theme/logo.svg')); ?>" alt="logo"></a>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-style-2">
+                            <form action="<?php echo e(route('frontend.search')); ?>" method="GET">
+                                <select class="select-active" name="category">
+                                    <option value="">All Categories</option>
+                                    <?php $__currentLoopData = \App\Models\Category::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category->id); ?>" <?php echo e(request('category') == $category->id ? 'selected' : ''); ?>>
+                                            <?php echo e($category->name); ?>
+
+                                        </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                <input type="text" name="query" id="search-input"
+                                    placeholder="Search for products..." autocomplete="off"
+                                    value="<?php echo e(request('query')); ?>" />
+                            </form>
+
+                            <!-- Search results dropdown container -->
+                            <div id="search-results-dropdown" class="search-results-dropdown" style="display: none;"></div>
+                        </div>
+
+                        <div class="header-action-right">
+                            <div class="header-action-2">
+                                <div class="header-action-icon-2">
+                                    <a href="<?php echo e(route('frontend.wishList')); ?>">
+                                        <img class="svgInject" alt="Wishlist"
+                                            src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-heart.svg')); ?>" />
+                                        <span class="pro-count blue wishlist-count">
+                                            <?php if(auth()->check()): ?>
+                                                <?php echo e(\App\Models\Wishlist::where('user_id', auth()->id())->count()); ?>
+
+                                            <?php else: ?>
+                                                                                        <?php echo e(\App\Models\Wishlist::where(
+                                                    'session_id',
+                                                    session()->getId()
+                                                )->count()); ?>
+
+                                            <?php endif; ?>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="header-action-icon-2">
+                                    <a class="mini-cart-icon" href="<?php echo e(route('frontend.cart')); ?>">
+                                        <img alt="Evara"
+                                            src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-cart.svg')); ?>" />
+                                        <span class="pro-count blue cart-count">
+                                            <?php if(auth()->check()): ?>
+                                                <?php echo e(\App\Models\Cart::where('user_id', auth()->id())->sum('quantity')); ?>
+
+                                            <?php else: ?>
+                                                                                        <?php echo e(\App\Models\Cart::where(
+                                                    'session_id',
+                                                    session()->getId()
+                                                )->sum('quantity')); ?>
+
+                                            <?php endif; ?>
+                                        </span>
+                                    </a>
+                                    <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                        <ul>
+                                            <?php
+                                                if (auth()->check()) {
+                                                    $cartItems = \App\Models\Cart::where('user_id', auth()->id())
+                                                        ->with('product')
+                                                        ->take(2)
+                                                        ->get();
+                                                } else {
+                                                    $cartItems = \App\Models\Cart::where(
+                                                        'session_id',
+                                                        session()->getId(),
+                                                    )
+                                                        ->with('product')
+                                                        ->take(2)
+                                                        ->get();
+                                                }
+
+                                                $cartTotal = 0;
+                                            ?>
+
+                                            <?php $__empty_1 = true; $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                                                    <?php $cartTotal += $item->total_price; ?>
+                                                                                    <li>
+                                                                                        <div class="shopping-cart-img">
+                                                                                            <a href="<?php echo e(route('frontend.productDetail', $item->product)); ?>">
+                                                                                                <img alt="<?php echo e($item->product->name); ?>"
+                                                                                                    src="<?php echo e(asset('uploads/products/' . $item->product->main_image)); ?>" />
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="shopping-cart-title">
+                                                                                            <h4>
+                                                                                                <a href="<?php echo e(route('frontend.productDetail', $item->product)); ?>"><?php echo e(Str::limit($item->product->name, 20)); ?></a>
+                                                                                            </h4>
+                                                                                            <h4><span><?php echo e($item->quantity); ?> × </span>Rs.
+                                                                                                <?php echo e(number_format($item->product->price, 2)); ?>
+
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                        <div class="shopping-cart-delete">
+                                                                                            <a href="#" class="remove-from-cart-header"
+                                                                                                data-id="<?php echo e($item->id); ?>"><i class="fi-rs-cross-small"></i></a>
+                                                                                        </div>
+                                                                                    </li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                                <li>
+                                                    <div class="text-center p-2">
+                                                        Your cart is empty
+                                                    </div>
+                                                </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                        <div class="shopping-cart-footer">
+                                            <div class="shopping-cart-total">
+                                                <h4>Total <span>Rs. <?php echo e(number_format($cartTotal, 2)); ?></span></h4>
+                                            </div>
+                                            <div class="shopping-cart-button">
+                                                <a href="<?php echo e(route('frontend.cart')); ?>" class="outline">View
+                                                    cart</a>
+                                                <a href="<?php echo e(route('frontend.checkout')); ?>">Checkout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom header-bottom-bg-color sticky-bar">
+            <div class="container">
+                <div class="header-wrap header-space-between  position-relative">
+                    <div class="logo logo-width-1 d-block d-lg-none">
+                        <a href="<?php echo e(route('frontend.home')); ?>"><img
+                                src="<?php echo e(asset('frontend/assets/imgs/theme/logo.svg')); ?>" alt="logo"></a>
+                    </div>
+                    <div class="header-nav d-none d-lg-flex">
+                        <div class="main-categori-wrap d-none d-lg-block">
+                            <!-- <a class="categori-button-active" href="#">
+                            <span class="fi-rs-apps"></span>Purchse Guide
+                        </a> -->
+                            <a class="active" href="<?php echo e(route('frontend.perchaseGuide')); ?>">
+                                <span class="fi-rs-apps"></span>
+                                <span data-lang-en="Purchase Guide" data-lang-ur="خریداری کی رہنمائی">Purchase
+                                    Guide</span>
+                            </a>
+                        </div>
+                        <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
+                            <nav>
+                                    <ul>
+                                        <li>
+                                            <a class="active" href="<?php echo e(route('frontend.home')); ?>">
+                                                <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
+                                            </a>
+                                        </li>
+
+                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li class="position-static">
+                                            <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug])); ?>">
+                                                <span data-lang-en="<?php echo e($category->name); ?>"
+                                                    data-lang-ur="<?php echo e($category->name_ur ?? $category->name); ?>">
+                                                    <?php echo e($category->name); ?>
+
+                                                </span>
+                                                <?php if($category->children->count()): ?>
+                                                <i class="fi-rs-angle-down"></i>
+                                                <?php endif; ?>
+                                            </a>
+
+                                            <?php if($category->children->count()): ?>
+                                            <ul class="mega-menu">
+                                                <?php $__currentLoopData = $category->children->chunk(ceil($category->children->count() /
+                                                3)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="sub-mega-menu sub-mega-menu-width-22">
+                                                    <?php $__currentLoopData = $chunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <a class="menu-title"
+                                                        href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug])); ?>">
+                                                        <?php echo e($subcategory->name); ?>
+
+                                                    </a>
+                                                    <ul>
+                                                        <?php $__currentLoopData = $subcategory->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li>
+                                                            <a
+                                                                href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug])); ?>">
+                                                                <?php echo e($child->name); ?>
+
+                                                            </a>
+                                                        </li>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    </ul>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                <!-- Banner areas -->
+                                                <li class="sub-mega-menu sub-mega-menu-width-34">
+                                                    <div class="menu-banner-wrap">
+                                                        <!-- Your banner content -->
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <?php endif; ?>
+                                        </li>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </ul>
+                                </nav>
+                        </div>
+                    </div>
+                    <div class="hotline d-none d-lg-block">
+                        <p><i class="fi-rs-headset"></i><span>Hotline</span>0339-1339339</p>
+                    </div>
+                    <p class="mobile-promotion">Free Shipping Across Pakistan</p>
+                    <div class="header-action-right d-block d-lg-none">
+                        <div class="header-action-2">
+                            <div class="header-action-icon-2">
+                                <a href="<?php echo e(route('frontend.wishList')); ?>">
+                                    <img class="svgInject" alt="Wishlist"
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-heart.svg')); ?>" />
+                                    <span class="pro-count blue wishlist-count">
+                                        <?php if(auth()->check()): ?>
+                                            <?php echo e(\App\Models\Wishlist::where('user_id', auth()->id())->count()); ?>
+
+                                        <?php else: ?>
+                                                                                <?php echo e(\App\Models\Wishlist::where(
+                                                'session_id',
+                                                session()->getId()
+                                            )->count()); ?>
+
+                                        <?php endif; ?>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="<?php echo e(route('frontend.cart')); ?>">
+                                    <img alt="Evara"
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-cart.svg')); ?>" />
+                                    <span class="pro-count blue cart-count">
+                                        <?php if(auth()->check()): ?>
+                                            <?php echo e(\App\Models\Cart::where('user_id', auth()->id())->sum('quantity')); ?>
+
+                                        <?php else: ?>
+                                                                                <?php echo e(\App\Models\Cart::where(
+                                                'session_id',
+                                                session()->getId()
+                                            )->sum('quantity')); ?>
+
+                                        <?php endif; ?>
+                                    </span>
+                                </a>
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                    <ul>
+                                        <?php
+                                            if (auth()->check()) {
+                                                $cartItems = \App\Models\Cart::where('user_id', auth()->id())
+                                                    ->with('product')
+                                                    ->take(2)
+                                                    ->get();
+                                            } else {
+                                                $cartItems = \App\Models\Cart::where(
+                                                    'session_id',
+                                                    session()->getId(),
+                                                )
+                                                    ->with('product')
+                                                    ->take(2)
+                                                    ->get();
+                                            }
+
+                                            $cartTotal = 0;
+                                        ?>
+
+                                        <?php $__empty_1 = true; $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                                            <?php $cartTotal += $item->total_price; ?>
+                                                                            <li>
+                                                                                <div class="shopping-cart-img">
+                                                                                    <a href="<?php echo e(route('frontend.productDetail', $item->product)); ?>">
+                                                                                        <img alt="<?php echo e($item->product->name); ?>"
+                                                                                            src="<?php echo e(asset('uploads/products/' . $item->product->main_image)); ?>" />
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="shopping-cart-title">
+                                                                                    <h4>
+                                                                                        <a href="<?php echo e(route('frontend.productDetail', $item->product)); ?>"><?php echo e(Str::limit($item->product->name, 20)); ?></a>
+                                                                                    </h4>
+                                                                                    <h4><span><?php echo e($item->quantity); ?> × </span>Rs.
+                                                                                        <?php echo e(number_format($item->product->price, 2)); ?>
+
+                                                                                    </h4>
+                                                                                </div>
+                                                                                <div class="shopping-cart-delete">
+                                                                                    <a href="#" class="remove-from-cart-header" data-id="<?php echo e($item->id); ?>"><i
+                                                                                            class="fi-rs-cross-small"></i></a>
+                                                                                </div>
+                                                                            </li>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                            <li>
+                                                <div class="text-center p-2">
+                                                    Your cart is empty
+                                                </div>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <div class="shopping-cart-footer">
+                                        <div class="shopping-cart-total">
+                                            <h4>Total <span>Rs. <?php echo e(number_format($cartTotal, 2)); ?></span></h4>
+                                        </div>
+                                        <div class="shopping-cart-button">
+                                            <a href="<?php echo e(route('frontend.cart')); ?>" class="outline">View
+                                                cart</a>
+                                            <a href="<?php echo e(route('frontend.checkout')); ?>">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header-action-icon-2 d-block d-lg-none">
+                                <div class="burger-icon burger-icon-white">
+                                    <span class="burger-icon-top"></span>
+                                    <span class="burger-icon-mid"></span>
+                                    <span class="burger-icon-bottom"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="mobile-header-active mobile-header-wrapper-style">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-top">
+                <div class="mobile-header-logo">
+                    <a href="<?php echo e(route('frontend.home')); ?>"><img src="<?php echo e(asset('frontend/assets/imgs/theme/logo.svg')); ?>"
+                            alt="logo"></a>
+                </div>
+                <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
+                    <button class="close-style search-close">
+                        <i class="icon-top"></i>
+                        <i class="icon-bottom"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mobile-header-content-area">
+                <div class="mobile-search search-style-3 mobile-header-border">
+                    <form action="<?php echo e(route('frontend.search')); ?>" method="GET">
+                        <input type="text" name="query" id="search-input"
+                            placeholder="Search for products..." autocomplete="off"
+                            value="<?php echo e(request('query')); ?>" />
+                    </form>
+                    <!-- This dropdown must be immediately after the form -->
+                    <div class="search-results-dropdown" style="display: none;"></div>
+                </div>
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <div class="main-categori-wrap mobile-header-border">
+                        <a class="active" href="<?php echo e(route('frontend.perchaseGuide')); ?>"><span class="fi-rs-apps"></span>Purchase
+                            Guide</a>
+
+
+                    </div>
+                    <!-- mobile menu start -->
+                    <nav>
+                        <ul class="mobile-menu">
+                            <li class="menu-item-has-children"><span class="menu-expand"></span>
+                                <a href="<?php echo e(route('frontend.home')); ?>">Home</a>
+
+                            </li>
+
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <li class="menu-item-has-children">
+                                        <span class="menu-expand"></span>
+                                        <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug])); ?>">
+                                            <?php echo e($category->name); ?>
+
+                                        </a>
+
+                                        <?php if($category->children->count()): ?>
+                                            <ul class="dropdown">
+                                                <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <li class="<?php if($subcategory->children->count()): ?> menu-item-has-children <?php endif; ?>">
+                                                        <?php if($subcategory->children->count()): ?>
+                                                            <span class="menu-expand"></span>
+                                                        <?php endif; ?>
+                                                        <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug])); ?>">
+                                                            <?php echo e($subcategory->name); ?>
+
+                                                        </a>
+
+                                                        <?php if($subcategory->children->count()): ?>
+                                                            <ul class="dropdown">
+                                                                <?php $__currentLoopData = $subcategory->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <li>
+                                                                        <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug])); ?>">
+                                                                            <?php echo e($child->name); ?>
+
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            </ul>
+                                                        <?php endif; ?>
+                                                    </li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </ul>
+                                        <?php endif; ?>
+                                    </li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+                        </ul>
+                    </nav>
+                    <!-- mobile menu end -->
+                </div>
+                <div class="mobile-header-info-wrap mobile-header-border">
+                    <div class="single-mobile-header-info mt-30">
+                        <a href="<?php echo e(route('frontend.contactUs')); ?>"> Our location </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="<?php echo e(route('frontend.aboutUs')); ?>"> About us </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="<?php echo e(route('login')); ?>">Log In / Sign Up </a>
+                    </div>
+                    <div class="single-mobile-header-info">
+                        <a href="#">+92 339 1339339 </a>
+                    </div>
+                </div>
+                <div class="mobile-social-icon">
+                    <h5 class="mb-15 text-grey-4">Follow Us</h5>
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-facebook.svg" alt=""></a>
+                    <!-- <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a> -->
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>
+                    <a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <?php echo $__env->yieldContent('content'); ?>
+
+    <footer class="main">
+        <section class="newsletter p-30 text-white wow fadeIn animated">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 mb-md-3 mb-lg-0">
+                        <div class="row align-items-center">
+                            <div class="col flex-horizontal-center">
+                                
+                            </div>
+                            <div class="col my-4 my-md-0 des">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- Subscribe Form -->
+                        <form class="form-subcriber d-flex wow fadeIn animated">
+                            
+                        </form>
+                        <!-- End Subscribe Form -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-padding footer-mid">
+            <div class="container pt-15 pb-20">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="widget-about font-md mb-md-5 mb-lg-0">
+                            <div class="logo logo-width-1 wow fadeIn animated">
+                                <a href="<?php echo e(route('frontend.home')); ?>"><img src="<?php echo e(asset('frontend/assets/imgs/theme/logo.svg')); ?>"
+                                        alt="logo" /></a>
+                            </div>
+                            <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
+                                Contact
+                            </h5>
+                            <p class="wow fadeIn animated">
+                                <strong>Address: </strong> Hali Rd, Gulberg 2, Lahore
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Phone: </strong>+92 339 1339339
+                            </p>
+                            <p class="wow fadeIn animated">
+                                <strong>Hours: </strong>10:00 AM - 10:00 PM, Mon - Sat
+                            </p>
+                            <h5 class="mb-10 mt-30 fw-600 text-grey-4 wow fadeIn animated">
+                                Follow Us
+                            </h5>
+                            <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
+                                <a href="https://www.facebook.com/VisionPlusOpticianPK"><img
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-facebook.svg')); ?>"
+                                        alt="Facebook logo" /></a>
+                                <a href="https://www.instagram.com/visionplusopticianspk/"><img
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-instagram.svg')); ?>"
+                                        alt="" /></a>
+                                <a href="https://www.youtube.com/@VisionPlusOptician"><img
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-youtube.svg')); ?>"
+                                        alt="" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">About</h5>
+                        <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
+                            <li><a href="<?php echo e(route('frontend.aboutUs')); ?>">About Us</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Our Location</a></li>
+                            <li><a href="<?php echo e(route('frontend.privacyPolicy')); ?>">Privacy Policy</a></li>
+                            <li><a href="<?php echo e(route('frontend.termsConditions')); ?>">Terms &amp; Conditions</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Contact Us</a></li>
+                            <li>
+                                <a href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20need%20assistance%20regarding%20my%20order,%20shipping,%20or%20product%20information.%20Please%20help%20me. "
+                                    target="_blank">Support Center</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-3">
+                        <h5 class="widget-title wow fadeIn animated">My Account</h5>
+                        <ul class="footer-list wow fadeIn animated">
+                            <li><a href="<?php echo e(route('login')); ?>">Sign In</a></li>
+                            <li><a href="<?php echo e(route('frontend.cart')); ?>">View Cart</a></li>
+                            <li><a href="<?php echo e(route('frontend.wishList')); ?>">My Wishlist</a></li>
+                            <li><a href="<?php echo e(route('frontend.perchaseGuide')); ?>">Help</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Our Outlets</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="widget-title wow fadeIn animated">How to order!</h5>
+                        <div class="row">
+                            <div class="col-md-8 col-lg-12">
+                                <p class="wow fadeIn animated">
+                                    Click on Below Button For Order Guide
+                                </p>
+                                <!-- <div class="download-app wow fadeIn animated">
+                                    <a href="page-purchase-guide.html" class="hover-up mb-sm-4 mb-lg-0"><img
+                                            class="active" src="frontend/assets/imgs/theme/PG.jpg" alt=""></a>
+                                    <a href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20want%20to%20place%20an%20order.%20Please%20assist%20me."
+                                        target="_blank" class="hover-up"><img src="frontend/assets/imgs/theme/WP.jpg" alt=""></a>
+                                </div> -->
+                                <div class="selec-btns" style="display: flex; gap: 10px; flex-wrap: wrap">
+                                    <a class="select-lens" href="<?php echo e(route('frontend.perchaseGuide')); ?>">How to
+                                        Order</a>
+                                    <a class="select-lens" href="<?php echo e(route('frontend.blog')); ?>">Blog</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
+                                <p class="mb-20 wow fadeIn animated">
+                                    Secured Payment Gateways
+                                </p>
+                                <img class="wow fadeIn animated"
+                                    src="<?php echo e(asset('frontend/assets/imgs/theme/payment-method.png')); ?>" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container pb-20 wow fadeIn animated">
+            <div class="row">
+                <div class="col-12 mb-20">
+                    <div class="footer-bottom"></div>
+                </div>
+                <div class="col-lg-6">
+                    <p class="float-md-left font-sm text-muted mb-0">
+                        &copy; 2025,
+                        <strong class="text-brand">Vision Plus Optical</strong> — Your
+                        Trusted Eye Care Partner.
+                    </p>
+                </div>
+
+                <div class="col-lg-6">
+                    <p class="text-lg-end text-start font-sm text-muted mb-0">
+                        Designed by
+                        <a href="#"><strong class="text-brand">Ahsan Saeed</strong></a>. All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <h5 class="mb-10">Sharpening your vision… Please wait</h5>
+                    <div class="loader">
+                        <div class="bar bar1"></div>
+                        <div class="bar bar2"></div>
+                        <div class="bar bar3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elegant WhatsApp Floating Button -->
+    <a href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20need%20assistance."
+        class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <!-- WhatsApp Icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-whatsapp"
+            viewBox="0 0 16 16">
+            <path
+                d="M13.601 2.326A7.875 7.875 0 0 0 8.005 0C3.582 0 .007 3.575 0 7.994a7.942 7.942 0 0 0 1.104 4.04L.058 16l4.124-1.08a7.973 7.973 0 0 0 3.823.974h.004c4.422 0 8.005-3.575 8.005-7.994a7.93 7.93 0 0 0-2.413-5.574ZM8.005 14.6a6.56 6.56 0 0 1-3.356-.923l-.24-.143-2.447.64.654-2.386-.156-.246a6.556 6.556 0 0 1 5.547-9.842h.003a6.559 6.559 0 0 1 6.548 6.548c0 3.623-2.956 6.552-6.553 6.552Zm3.666-4.967c-.2-.1-1.18-.582-1.364-.648-.183-.065-.317-.1-.45.1-.134.2-.516.648-.633.782-.116.134-.233.15-.433.05-.2-.1-.843-.31-1.604-.991-.593-.528-.993-1.177-1.11-1.376-.117-.2-.012-.3.088-.4.09-.09.2-.233.3-.35.1-.117.134-.2.2-.333.067-.134.034-.25-.017-.35-.05-.1-.45-1.084-.616-1.484-.162-.39-.327-.334-.45-.34l-.383-.006a.737.737 0 0 0-.533.25c-.183.2-.7.683-.7 1.667 0 .983.717 1.935.817 2.067.1.133 1.41 2.15 3.42 3.015.478.206.85.33 1.14.422.48.153.917.132 1.263.08.385-.057 1.18-.48 1.347-.944.167-.465.167-.865.117-.95-.05-.084-.183-.133-.383-.233Z" />
+        </svg>
+    </a>
+    <!-- End Elegant WhatsApp Floating Button -->
+    <!--Live sales notification  start-->
+    <div id="sales-notification" class="sales-popup">
+        <span id="sales-text">🛍️ A customer just made a purchase!</span>
+    </div>
+    <!--Live sales notification  End-->
+
+
+    <!-- Vendor JS-->
+    <!-- Vendor JS -->
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/jquery-3.6.0.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/bootstrap.bundle.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/slick.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.syotimer.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/wow.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery-ui.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/perfect-scrollbar.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/magnific-popup.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/select2.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/waypoints.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/counterup.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.countdown.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/images-loaded.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/isotope.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/scrollup.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.vticker-min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.theia.sticky.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.elevatezoom.js')); ?>"></script>
+
+    <!-- Template JS -->
+    <script src="<?php echo e(asset('frontend/assets/js/main.js')); ?>?v=3.4"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/shop.js')); ?>?v=3.4"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/custom.js')); ?>?v=3.4"></script>
+
+
+    <!-- Start language button  -->
+    <script>
+        function setLanguage(lang) {
+            const elements = document.querySelectorAll("[data-lang-en]");
+            elements.forEach((el) => {
+                el.textContent = el.getAttribute(`data-lang-${lang}`);
+            });
+
+            localStorage.setItem("preferredLang", lang);
+        }
+
+        // Auto apply language on page load
+        window.onload = () => {
+            const savedLang = localStorage.getItem("preferredLang") || "en";
+            setLanguage(savedLang);
+        };
+    </script>
+
+    <!-- End language button  -->
+
+    <!-- Animated curser -->
+    
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = "https://embed.tawk.to/680094e91d1b06190d6f921f/1ip14bchr";
+            s1.charset = "UTF-8";
+            s1.setAttribute("crossorigin", "*");
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+    <!--Live sales notification  start-->
+    <script>
+const messages = [
+  "👓 Zoya from Karachi got Eyeglasses",
+  "🛍 Sara from Karachi bought Screen Glasses",
+  "👓 Ali from Lahore got Eyeglasses",
+  "📦 Aysha from Islamabad ordered Lenses 🔥",
+  "🛒 Hamza from Multan placed an order 🔥",
+  "💼 Ahsan from Faisalabad got Sunglasses",
+  "👓 Saqib from Lahore picked Club Master 🔥",
+  "👓 Farah from Lahore got New Frames",
+  "🛍 Bilal from Islamabad bought Glasses",
+  "📦 Umar from Multan got Lenses 🔥",
+  "🛒 Sana from Faisalabad checked out",
+  "💼 Rehan from Peshawar got Shades",
+  "👓 Hira from Rawalpindi chose Cat Eye",
+  "🛍 Daniyal from Gujranwala got Screen Glasses",
+  "📦 Anum from Sialkot got Daily Lenses",
+  "🛒 Taimoor from Hyderabad bought Eyewear",
+  "👓 Laiba from Lahore got Bold Frames 🔥",
+  "💼 Faizan from Quetta picked Polarized",
+  "🛍 Iqra from Bahawalpur got Anti-Glare",
+  "📦 Yasir from Sargodha got Lenses – 1d ago",
+  "👓 Areeba from Lahore got Eyeglasses – 1d ago",
+  "🛍 Fahad from Karachi bought Glasses – 2d ago",
+  "💼 Muneeb from Islamabad got Shades – 1d ago",
+  "📦 Mehwish from Multan got Lenses – 2d ago",
+  "🛒 Imran from Faisalabad ordered – 1d ago"
+];
+
+function showSalePopup() {
+  const popup = document.getElementById("sales-notification");
+  const text = document.getElementById("sales-text");
+
+  const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+  text.textContent = randomMsg;
+
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 5000);
+}
+
+// Show the first popup after 10 seconds
+setTimeout(() => {
+  showSalePopup();
+  // Then keep showing every 10 seconds
+  setInterval(showSalePopup, 12000);
+}, 12000);
+    </script>
+    <!--Live sales notification  End-->
+
+    <script>
+        $(document).ready(function () {
+            // Remove item from cart in header
+            $('.remove-from-cart-header').on('click', function (e) {
+                e.preventDefault();
+                const itemId = $(this).data('id');
+
+                $.ajax({
+                    url: '<?php echo e(route('frontend.removeCartItem')); ?>',
+                    type: 'POST',
+                    data: {
+                        id: itemId,
+                        _token: '<?php echo e(csrf_token()); ?>'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Reload the page to update cart
+                            location.reload();
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error removing item from cart');
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Add these before your script -->
+
+    <!-- Quick view functionality -->
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.quick-view-btn', function (e) {
+                e.preventDefault();
+
+                var productId = $(this).data('product-id');
+                var url = $(this).attr('href');
+
+                // Show loading spinner
+                $('#quickViewModal .modal-body').html(
+                    '<div class="text-center py-5"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                );
+
+                // Fetch product data via AJAX
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // Update modal content
+                            $('#quickViewModal .modal-body').html(response.html);
+
+                            // Initialize product image slider
+                            initQuickViewSlider();
+                        }
+                    },
+                    error: function (xhr) {
+                        $('#quickViewModal .modal-body').html(
+                            '<div class="alert alert-danger">Error loading product details</div>'
+                        );
+                    }
+                });
+            });
+
+            function initQuickViewSlider() {
+                // Initialize your image slider here
+                // This depends on what slider plugin you're using
+                $('.product-image-slider').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    fade: true,
+                    asNavFor: '.slider-nav-thumbnails'
+                });
+
+                $('.slider-nav-thumbnails').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: '.product-image-slider',
+                    dots: false,
+                    focusOnSelect: true
+                });
+
+                // Color selection functionality
+                $('.color-button').on('click', function () {
+                    var index = $(this).data('index');
+                    $('.product-image-slider').slick('slickGoTo', index);
+                    $('.color-button').removeClass('active');
+                    $(this).addClass('active');
+                });
+            }
+        });
+    </script>
+
+    <!-- Add this script to handle the preloader -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle menu expand/collapse
+            document.querySelectorAll('.menu-expand').forEach(expand => {
+                expand.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.classList.toggle('active');
+
+                    // Close other open menus at the same level
+                    if (parent.classList.contains('active')) {
+                        const siblings = parent.parentElement.querySelectorAll(
+                            '.menu-item-has-children');
+                        siblings.forEach(sib => {
+                            if (sib !== parent) {
+                                sib.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Highlight current category
+            const currentCategory = "<?php echo e(request()->input('category')); ?>";
+            if (currentCategory) {
+                document.querySelectorAll(`a[href*="${currentCategory}"]`).forEach(link => {
+                    let parent = link.closest('.menu-item-has-children');
+                    while (parent) {
+                        parent.classList.add('active');
+                        parent = parent.parentElement.closest('.menu-item-has-children');
+                    }
+                    link.classList.add('active');
+                });
+            }
+        });
+    </script>
+    <script>
+            $(document).ready(function () {
+            let searchTimeout;
+
+            // Handle both desktop and mobile search inputs
+            $('.search-style-2 #search-input, .mobile-search #search-input').on('input', function() {
+                const query = $(this).val().trim();
+                const form = $(this).closest('form');
+                const dropdown = form.next('.search-results-dropdown');
+                const category = form.find('select[name="category"]').val();
+
+                clearTimeout(searchTimeout);
+
+                if (!query) {
+                    dropdown.hide();
+                    return;
+                }
+
+                searchTimeout = setTimeout(() => {
+                    // Show loading state
+                    dropdown.html(
+                        '<div class="search-loading p-3 text-center">' +
+                        '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>' +
+                        ' Searching...</div>'
+                    ).show();
+
+                    $.ajax({
+                        url: form.attr('action'),
+                        method: 'GET',
+                        data: {
+                            query: query,
+                            category: category,
+                            _token: '<?php echo e(csrf_token()); ?>'
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                dropdown.html(response.html).show();
+                            } else {
+                                dropdown.html(
+                                    '<div class="no-results-found p-4 text-center">' +
+                                    '<i class="fas fa-search text-muted mb-2" style="font-size: 2rem;"></i>' +
+                                    '<p class="text-muted mb-0">No products found</p></div>'
+                                ).show();
+                            }
+                        },
+                        error: function (xhr) {
+                            let errorMessage = 'Error performing search';
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            }
+                            dropdown.html(
+                                '<div class="search-error p-3 text-center text-danger">' +
+                                '<i class="fas fa-exclamation-circle me-2"></i>' + errorMessage + '</div>'
+                            ).show();
+                        }
+                    });
+                }, 300);
+            });
+
+            // Close dropdown when clicking outside (for both desktop and mobile)
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.search-style-2, .mobile-search').length) {
+                    $('.search-results-dropdown').hide();
+                }
+            });
+
+            // Handle category change (desktop only)
+            $('.search-style-2 select[name="category"]').on('change', function () {
+                const searchInput = $(this).closest('form').find('#search-input');
+                if (searchInput.val().trim()) {
+                    searchInput.trigger('input');
+                }
+            });
+
+            // Keep dropdown open when clicking inside it (both versions)
+            $('.search-results-dropdown').on('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+    <?php echo $__env->yieldPushContent('scripts'); ?>
+
+    <!-- Search Functionality -->
+
+</body>
+
+</html>
+<?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views/frontend/layouts/app.blade.php ENDPATH**/ ?>

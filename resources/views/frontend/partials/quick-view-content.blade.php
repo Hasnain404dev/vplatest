@@ -9,12 +9,12 @@
                     @if ($product->main_image)
                         <figure class="border-radius-10">
                             <img src="{{ asset('uploads/products/' . $product->main_image) }}" alt="{{ $product->name }}"
-                                data-index="0"  loading="lazy" decoding="async" />
+                                data-index="0" />
                         </figure>
                     @else
                         <figure class="border-radius-10">
                             <img src="{{ asset('frontend/assets/imgs/shop/product-placeholder.jpg') }}"
-                                alt="{{ $product->name }}" data-index="0"  loading="lazy" decoding="async" />
+                                alt="{{ $product->name }}" data-index="0" />
                         </figure>
                     @endif
 
@@ -25,7 +25,7 @@
                                 <figure class="border-radius-10">
                                     <img src="{{ asset('uploads/products/colors/' . $color->image) }}"
                                         alt="{{ $product->name }} - {{ $color->color_name }}" data-index="{{ $index + 1 }}"
-                                        data-color="{{ $color->color_name }}"  loading="lazy" decoding="async" />
+                                        data-color="{{ $color->color_name }}" />
                                 </figure>
                             @endif
                         @endforeach
@@ -38,12 +38,12 @@
                     @if ($product->main_image)
                         <div>
                             <img src="{{ asset('uploads/products/' . $product->main_image) }}" alt="{{ $product->name }}"
-                                data-index="0"  loading="lazy" decoding="async"/>
+                                data-index="0" />
                         </div>
                     @else
                         <div>
                             <img src="{{ asset('frontend/assets/imgs/shop/product-placeholder.jpg') }}"
-                                alt="{{ $product->name }}" data-index="0"  loading="lazy" decoding="async"/>
+                                alt="{{ $product->name }}" data-index="0" />
                         </div>
                     @endif
 
@@ -54,7 +54,7 @@
                                 <div>
                                     <img src="{{ asset('uploads/products/colors/' . $color->image) }}"
                                         alt="{{ $product->name }} - {{ $color->color_name }}" data-index="{{ $index + 1 }}"
-                                        data-color="{{ $color->color_name }}"  loading="lazy" decoding="async" />
+                                        data-color="{{ $color->color_name }}" />
                                 </div>
                             @endif
                         @endforeach
@@ -67,15 +67,15 @@
                     <li><strong class="mr-10">Share this:</strong></li>
                     <li class="social-facebook">
                         <a href="https://www.facebook.com/VisionPlusOpticianPK"><img
-                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt=""  loading="lazy" decoding="async" /></a>
+                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt="" /></a>
                     </li>
                     <li class="social-instagram">
                         <a href="https://www.instagram.com/visionplusopticianspk/"><img
-                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}" alt=""  loading="lazy" decoding="async" /></a>
+                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}" alt="" /></a>
                     </li>
                     <li class="social-youtube">
                         <a href="https://www.youtube.com/@VisionPlusOptician"><img
-                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}" alt=""  loading="lazy" decoding="async" /></a>
+                                src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}" alt="" /></a>
                     </li>
                 </ul>
             </div>
@@ -110,7 +110,7 @@
                             <input type="hidden" name="quantity" value="1" class="quantity-input">
                             <!-- This will be updated by the JavaScript -->
                             <input type="hidden" name="color_name" id="selected-color" value="">
-                            <button type="submit" class="button button-add-to-cart">Add to
+                            <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-product-id="{{ $product->id }}">Add to
                                 cart</button>
                         </form>
                         <a aria-label="Add To Wishlist" class="action-btn hover-up" href="javascript:void(0);"
