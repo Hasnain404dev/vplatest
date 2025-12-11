@@ -207,12 +207,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     // =========================
     // Bulk Discount Routes
     // =========================
-    Route::get('/admin/bulk-discounts', [BulkDiscountController::class, 'index'])->name('admin.bulkDiscount.index');
-    Route::get('/admin/bulk-discounts/create', [BulkDiscountController::class, 'create'])->name('admin.bulkDiscount.create');
-    Route::post('/admin/bulk-discounts/store', [BulkDiscountController::class, 'store'])->name('admin.bulkDiscount.store');
-    Route::get('/admin/bulk-discounts/edit/{bulkDiscount}', [BulkDiscountController::class, 'edit'])->name('admin.bulkDiscount.edit');
-    Route::put('/admin/bulk-discounts/update/{bulkDiscount}', [BulkDiscountController::class, 'update'])->name('admin.bulkDiscount.update');
-    Route::delete('/admin/bulk-discounts/delete/{bulkDiscount}', [BulkDiscountController::class, 'destroy'])->name('admin.bulkDiscount.delete');
+    Route::get('/admin/bulk-discounts', [BulkDiscountController::class, 'index'])->name('admin.bulk-discounts.index');
+    Route::get('/admin/bulk-discounts/create', [BulkDiscountController::class, 'create'])->name('admin.bulk-discounts.create');
+    Route::post('/admin/bulk-discounts/store', [BulkDiscountController::class, 'store'])->name('admin.bulk-discounts.store');
+    Route::get('/admin/bulk-discounts/edit/{bulkDiscount}', [BulkDiscountController::class, 'edit'])->name('admin.bulk-discounts.edit');
+    Route::put('/admin/bulk-discounts/update/{bulkDiscount}', [BulkDiscountController::class, 'update'])->name('admin.bulk-discounts.update');
+    Route::delete('/admin/bulk-discounts/delete/{bulkDiscount}', [BulkDiscountController::class, 'destroy'])->name('admin.bulk-discounts.delete');
 });
 // Popup route - make sure this is outside any middleware groups
 Route::get('/get-active-popup', [PopupProductController::class, 'getActivePopup'])->name('get-active-popup');

@@ -1110,4 +1110,4 @@
 </body>
 
 </html>
-<?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views/frontend/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views\frontend\layouts\app.blade.php ENDPATH**/ ?>
