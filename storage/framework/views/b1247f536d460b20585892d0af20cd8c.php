@@ -53,4 +53,4 @@
             <?php endif; ?>
         </ul>
     </nav>
-<?php endif; ?><?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views\vendor\pagination\custom.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views/vendor/pagination/custom.blade.php ENDPATH**/ ?>

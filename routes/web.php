@@ -63,6 +63,9 @@ Route::get('/search', [FrontendController::class, 'search'])->name('frontend.sea
 Route::get('/shop', [FrontendController::class, 'shop'])->name('frontend.shop');
 Route::get('/product-detail/{product:slug}', [FrontendController::class, 'productDetail'])->name('frontend.productDetail');
 
+// Virtual Try-On
+Route::get('/virtual-try-on', [VirtualTryOnController::class, 'index'])->name('virtual.try.on');
+
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{blog:slug}', [FrontendController::class, 'blogDetail'])->name('frontend.blogDetail');
 

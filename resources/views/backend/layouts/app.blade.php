@@ -77,6 +77,12 @@
                         <span class="text">Reviews</span>
                     </a>
                 </li>
+                 <li class="menu-item {{ request()->routeIs('admin.payments*') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('admin.payments.index') }}">
+                        <i class="icon material-icons md-payment"></i>
+                        <span class="text">Payments</span>
+                    </a>
+                </li>
                 <li class="menu-item {{ request()->routeIs('admin.popups*') ? 'active' : '' }}">
                     <a class="menu-link" href="{{ route('admin.popups') }}">
                         <i class="icon material-icons md-filter_none"></i>

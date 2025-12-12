@@ -14,6 +14,13 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://visionplus.pk/" />
 
+        <style>
+            html, body { overflow-x: hidden; }
+            .container, .row { max-width: 100%; }
+            img, video { max-width: 100%; height: auto; }
+            .header-wrap, .mobile-header-wrapper-inner { width: 100%; }
+        </style>
+
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
 
     <meta property="og:title" content="VisionPlusOpticians Pakistan | Stylish Eyewear & Expert Eye Care" />
