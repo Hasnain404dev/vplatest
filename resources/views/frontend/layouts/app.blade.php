@@ -36,7 +36,7 @@
         content="Pakistan’s #1 online optical store for glasses, lenses, and sunglasses. Try online, buy with ease." />
     <!--<meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />-->
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -52,9 +52,7 @@
 </noscript>
 
 
-    <!--banner image preloader-->
-     <link rel="preload" as="image" href="{{ asset('slider/1755516715.jpg') }}">
-     
+    @stack('head')
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/assets/imgs/theme/vp_favicon.png')}}" />
     <!-- Template CSS -->
@@ -76,16 +74,11 @@
     <noscript><link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}"></noscript>
 
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/custome.css') }}" />
-    <!--new-->
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-        crossorigin="anonymous"></script>
-         
-         <!--schema-->
+    <!--schema-->
 <script type="application/ld+json">
 {
   "@@context": "https://schema.org",
-  "@type": "Optician",
+  "@@type": "Optician",
   "name": "Vision Plus Optical",
   "url": "https://visionplus.pk",
   "logo": "https://visionplus.pk/frontend/assets/imgs/theme/bluelogo-vision.png",
@@ -98,19 +91,19 @@
   ],
   "address": [
     {
-      "@type": "PostalAddress",
+      "@@type": "PostalAddress",
       "streetAddress": "Sheraz Plaza, Hali Road, Gulberg 2",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
     },
     {
-      "@type": "PostalAddress",
+      "@@type": "PostalAddress",
       "streetAddress": "Township",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
     },
     {
-      "@type": "PostalAddress",
+      "@@type": "PostalAddress",
       "streetAddress": "Iqbal Town",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
@@ -118,7 +111,7 @@
   ],
   "openingHoursSpecification": [
     {
-      "@type": "OpeningHoursSpecification",
+      "@@type": "OpeningHoursSpecification",
       "dayOfWeek": [
         "Monday",
         "Tuesday",
@@ -683,7 +676,7 @@
                         <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}"
                             alt="Instagram logo" loading="lazy" />
                     </a>
-                    <a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
+                    <a href="https://www.youtube.com/@@VisionPlusOptician" target="_blank">
                         <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}"
                             alt="YouTube logo"  />
                     </a>
@@ -759,7 +752,7 @@
 <a href="https://www.instagram.com/visionplusopticianspk/" target="_blank">
   <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}" alt="Instagram logo" loading="lazy"/>
 </a>
-<a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
+<a href="https://www.youtube.com/@@VisionPlusOptician" target="_blank">
   <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}" alt="YouTube logo" loading="lazy"/>
 </a>
 

@@ -14,6 +14,7 @@ use App\Models\Order;
 
 use App\Models\ContactUs;
 use App\Mail\ContactUsMessage;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 
@@ -47,13 +48,33 @@ class FrontendController extends BaseFrontendController
 
     public function index()
     {
+        $cacheKey = 'frontend.home.guest';
+        $cacheTtl = 300; // 5 minutes
+
+        // Full-page cache for guests to improve perceived performance
+        if (! auth()->check()) {
+            $html = Cache::remember($cacheKey, $cacheTtl, function () {
+                $sliders = Slider::where('is_active', true)->orderBy('order', 'asc')->get();
+                $productRelations = ['categories', 'colors'];
+                $featuredProducts = Product::with($productRelations)->where('status', 'featured')->take(12)->get();
+                $popularProducts = Product::with($productRelations)->where('status', 'popular')->take(12)->get();
+                $newProducts = Product::with($productRelations)->where('status', 'new')->take(12)->get();
+                $products = Product::with($productRelations)->latest()->take(30)->get();
+                $popupController = new PopupProductController();
+                $activePopup = $popupController->getActivePopup();
+                return view('frontend.index', compact(
+                    'sliders', 'featuredProducts', 'popularProducts', 'newProducts', 'products', 'activePopup'
+                ))->render();
+            });
+            return response($html)->header('Content-Type', 'text/html; charset=UTF-8');
+        }
+
         $sliders = Slider::where('is_active', true)->orderBy('order', 'asc')->get();
-
-        $featuredProducts = Product::with('categories')->where('status', 'featured')->get();
-        $popularProducts = Product::with('categories')->where('status', 'popular')->get();
-        $newProducts = Product::with('categories')->where('status', 'new')->get();
-        $products = Product::with('categories')->get();
-
+        $productRelations = ['categories', 'colors'];
+        $featuredProducts = Product::with($productRelations)->where('status', 'featured')->take(12)->get();
+        $popularProducts = Product::with($productRelations)->where('status', 'popular')->take(12)->get();
+        $newProducts = Product::with($productRelations)->where('status', 'new')->take(12)->get();
+        $products = Product::with($productRelations)->latest()->take(30)->get();
         $popupController = new PopupProductController();
         $activePopup = $popupController->getActivePopup();
         return view('frontend.index', compact(

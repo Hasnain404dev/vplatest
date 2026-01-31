@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PopupProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 
 class PopupProductController extends Controller
@@ -73,6 +74,7 @@ class PopupProductController extends Controller
                 'is_active' => $request->has('is_active') ? 1 : 0,
             ]);
 
+            Cache::forget('frontend.home.guest');
             return redirect()->route('admin.popups')->with('success', 'Popup created successfully!');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Error creating popup: ' . $e->getMessage());
@@ -109,6 +111,7 @@ class PopupProductController extends Controller
                 'is_active' => $request->has('is_active') ? 1 : 0,
             ]));
 
+            Cache::forget('frontend.home.guest');
             return redirect()->route('admin.popups')->with('success', 'Popup updated successfully!');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Error updating popup: ' . $e->getMessage());
@@ -125,6 +128,7 @@ class PopupProductController extends Controller
 
             $popupProduct->delete();
 
+            Cache::forget('frontend.home.guest');
             return redirect()->route('admin.popups')->with('success', 'Popup deleted successfully!');
         } catch (\Exception $e) {
             return back()->with('error', 'Error deleting popup: ' . $e->getMessage());

@@ -1,11 +1,17 @@
 @extends('frontend.layouts.app')
 
+@push('head')
+@if(isset($sliders) && $sliders->isNotEmpty())
+<link rel="preload" as="image" href="{{ asset($sliders->first()->image) }}">
+@endif
+@endpush
+
 @section('content')
 
 
     <main class="main">
 
-     <div id="preloader-active" class="preloader">
+     <div id="preloader-active" class="preloader" aria-hidden="true">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
@@ -19,6 +25,15 @@
             </div>
         </div>
     </div>
+    <script>
+        (function(){
+            var preloader = document.getElementById('preloader-active');
+            function hidePreloader(){ if(preloader) preloader.style.display = 'none'; }
+            if (document.readyState === 'complete') hidePreloader();
+            else window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 2500);
+        })();
+    </script>
 
 
         {{-- popup section --}}
@@ -70,50 +85,106 @@
         @endif
 
 
-        {{-- slider section --}}
-        <section class="home-slider position-relative pt-50">
-            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
-                @foreach ($sliders as $slider)
-                    <div class="single-hero-slider single-animation-wrap">
-                        <div class="container">
-                            <div class="row  align-items-center slider-animated-1">
-                                <div class="col-lg-5 col-md-5 col-12">
-                                    <div class="hero-slider-content-2">
-                                        @if ($slider->heading)
-                                            <h4 class="animated">{{ $slider->heading }}</h4>
-                                        @endif
-                                        @if ($slider->sub_heading)
-                                            <h2 class="animated fw-900 text-7">{{ $slider->sub_heading }}</h2>
-                                        @endif
-                                        <p class="animated overflow-hidden">
-                                            {{ $slider->paragraph }}
-                                        </p>
-                                        @if ($slider->button_name && $slider->button_link)
-                                            <a class="animated btn btn-brush btn-brush-3"
-                                                href="{{ $slider->button_link }}">
-                                                {{ $slider->button_name }}
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-lg-7 col-md-7 col-12">
-                                    <div class="single-slider-img single-slider-img-1">
-                                        <img class="animated slider-1-1"
-                                        src="{{ asset($slider->image) }}"
-                                            alt="{{ $slider->heading }}" 
-                                              
-                                              fetchpriority="high"
-                                            />
-                                            
-                                    </div>
+        {{-- Hero carousel (Bootstrap, dynamic from backend) --}}
+        @if($sliders->isNotEmpty())
+        <section class="hero-carousel-section position-relative">
+            <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-indicators">
+                    @foreach($sliders as $index => $slide)
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+                <div class="carousel-inner">
+                    @foreach($sliders as $index => $slider)
+                        @php
+                            $overlayOpacity = $slider->background_opacity !== null ? (float) $slider->background_opacity : 0.4;
+                                $textColor = $slider->text_color ?? '#ffffff';
+                                $headingColor = $slider->heading_color ?? $textColor;
+                                $subHeadingColor = $slider->sub_heading_color ?? $textColor;
+                                $paragraphColor = $slider->paragraph_color ?? $textColor;
+                                $btnBgColor = $slider->button_bg_color ?? ($slider->button_color ?? '#0d6efd');
+                                $btnTextColor = $slider->button_text_color ?? '#ffffff';
+                            $imgUrl = asset($slider->image);
+                            $eagerLoad = $index === 0;
+                        @endphp
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-slide-index="{{ $index }}">
+                            <div class="hero-slide-bg" @if($eagerLoad) style="background-image: url('{{ $imgUrl }}');" @else data-bg="{{ $imgUrl }}" @endif role="img" aria-label="{{ $slider->heading ?? 'Slide' }}"></div>
+                            <div class="hero-slide-overlay" style="background: rgba(0,0,0, {{ $overlayOpacity }});"></div>
+                            <div class="carousel-caption hero-caption" style="color: {{ $textColor }};">
+                                <div class="container text-center">
+                                    @if($slider->heading)
+                                        <p class="hero-heading mb-1" style="color: {{ $headingColor }};">{{ $slider->heading }}</p>
+                                    @endif
+                                    @if($slider->sub_heading)
+                                        <h1 class="hero-title mb-2" style="color: {{ $subHeadingColor }};">{{ $slider->sub_heading }}</h1>
+                                    @endif
+                                    @if($slider->paragraph)
+                                        <p class="hero-text d-none d-md-block mb-3 mx-auto" style="color: {{ $paragraphColor }};">{{ $slider->paragraph }}</p>
+                                    @endif
+                                    @if($slider->button_name && $slider->button_link)
+                                        <a href="{{ $slider->button_link }}" class="btn btn-lg hero-cta" style="background-color: {{ $btnBgColor }}; border-color: {{ $btnBgColor }}; color: {{ $btnTextColor }};">{{ $slider->button_name }}</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                @if($sliders->count() > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                @endif
             </div>
-            <div class="slider-arrow hero-slider-1-arrow"></div>
+            <style>
+                .hero-carousel-section { min-height: 380px; }
+                .hero-carousel-section .carousel-item { min-height: 380px; position: relative; }
+                /* Background image element for each slide */
+                .hero-slide-bg {
+                    position: absolute;
+                    inset: 0;
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0;
+                    transition: opacity 0.8s ease-in-out;
+                }
+                /* Cross-fade the background between slides (Bootstrap transition states) */
+                .hero-carousel-section .carousel-item.active .hero-slide-bg,
+                .hero-carousel-section .carousel-item-next.carousel-item-start .hero-slide-bg,
+                .hero-carousel-section .carousel-item-prev.carousel-item-end .hero-slide-bg { opacity: 1; }
+                .hero-carousel-section .active.carousel-item-end .hero-slide-bg,
+                .hero-carousel-section .active.carousel-item-start .hero-slide-bg { opacity: 0; }
+
+                .hero-slide-overlay { position: absolute; inset: 0; pointer-events: none; }
+                .hero-caption { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-bottom: 2rem; }
+                .hero-caption .container { max-width: 36rem; }
+                .hero-heading { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.95; }
+                .hero-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+                .hero-text { max-width: 28rem; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+                .hero-cta { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+                @@media (min-width: 768px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 420px; } }
+                @@media (min-width: 992px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 480px; } }
+            </style>
+            <script>
+                (function() {
+                    var carousel = document.getElementById('heroCarousel');
+                    if (!carousel) return;
+                    carousel.addEventListener('slid.bs.carousel', function(e) {
+                        var bg = e.relatedTarget && e.relatedTarget.querySelector('.hero-slide-bg[data-bg]');
+                        if (bg && bg.getAttribute('data-bg')) {
+                            bg.style.backgroundImage = "url('" + bg.getAttribute('data-bg').replace(/'/g, "\\'") + "')";
+                            bg.removeAttribute('data-bg');
+                        }
+                    });
+                })();
+            </script>
         </section>
+        @endif
 
         {{-- featured section --}}
         <!--<section class="featured section-padding position-relative">-->
@@ -190,16 +261,16 @@
                                                 <a href="{{ route('frontend.productDetail', $product) }}">
                                                     <img class="default-img"
                                                         src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy"  />
+                                                        alt="{{ $product->name }}" loading="lazy" decoding="async"  />
 
                                                     @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                                     @else
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy"  />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
                                                     @endif
                                                 </a>
                                             </div>
@@ -278,16 +349,16 @@
                                                 <a href="{{ route('frontend.productDetail', $product) }}">
                                                     <img class="default-img"
                                                         src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy"  />
+                                                        alt="{{ $product->name }}" loading="lazy" decoding="async"  />
 
                                                     @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy"  />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
                                                     @else
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy"  />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
                                                     @endif
                                                 </a>
                                             </div>
@@ -367,16 +438,16 @@
                                                 <a href="{{ route('frontend.productDetail', $product) }}">
                                                     <img class="default-img"
                                                         src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" />
+                                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
 
                                                     @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy"  />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
                                                     @else
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                                     @endif
                                                 </a>
                                             </div>
@@ -479,7 +550,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/men-img.png"
                                         alt=" men's prescription eyeglasses "
-                                        loading="lazy" >
+                                        loading="lazy" decoding="async">
 
                                 </div>
                             </div>
@@ -576,7 +647,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/kids-img.png"
                                         alt=" eyewear for children"
-                                        loading="lazy" >
+                                        loading="lazy" decoding="async">
 
                                 </div>
                             </div>
@@ -625,7 +696,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/model-card-img.png"
                                         alt="blue light blocking screen glasses"
-                                        loading="lazy" >
+                                        loading="lazy" decoding="async">
 
                                 </div>
                             </div>
@@ -672,7 +743,7 @@
                                 <figure class="img-hover-scale overflow-hidden">
                                     <a href="{{ route('frontend.productDetail', $product) }}"><img
                                             src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                            alt="" loading="lazy" /></a>
+                                            alt="{{ $product->name }}" loading="lazy" decoding="async" /></a>
                                 </figure>
                                 <h5><a href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
                                 </h5>
@@ -698,16 +769,16 @@
                                         <a href="{{ route('frontend.productDetail', $product) }}">
                                             <img class="default-img"
                                                 src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                alt="{{ $product->name }}" loading="lazy" />
+                                                alt="{{ $product->name }}" loading="lazy" decoding="async" />
 
                                             @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
                                                 <img class="hover-img"
                                                     src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                    alt="{{ $product->name }}" loading="lazy" />
+                                                    alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                             @else
                                                 <img class="hover-img"
                                                     src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                    alt="{{ $product->name }}" loading="lazy" />
+                                                    alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                             @endif
                                         </a>
                                     </div>
@@ -795,27 +866,27 @@
                     <div class="carausel-6-columns text-center" id="carausel-6-columns-3">
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/ziesslogo.jpg" alt="ziesslogo" loading="lazy" />
+                                src="frontend/assets/imgs/banner/ziesslogo.jpg" alt="ziesslogo" loading="lazy" decoding="async" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/privologo.png" alt="privologo" loading="lazy"/>
+                                src="frontend/assets/imgs/banner/privologo.png" alt="privologo" loading="lazy" decoding="async"/>
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/freshlook.png" alt="freshlook" loading="lazy"/>
+                                src="frontend/assets/imgs/banner/freshlook.png" alt="freshlook" loading="lazy" decoding="async"/>
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/freshkonlogo.png" alt="freshkonlogo" loading="lazy"  />
+                                src="frontend/assets/imgs/banner/freshkonlogo.png" alt="freshkonlogo" loading="lazy" decoding="async" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/cooperlogo.jpg" alt="cooperlogo" loading="lazy" />
+                                src="frontend/assets/imgs/banner/cooperlogo.jpg" alt="cooperlogo" loading="lazy" decoding="async" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/optianologo.jpg" alt="optianologo" loading="lazy"  />
+                                src="frontend/assets/imgs/banner/optianologo.jpg" alt="optianologo" loading="lazy" decoding="async" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
@@ -838,7 +909,7 @@
                 <div class="row">
                     <div class="col-lg-3 d-none d-lg-flex">
                         <div class="banner-img style-2 wow fadeIn animated">
-                            <img src="frontend/assets/imgs/banner/contact-lens-model.png" alt="contact-lens-model" loading="lazy"  />
+                            <img src="frontend/assets/imgs/banner/contact-lens-model.png" alt="contact-lens-model" loading="lazy" decoding="async" />
                             <div class="banner-text">
                                 <a href="https://visionplus.pk/shop?category=contact-lenses" class="text-white">Shop Now <i class="fi-rs-arrow-right"></i></a>
                             </div>
@@ -856,16 +927,16 @@
                                                 <a href="{{ route('frontend.productDetail', $product) }}">
                                                     <img class="default-img"
                                                         src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" />
+                                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
 
                                                     @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                                     @else
                                                         <img class="hover-img"
                                                             src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" />
+                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
                                                     @endif
                                                 </a>
                                             </div>
@@ -958,7 +1029,7 @@
                 <div class="prod-card fader-effect delay-1">
                     <img src="frontend/assets/imgs/cards/new-card-img-2.jpg"
                         alt="Limited edition men's designer sunglasses by VisionPlus – stylish UV protection"
-                        loading="lazy"  class="prod-img prod-img-2">
+                        loading="lazy" decoding="async" class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
                     <!-- <div class="prod-badge">Trending</div> -->
@@ -985,7 +1056,7 @@
                 <!-- card-3 -->
                 <div class="prod-card fader-effect">
                     <img src="frontend/assets/imgs/cards/new-card-img-4.jpg"
-                        alt="Men's Clubmaster-style eyeglasses – limited edition VisionPlus frame" loading="lazy" 
+                        alt="Men's Clubmaster-style eyeglasses – limited edition VisionPlus frame" loading="lazy" decoding="async"
                         class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
@@ -998,7 +1069,7 @@
                 <!-- Card 4 -->
                 <div class="prod-card fader-effect delay-3">
                     <img src="frontend/assets/imgs/cards/new-card-img-1.jpg"
-                        alt="Limited edition women's fashion sunglasses – UV-protected by VisionPlus" loading="lazy"
+                        alt="Limited edition women's fashion sunglasses – UV-protected by VisionPlus" loading="lazy" decoding="async"
                         class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
