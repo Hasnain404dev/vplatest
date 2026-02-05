@@ -16,6 +16,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\BulkDiscountController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -60,6 +62,9 @@ Route::get('/quick-view/{product:slug}', [FrontendController::class, 'quickView'
 Route::get('/search', [FrontendController::class, 'search'])->name('frontend.search');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('frontend.shop');
 Route::get('/product-detail/{product:slug}', [FrontendController::class, 'productDetail'])->name('frontend.productDetail');
+
+// Virtual Try-On
+Route::get('/virtual-try-on', [VirtualTryOnController::class, 'index'])->name('virtual.try.on');
 
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{blog:slug}', [FrontendController::class, 'blogDetail'])->name('frontend.blogDetail');
@@ -191,14 +196,37 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/payments', [PaymentController::class, 'index'])->name('admin.payments.index');
     Route::get('/admin/payments/{payment}', [PaymentController::class, 'show'])->name('admin.payments.show');
     Route::put('/admin/payments/{payment}/status', [PaymentController::class, 'updateStatus'])->name('admin.payments.updateStatus');
+
+    // =========================
+    // Coupon Routes
+    // =========================
+    Route::get('/admin/coupons', [CouponController::class, 'index'])->name('admin.coupons.index');
+    Route::get('/admin/coupons/create', [CouponController::class, 'create'])->name('admin.coupons.create');
+    Route::post('/admin/coupons/store', [CouponController::class, 'store'])->name('admin.coupons.store');
+    Route::get('/admin/coupons/edit/{coupon}', [CouponController::class, 'edit'])->name('admin.coupons.edit');
+    Route::put('/admin/coupons/update/{coupon}', [CouponController::class, 'update'])->name('admin.coupons.update');
+    Route::delete('/admin/coupons/delete/{coupon}', [CouponController::class, 'destroy'])->name('admin.coupons.delete');
+
+    // =========================
+    // Bulk Discount Routes
+    // =========================
+    Route::get('/admin/bulk-discounts', [BulkDiscountController::class, 'index'])->name('admin.bulk-discounts.index');
+    Route::get('/admin/bulk-discounts/create', [BulkDiscountController::class, 'create'])->name('admin.bulk-discounts.create');
+    Route::post('/admin/bulk-discounts/store', [BulkDiscountController::class, 'store'])->name('admin.bulk-discounts.store');
+    Route::get('/admin/bulk-discounts/edit/{bulkDiscount}', [BulkDiscountController::class, 'edit'])->name('admin.bulk-discounts.edit');
+    Route::put('/admin/bulk-discounts/update/{bulkDiscount}', [BulkDiscountController::class, 'update'])->name('admin.bulk-discounts.update');
+    Route::delete('/admin/bulk-discounts/delete/{bulkDiscount}', [BulkDiscountController::class, 'destroy'])->name('admin.bulk-discounts.delete');
 });
-
-Route::get('/virtual-try-on/{product:slug}', [VirtualTryOnController::class, 'index'])->name('virtual.try.on');
-
-Route::get('/3d-try-on/{product:slug}', [VirtualTryOnController::class, 'threeDTryOn'])->name('virtual.try.on.3d');
-
 // Popup route - make sure this is outside any middleware groups
 Route::get('/get-active-popup', [PopupProductController::class, 'getActivePopup'])->name('get-active-popup');
+
+/*
+|--------------------------------------------------------------------------
+| Coupon Validation API (Frontend AJAX)
+|--------------------------------------------------------------------------
+*/
+Route::post('/api/validate-coupon', [CouponController::class, 'validateCoupon'])->name('api.validate-coupon');
+Route::post('/api/remove-coupon', [CouponController::class, 'removeCoupon'])->name('api.remove-coupon');
 
 
 // Fallback route for 404 - must be last!

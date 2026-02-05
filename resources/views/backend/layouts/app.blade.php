@@ -77,7 +77,7 @@
                         <span class="text">Reviews</span>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('admin.payments*') ? 'active' : '' }}">
+                 <li class="menu-item {{ request()->routeIs('admin.payments*') ? 'active' : '' }}">
                     <a class="menu-link" href="{{ route('admin.payments.index') }}">
                         <i class="icon material-icons md-payment"></i>
                         <span class="text">Payments</span>
@@ -99,6 +99,18 @@
                     <a class="menu-link" href="{{ route('admin.contactList') }}">
                         <i class="icon material-icons md-mail_outline"></i>
                         <span class="text">Contact List</span>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.coupons*') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('admin.coupons.index') }}">
+                        <i class="icon material-icons md-local_offer"></i>
+                        <span class="text">Coupons</span>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('admin.bulk-discounts*') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('admin.bulk-discounts.index') }}">
+                        <i class="icon material-icons md-discount"></i>
+                        <span class="text">Bulk Discounts</span>
                     </a>
                 </li>
             </ul>

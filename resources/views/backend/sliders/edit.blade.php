@@ -50,6 +50,29 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Heading color</label>
+                                    @php $headingColor = $slider->heading_color ?? ($slider->text_color ?? '#ffffff'); @endphp
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="heading_color_picker" value="{{ $headingColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="heading_color" name="heading_color" value="{{ old('heading_color', $headingColor) }}" placeholder="#ffffff">
+                                    </div>
+                                    @error('heading_color')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Sub heading color</label>
+                                    @php $subHeadingColor = $slider->sub_heading_color ?? ($slider->text_color ?? '#ffffff'); @endphp
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="sub_heading_color_picker" value="{{ $subHeadingColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="sub_heading_color" name="sub_heading_color" value="{{ old('sub_heading_color', $subHeadingColor) }}" placeholder="#ffffff">
+                                    </div>
+                                    @error('sub_heading_color')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="col-md-6">
@@ -57,6 +80,18 @@
                                     <label for="paragraph" class="form-label">Paragraph</label>
                                     <textarea class="form-control" id="paragraph" name="paragraph" rows="3">{{ old('paragraph', $slider->paragraph) }}</textarea>
                                     @error('paragraph')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Paragraph text color</label>
+                                    @php $paragraphColor = $slider->paragraph_color ?? ($slider->text_color ?? '#ffffff'); @endphp
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="paragraph_color_picker" value="{{ $paragraphColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="paragraph_color" name="paragraph_color" value="{{ old('paragraph_color', $paragraphColor) }}" placeholder="#ffffff">
+                                    </div>
+                                    @error('paragraph_color')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -75,6 +110,59 @@
                                     <input type="url" class="form-control" id="button_link" name="button_link"
                                            value="{{ old('button_link', $slider->button_link) }}">
                                     @error('button_link')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                @php
+                                    $opacityPct = $slider->background_opacity !== null ? (int) round($slider->background_opacity * 100) : 40;
+                                    $textColor = $slider->text_color ?? '#ffffff';
+                                    $btnBgColor = $slider->button_bg_color ?? ($slider->button_color ?? '#0d6efd');
+                                    $btnTextColor = $slider->button_text_color ?? '#ffffff';
+                                @endphp
+                                <div class="form-group mb-3">
+                                    <label for="background_opacity" class="form-label">Background overlay opacity</label>
+                                    <input type="range" class="form-range" id="background_opacity" name="background_opacity" min="0" max="100" value="{{ old('background_opacity', $opacityPct) }}">
+                                    <small class="text-muted"><span id="background_opacity_val">{{ old('background_opacity', $opacityPct) }}</span>% (darker = more readable text)</small>
+                                    @error('background_opacity')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="text_color" class="form-label">Text color</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="text_color_picker" value="{{ $textColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="text_color" name="text_color" value="{{ old('text_color', $textColor) }}" placeholder="#ffffff">
+                                    </div>
+                                    @error('text_color')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Button background color</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="button_bg_color_picker" value="{{ $btnBgColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="button_bg_color" name="button_bg_color" value="{{ old('button_bg_color', $btnBgColor) }}" placeholder="#0d6efd">
+                                    </div>
+                                    @error('button_bg_color')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Legacy field still supported: Button color</small>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <input type="color" class="form-control form-control-color" id="button_color_picker" value="{{ $slider->button_color ?? $btnBgColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="button_color" name="button_color" value="{{ old('button_color', $slider->button_color) }}" placeholder="#0d6efd">
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Button text color</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color" id="button_text_color_picker" value="{{ $btnTextColor }}" style="width:3rem;height:2.25rem;">
+                                        <input type="text" class="form-control" id="button_text_color" name="button_text_color" value="{{ old('button_text_color', $btnTextColor) }}" placeholder="#ffffff">
+                                    </div>
+                                    @error('button_text_color')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -114,4 +202,28 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('background_opacity').addEventListener('input', function() {
+            document.getElementById('background_opacity_val').textContent = this.value;
+        });
+        function bindColorSync(pickerId, textId){
+            var p = document.getElementById(pickerId);
+            var t = document.getElementById(textId);
+            if(!p || !t) return;
+            p.addEventListener('input', function(){ t.value = this.value; });
+            t.addEventListener('input', function(){ if(/^#[0-9A-Fa-f]{6}$/.test(this.value)) p.value = this.value; });
+        }
+        document.getElementById('text_color_picker').addEventListener('input', function() {
+            document.getElementById('text_color').value = this.value;
+        });
+        document.getElementById('text_color').addEventListener('input', function() {
+            if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) document.getElementById('text_color_picker').value = this.value;
+        });
+        bindColorSync('button_color_picker','button_color');
+        bindColorSync('button_bg_color_picker','button_bg_color');
+        bindColorSync('button_text_color_picker','button_text_color');
+        bindColorSync('heading_color_picker','heading_color');
+        bindColorSync('sub_heading_color_picker','sub_heading_color');
+        bindColorSync('paragraph_color_picker','paragraph_color');
+    </script>
 @endsection

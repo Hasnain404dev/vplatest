@@ -36,10 +36,10 @@
         content="Pakistan’s #1 online optical store for glasses, lenses, and sunglasses. Try online, buy with ease." />
     <!--<meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />-->
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer ></script>
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
   <!-- Preconnect for Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,12 +52,14 @@
 </noscript>
 
 
-    @stack('head')
+    <!--banner image preloader-->
+     <link rel="preload" as="image" href="<?php echo e(asset('slider/1755516715.jpg')); ?>">
+     
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/assets/imgs/theme/vp_favicon.png')}}" />
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('frontend/assets/imgs/theme/vp_favicon.png')); ?>" />
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}"></noscript>
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/main.css')); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/main.css')); ?>"></noscript>
     
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-03LLVGZMRD"></script>
@@ -70,15 +72,20 @@
 </script>
 
     <!-- Custom CSS -->
-    <link rel="preload" href="{{ asset('frontend/assets/css/custom.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}"></noscript>
+    <link rel="preload" href="<?php echo e(asset('frontend/assets/css/custom.css')); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custom.css')); ?>"></noscript>
 
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/custome.css') }}" />
-    <!--schema-->
+    <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custome.css')); ?>" />
+    <!--new-->
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
+         
+         <!--schema-->
 <script type="application/ld+json">
 {
-  "@@context": "https://schema.org",
-  "@@type": "Optician",
+  "@context": "https://schema.org",
+  "@type": "Optician",
   "name": "Vision Plus Optical",
   "url": "https://visionplus.pk",
   "logo": "https://visionplus.pk/frontend/assets/imgs/theme/bluelogo-vision.png",
@@ -91,19 +98,19 @@
   ],
   "address": [
     {
-      "@@type": "PostalAddress",
+      "@type": "PostalAddress",
       "streetAddress": "Sheraz Plaza, Hali Road, Gulberg 2",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
     },
     {
-      "@@type": "PostalAddress",
+      "@type": "PostalAddress",
       "streetAddress": "Township",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
     },
     {
-      "@@type": "PostalAddress",
+      "@type": "PostalAddress",
       "streetAddress": "Iqbal Town",
       "addressLocality": "Lahore",
       "addressCountry": "PK"
@@ -111,7 +118,7 @@
   ],
   "openingHoursSpecification": [
     {
-      "@@type": "OpeningHoursSpecification",
+      "@type": "OpeningHoursSpecification",
       "dayOfWeek": [
         "Monday",
         "Tuesday",
@@ -161,7 +168,7 @@
                                 <li><i class="fi-rs-smartphone"></i> <a href="#">042 35197464</a></li>
                                 <li>
                                     <i class="fi-rs-marker"></i>
-                                    <a href="{{ route('frontend.contactUs') }}">
+                                    <a href="<?php echo e(route('frontend.contactUs')); ?>">
                                         <span data-lang-en="Our location" data-lang-ur="ہمارا پتہ">Our location</span>
                                     </a>
                                 </li>
@@ -199,49 +206,49 @@
                                 <!--    </ul>-->
                                 <!--</li>-->
                                 <li>
-                                    @guest
-                                        @if (Route::has('login'))
-                                            <i class="fi-rs-user"></i><a href="{{ route('login') }}">
+                                    <?php if(auth()->guard()->guest()): ?>
+                                        <?php if(Route::has('login')): ?>
+                                            <i class="fi-rs-user"></i><a href="<?php echo e(route('login')); ?>">
                                                 <span data-lang-en="Log In" data-lang-ur="لاگ اِن">Log In</span>
                                             </a>
-                                        @endif
+                                        <?php endif; ?>
 
-                                        @if (Route::has('register'))
-                                            <i class="fi-rs-user"></i><a href="{{ route('register') }}">
+                                        <?php if(Route::has('register')): ?>
+                                            <i class="fi-rs-user"></i><a href="<?php echo e(route('register')); ?>">
                                                 <span data-lang-en="Sign Up" data-lang-ur="سائن اپ">Sign Up</span>
                                             </a>
-                                        @endif
-                                    @else
+                                        <?php endif; ?>
+                                    <?php else: ?>
                                     <li class="dropdown">
                                         <i class="fi-rs-user"></i><a id="navbarDropdown" href="#" role="button"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <span>{{ Auth::user()->name }}</span>
+                                            <span><?php echo e(Auth::user()->name); ?></span>
                                         </a>
 
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            @if (Auth::user()->getRawOriginal('type') == 1)
-                                                <a class="dropdown-item" href="{{ url('/admin/dashboard') }}">
+                                            <?php if(Auth::user()->getRawOriginal('type') == 1): ?>
+                                                <a class="dropdown-item" href="<?php echo e(url('/admin/dashboard')); ?>">
                                                     <span data-lang-en="Dashboard"
                                                         data-lang-ur="ڈیش بورڈ">Dashboard</span>
                                                 </a>
-                                            @else
-                                                <a class="dropdown-item" href="{{ url('/home') }}">
+                                            <?php else: ?>
+                                                <a class="dropdown-item" href="<?php echo e(url('/home')); ?>">
                                                     <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
                                                 </a>
-                                            @endif
+                                            <?php endif; ?>
 
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <span data-lang-en="Logout" data-lang-ur="لاگ آؤٹ">Logout</span>
                                             </a>
 
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST"
                                                 class="d-none">
-                                                @csrf
+                                                <?php echo csrf_field(); ?>
                                             </form>
                                         </div>
                                     </li>
-                                @endguest
+                                <?php endif; ?>
                                 </li>
                             </ul>
                         </div>
@@ -254,24 +261,25 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="{{ route('frontend.home') }}"><img
-                                src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager" ></a>
+                        <a href="<?php echo e(route('frontend.home')); ?>"><img
+                                src="<?php echo e(asset('frontend/assets/imgs/theme/bluelogo-vision.png')); ?>" alt="logo" loading="eager" ></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
-                            <form action="{{ route('frontend.search') }}" method="GET">
+                            <form action="<?php echo e(route('frontend.search')); ?>" method="GET">
                                 <select class="select-active" name="category">
                                     <option value="">All Categories</option>
-                                    @foreach (\App\Models\Category::all() as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ request('category') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                    <?php $__currentLoopData = \App\Models\Category::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category->id); ?>"
+                                            <?php echo e(request('category') == $category->id ? 'selected' : ''); ?>>
+                                            <?php echo e($category->name); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                                 <input type="text" name="query" id="search-input"
                                     placeholder="Search for products..." autocomplete="off"
-                                    value="{{ request('query') }}" />
+                                    value="<?php echo e(request('query')); ?>" />
                             </form>
 
                             <!-- Search results dropdown container -->
@@ -282,33 +290,37 @@
                         <div class="header-action-right">
                             <div class="header-action-2">
                                 <div class="header-action-icon-2">
-                                    <a href="{{ route('frontend.wishList') }}">
+                                    <a href="<?php echo e(route('frontend.wishList')); ?>">
                                         <img class="svgInject" alt="Wishlist"
-                                            src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
+                                            src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-heart.svg')); ?>" />
                                         <span class="pro-count blue wishlist-count">
-                                            @if (auth()->check())
-                                                {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
-                                            @else
-                                                {{ \App\Models\Wishlist::where('session_id', session()->getId())->count() }}
-                                            @endif
+                                            <?php if(auth()->check()): ?>
+                                                <?php echo e(\App\Models\Wishlist::where('user_id', auth()->id())->count()); ?>
+
+                                            <?php else: ?>
+                                                <?php echo e(\App\Models\Wishlist::where('session_id', session()->getId())->count()); ?>
+
+                                            <?php endif; ?>
                                         </span>
                                     </a>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a class="mini-cart-icon" href="{{ route('frontend.cart') }}">
+                                    <a class="mini-cart-icon" href="<?php echo e(route('frontend.cart')); ?>">
                                         <img alt="Evara"
-                                            src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
+                                            src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-cart.svg')); ?>" />
                                         <span class="pro-count blue cart-count">
-                                            @if (auth()->check())
-                                                {{ \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') }}
-                                            @else
-                                                {{ \App\Models\Cart::where('session_id', session()->getId())->sum('quantity') }}
-                                            @endif
+                                            <?php if(auth()->check()): ?>
+                                                <?php echo e(\App\Models\Cart::where('user_id', auth()->id())->sum('quantity')); ?>
+
+                                            <?php else: ?>
+                                                <?php echo e(\App\Models\Cart::where('session_id', session()->getId())->sum('quantity')); ?>
+
+                                            <?php endif; ?>
                                         </span>
                                     </a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
-                                            @php
+                                            <?php
                                                 if (auth()->check()) {
                                                     $cartItems = \App\Models\Cart::where('user_id', auth()->id())
                                                         ->with('product')
@@ -325,49 +337,50 @@
                                                 }
 
                                                 $cartTotal = 0;
-                                            @endphp
+                                            ?>
 
-                                            @forelse($cartItems as $item)
-                                                @php $cartTotal += $item->total_price; @endphp
+                                            <?php $__empty_1 = true; $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                                <?php $cartTotal += $item->total_price; ?>
                                                 <li>
                                                     <div class="shopping-cart-img">
                                                         <a
-                                                            href="{{ route('frontend.productDetail', $item->product) }}">
-                                                            <img alt="{{ $item->product->name }}"
-                                                                src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
+                                                            href="<?php echo e(route('frontend.productDetail', $item->product)); ?>">
+                                                            <img alt="<?php echo e($item->product->name); ?>"
+                                                                src="<?php echo e(asset('uploads/products/' . $item->product->main_image)); ?>" />
                                                         </a>
                                                     </div>
                                                     <div class="shopping-cart-title">
                                                         <h4>
                                                             <a
-                                                                href="{{ route('frontend.productDetail', $item->product) }}">{{ Str::limit($item->product->name, 20) }}</a>
+                                                                href="<?php echo e(route('frontend.productDetail', $item->product)); ?>"><?php echo e(Str::limit($item->product->name, 20)); ?></a>
                                                         </h4>
-                                                        <h4><span>{{ $item->quantity }} × </span>Rs.
-                                                            {{ number_format($item->product->price, 2) }}
+                                                        <h4><span><?php echo e($item->quantity); ?> × </span>Rs.
+                                                            <?php echo e(number_format($item->product->price, 2)); ?>
+
                                                         </h4>
                                                     </div>
                                                     <div class="shopping-cart-delete">
                                                         <a href="#" class="remove-from-cart-header"
-                                                            data-id="{{ $item->id }}"><i
+                                                            data-id="<?php echo e($item->id); ?>"><i
                                                                 class="fi-rs-cross-small"></i></a>
                                                     </div>
                                                 </li>
-                                            @empty
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                 <li>
                                                     <div class="text-center p-2">
                                                         Your cart is empty
                                                     </div>
                                                 </li>
-                                            @endforelse
+                                            <?php endif; ?>
                                         </ul>
                                         <div class="shopping-cart-footer">
                                             <div class="shopping-cart-total">
-                                                <h4>Total <span>Rs. {{ number_format($cartTotal, 2) }}</span></h4>
+                                                <h4>Total <span>Rs. <?php echo e(number_format($cartTotal, 2)); ?></span></h4>
                                             </div>
                                             <div class="shopping-cart-button">
-                                                <a href="{{ route('frontend.cart') }}" class="outline">View
+                                                <a href="<?php echo e(route('frontend.cart')); ?>" class="outline">View
                                                     cart</a>
-                                                <a href="{{ route('frontend.checkout') }}">Checkout</a>
+                                                <a href="<?php echo e(route('frontend.checkout')); ?>">Checkout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -383,15 +396,15 @@
             <div class="container">
                 <div class="header-wrap header-space-between  position-relative">
                     <div class="logo logo-width-1 d-block d-lg-none">
-                        <a href="{{ route('frontend.home') }}"><img
-                                src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager"></a>
+                        <a href="<?php echo e(route('frontend.home')); ?>"><img
+                                src="<?php echo e(asset('frontend/assets/imgs/theme/bluelogo-vision.png')); ?>" alt="logo" loading="eager"></a>
                     </div>
                     <div class="header-nav d-none d-lg-flex">
                         <div class="main-categori-wrap d-none d-lg-block">
                             <!-- <a class="categori-button-active" href="#">
                             <span class="fi-rs-apps"></span>Purchse Guide
                         </a> -->
-                            <a class="active" href="{{ route('frontend.perchaseGuide') }}">
+                            <a class="active" href="<?php echo e(route('frontend.perchaseGuide')); ?>">
                                 <span class="fi-rs-apps"></span>
                                <span data-lang-en="Purchase Guide" data-lang-ur="خریداری کی رہنمائی">Order Guide</span>
                             </a>
@@ -400,46 +413,49 @@
                             <nav>
                                 <ul>
                                     <li>
-                                        <a class="active" href="{{ route('frontend.home') }}">
+                                        <a class="active" href="<?php echo e(route('frontend.home')); ?>">
                                             <span data-lang-en="Home" data-lang-ur="ہوم">Home</span>
                                         </a>
                                     </li>
 
-                                    @if(isset($categories) && $categories->count() > 0)
-                                        @foreach($categories as $category)
+                                    <?php if(isset($categories) && $categories->count() > 0): ?>
+                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="position-static">
-                                                <a href="{{ route('frontend.shop', ['category' => $category->slug]) }}">
-                                                    <span data-lang-en="{{ $category->name }}"
-                                                        data-lang-ur="{{ $category->name_ur ?? $category->name }}">
-                                                        {{ $category->name }}
+                                                <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug])); ?>">
+                                                    <span data-lang-en="<?php echo e($category->name); ?>"
+                                                        data-lang-ur="<?php echo e($category->name_ur ?? $category->name); ?>">
+                                                        <?php echo e($category->name); ?>
+
                                                     </span>
-                                                    @if ($category->children->count())
+                                                    <?php if($category->children->count()): ?>
                                                         <i class="fi-rs-angle-down"></i>
-                                                    @endif
+                                                    <?php endif; ?>
                                                 </a>
 
-                                                @if ($category->children->count())
+                                                <?php if($category->children->count()): ?>
                                                     <ul class="mega-menu">
-                                                        @foreach ($category->children->chunk(ceil($category->children->count() / 3)) as $chunk)
+                                                        <?php $__currentLoopData = $category->children->chunk(ceil($category->children->count() / 3)); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $chunk): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <li class="sub-mega-menu sub-mega-menu-width-22">
-                                                                @foreach ($chunk as $subcategory)
+                                                                <?php $__currentLoopData = $chunk; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <a class="menu-title"
-                                                                        href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
-                                                                        {{ $subcategory->name }}
+                                                                        href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug])); ?>">
+                                                                        <?php echo e($subcategory->name); ?>
+
                                                                     </a>
                                                                     <ul>
-                                                                        @foreach ($subcategory->children as $child)
+                                                                        <?php $__currentLoopData = $subcategory->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                             <li>
                                                                                 <a
-                                                                                    href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
-                                                                                    {{ $child->name }}
+                                                                                    href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug])); ?>">
+                                                                                    <?php echo e($child->name); ?>
+
                                                                                 </a>
                                                                             </li>
-                                                                        @endforeach
+                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                     </ul>
-                                                                @endforeach
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </li>
-                                                        @endforeach
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                                         <!-- Banner areas -->
                                                         <li class="sub-mega-menu sub-mega-menu-width-34">
@@ -448,10 +464,10 @@
                                                             </div>
                                                         </li>
                                                     </ul>
-                                                @endif
+                                                <?php endif; ?>
                                             </li>
-                                        @endforeach
-                                    @endif
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </ul>
                             </nav>
                         </div>
@@ -463,33 +479,37 @@
                     <div class="header-action-right d-block d-lg-none">
                         <div class="header-action-2">
                             <div class="header-action-icon-2">
-                                <a href="{{ route('frontend.wishList') }}">
+                                <a href="<?php echo e(route('frontend.wishList')); ?>">
                                     <img class="svgInject" alt="Wishlist"
-                                        src="{{ asset('frontend/assets/imgs/theme/icons/icon-heart.svg') }}" />
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-heart.svg')); ?>" />
                                     <span class="pro-count blue wishlist-count">
-                                        @if (auth()->check())
-                                            {{ \App\Models\Wishlist::where('user_id', auth()->id())->count() }}
-                                        @else
-                                            {{ \App\Models\Wishlist::where('session_id', session()->getId())->count() }}
-                                        @endif
+                                        <?php if(auth()->check()): ?>
+                                            <?php echo e(\App\Models\Wishlist::where('user_id', auth()->id())->count()); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(\App\Models\Wishlist::where('session_id', session()->getId())->count()); ?>
+
+                                        <?php endif; ?>
                                     </span>
                                 </a>
                             </div>
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="{{ route('frontend.cart') }}">
+                                <a class="mini-cart-icon" href="<?php echo e(route('frontend.cart')); ?>">
                                     <img alt="Evara"
-                                        src="{{ asset('frontend/assets/imgs/theme/icons/icon-cart.svg') }}" />
+                                        src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-cart.svg')); ?>" />
                                     <span class="pro-count blue cart-count">
-                                        @if (auth()->check())
-                                            {{ \App\Models\Cart::where('user_id', auth()->id())->sum('quantity') }}
-                                        @else
-                                            {{ \App\Models\Cart::where('session_id', session()->getId())->sum('quantity') }}
-                                        @endif
+                                        <?php if(auth()->check()): ?>
+                                            <?php echo e(\App\Models\Cart::where('user_id', auth()->id())->sum('quantity')); ?>
+
+                                        <?php else: ?>
+                                            <?php echo e(\App\Models\Cart::where('session_id', session()->getId())->sum('quantity')); ?>
+
+                                        <?php endif; ?>
                                     </span>
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
-                                        @php
+                                        <?php
                                             if (auth()->check()) {
                                                 $cartItems = \App\Models\Cart::where('user_id', auth()->id())
                                                     ->with('product')
@@ -503,48 +523,49 @@
                                             }
 
                                             $cartTotal = 0;
-                                        @endphp
+                                        ?>
 
-                                        @forelse($cartItems as $item)
-                                            @php $cartTotal += $item->total_price; @endphp
+                                        <?php $__empty_1 = true; $__currentLoopData = $cartItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                            <?php $cartTotal += $item->total_price; ?>
                                             <li>
                                                 <div class="shopping-cart-img">
-                                                    <a href="{{ route('frontend.productDetail', $item->product) }}">
-                                                        <img alt="{{ $item->product->name }}"
-                                                            src="{{ asset('uploads/products/' . $item->product->main_image) }}" />
+                                                    <a href="<?php echo e(route('frontend.productDetail', $item->product)); ?>">
+                                                        <img alt="<?php echo e($item->product->name); ?>"
+                                                            src="<?php echo e(asset('uploads/products/' . $item->product->main_image)); ?>" />
                                                     </a>
                                                 </div>
                                                 <div class="shopping-cart-title">
                                                     <h4>
                                                         <a
-                                                            href="{{ route('frontend.productDetail', $item->product) }}">{{ Str::limit($item->product->name, 20) }}</a>
+                                                            href="<?php echo e(route('frontend.productDetail', $item->product)); ?>"><?php echo e(Str::limit($item->product->name, 20)); ?></a>
                                                     </h4>
-                                                    <h4><span>{{ $item->quantity }} × </span>Rs.
-                                                        {{ number_format($item->product->price, 2) }}
+                                                    <h4><span><?php echo e($item->quantity); ?> × </span>Rs.
+                                                        <?php echo e(number_format($item->product->price, 2)); ?>
+
                                                     </h4>
                                                 </div>
                                                 <div class="shopping-cart-delete">
                                                     <a href="#" class="remove-from-cart-header"
-                                                        data-id="{{ $item->id }}"><i
+                                                        data-id="<?php echo e($item->id); ?>"><i
                                                             class="fi-rs-cross-small"></i></a>
                                                 </div>
                                             </li>
-                                        @empty
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <li>
                                                 <div class="text-center p-2">
                                                     Your cart is empty
                                                 </div>
                                             </li>
-                                        @endforelse
+                                        <?php endif; ?>
                                     </ul>
                                     <div class="shopping-cart-footer">
                                         <div class="shopping-cart-total">
-                                            <h4>Total <span>Rs. {{ number_format($cartTotal, 2) }}</span></h4>
+                                            <h4>Total <span>Rs. <?php echo e(number_format($cartTotal, 2)); ?></span></h4>
                                         </div>
                                         <div class="shopping-cart-button">
-                                            <a href="{{ route('frontend.cart') }}" class="outline">View
+                                            <a href="<?php echo e(route('frontend.cart')); ?>" class="outline">View
                                                 cart</a>
-                                            <a href="{{ route('frontend.checkout') }}">Checkout</a>
+                                            <a href="<?php echo e(route('frontend.checkout')); ?>">Checkout</a>
                                         </div>
                                     </div>
                                 </div>
@@ -566,8 +587,8 @@
         <div class="mobile-header-wrapper-inner">
             <div class="mobile-header-top">
                 <div class="mobile-header-logo">
-                    <a href="{{ route('frontend.home') }}"><img
-                            src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="logo" loading="eager"></a>
+                    <a href="<?php echo e(route('frontend.home')); ?>"><img
+                            src="<?php echo e(asset('frontend/assets/imgs/theme/bluelogo-vision.png')); ?>" alt="logo" loading="eager"></a>
                 </div>
                 <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                     <button class="close-style search-close">
@@ -578,16 +599,16 @@
             </div>
             <div class="mobile-header-content-area">
                 <div class="mobile-search search-style-3 mobile-header-border">
-                    <form action="{{ route('frontend.search') }}" method="GET">
+                    <form action="<?php echo e(route('frontend.search')); ?>" method="GET">
                         <input type="text" name="query" id="search-input" placeholder="Search for products..."
-                            autocomplete="off" value="{{ request('query') }}" />
+                            autocomplete="off" value="<?php echo e(request('query')); ?>" />
                     </form>
                     <!-- This dropdown must be immediately after the form -->
                     <div class="search-results-dropdown" style="display: none;"></div>
                 </div>
                 <div class="mobile-menu-wrap mobile-header-border">
                     <div class="main-categori-wrap mobile-header-border">
-                        <a class="active" href="{{ route('frontend.perchaseGuide') }}"><span
+                        <a class="active" href="<?php echo e(route('frontend.perchaseGuide')); ?>"><span
                                 class="fi-rs-apps"></span>Purchase
                             Guide</a>
 
@@ -597,50 +618,53 @@
                     <nav>
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children"><span class="menu-expand"></span>
-                                <a href="{{ route('frontend.home') }}">Home</a>
+                                <a href="<?php echo e(route('frontend.home')); ?>">Home</a>
 
                             </li>
 
-                            @if(isset($categories) && $categories->count() > 0)
-                                @foreach($categories as $category)
+                            <?php if(isset($categories) && $categories->count() > 0): ?>
+                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li class="menu-item-has-children">
                                         <span class="menu-expand"></span>
-                                        <a href="{{ route('frontend.shop', ['category' => $category->slug]) }}">
-                                            {{ $category->name }}
+                                        <a href="<?php echo e(route('frontend.shop', ['category' => $category->slug])); ?>">
+                                            <?php echo e($category->name); ?>
+
                                         </a>
 
-                                        @if ($category->children->count())
+                                        <?php if($category->children->count()): ?>
                                             <ul class="dropdown">
-                                                @foreach ($category->children as $subcategory)
+                                                <?php $__currentLoopData = $category->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <li
-                                                        class="@if ($subcategory->children->count()) menu-item-has-children @endif">
-                                                        @if ($subcategory->children->count())
+                                                        class="<?php if($subcategory->children->count()): ?> menu-item-has-children <?php endif; ?>">
+                                                        <?php if($subcategory->children->count()): ?>
                                                             <span class="menu-expand"></span>
-                                                        @endif
+                                                        <?php endif; ?>
                                                         <a
-                                                            href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug]) }}">
-                                                            {{ $subcategory->name }}
+                                                            href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $subcategory->slug])); ?>">
+                                                            <?php echo e($subcategory->name); ?>
+
                                                         </a>
 
-                                                        @if ($subcategory->children->count())
+                                                        <?php if($subcategory->children->count()): ?>
                                                             <ul class="dropdown">
-                                                                @foreach ($subcategory->children as $child)
+                                                                <?php $__currentLoopData = $subcategory->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <li>
                                                                         <a
-                                                                            href="{{ route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug]) }}">
-                                                                            {{ $child->name }}
+                                                                            href="<?php echo e(route('frontend.shop', ['category' => $category->slug, 'type' => $child->slug])); ?>">
+                                                                            <?php echo e($child->name); ?>
+
                                                                         </a>
                                                                     </li>
-                                                                @endforeach
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </ul>
-                                                        @endif
+                                                        <?php endif; ?>
                                                     </li>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </ul>
-                                        @endif
+                                        <?php endif; ?>
                                     </li>
-                                @endforeach
-                            @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
 
 
                         </ul>
@@ -649,13 +673,13 @@
                 </div>
                 <div class="mobile-header-info-wrap mobile-header-border">
                     <div class="single-mobile-header-info mt-30">
-                        <a href="{{ route('frontend.contactUs') }}"> Our location </a>
+                        <a href="<?php echo e(route('frontend.contactUs')); ?>"> Our location </a>
                     </div>
                     <div class="single-mobile-header-info">
-                        <a href="{{ route('frontend.aboutUs') }}"> About us </a>
+                        <a href="<?php echo e(route('frontend.aboutUs')); ?>"> About us </a>
                     </div>
                     <div class="single-mobile-header-info">
-                        <a href="{{ route('login') }}">Log In / Sign Up </a>
+                        <a href="<?php echo e(route('login')); ?>">Log In / Sign Up </a>
                     </div>
                     <div class="single-mobile-header-info">
                         <a href="#">+92 339 1339339 </a>
@@ -663,21 +687,21 @@
                 </div>
                 <div class="mobile-social-icon">
                     <h5 class="mb-15 text-grey-4">Follow Us</h5>
-                    <!--<a href="https://www.facebook.com/VisionPlusOpticianPK"><img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt="facebook logo"></a>-->
+                    <!--<a href="https://www.facebook.com/VisionPlusOpticianPK"><img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-facebook.svg')); ?>" alt="facebook logo"></a>-->
                     <!-- <a href="#"><img src="assets/imgs/theme/icons/icon-twitter.svg" alt=""></a> -->
                     <!--<a href="#"><img src="assets/imgs/theme/icons/icon-instagram.svg" alt=""></a>-->
                     <!--<a href="#"><img src="assets/imgs/theme/icons/icon-pinterest.svg" alt=""></a>-->
                     <!--<a href="#"><img src="assets/imgs/theme/icons/icon-youtube.svg" alt=""></a>-->
                     <a href="https://www.facebook.com/VisionPlusOpticianPK" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}"
+                        <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-facebook.svg')); ?>"
                             alt="Facebook logo" loading="lazy" />
                     </a>
                     <a href="https://www.instagram.com/visionplusopticianspk/" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}"
+                        <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-instagram.svg')); ?>"
                             alt="Instagram logo" loading="lazy" />
                     </a>
-                    <a href="https://www.youtube.com/@@VisionPlusOptician" target="_blank">
-                        <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}"
+                    <a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
+                        <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-youtube.svg')); ?>"
                             alt="YouTube logo"  />
                     </a>
 
@@ -686,7 +710,7 @@
         </div>
     </div>
 
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
 
     <footer class="main">
         <section class="newsletter p-30 text-white wow fadeIn animated">
@@ -695,26 +719,17 @@
                     <div class="col-lg-7 mb-md-3 mb-lg-0">
                         <div class="row align-items-center">
                             <div class="col flex-horizontal-center">
-                                {{-- <img class="icon-email"
-                                    src="{{ asset('frontend/assets/imgs/theme/icons/icon-email.svg') }}" alt="" />
-                                <h4 class="font-size-20 mb-0 ml-3"></h4> --}}
+                                
                             </div>
                             <div class="col my-4 my-md-0 des">
-                                {{-- <h5 class="font-size-15 ml-4 mb-0">
-                                    <strong>
-                                        </strong>
-                                </h5> --}}
+                                
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <!-- Subscribe Form -->
                         <form class="form-subcriber d-flex wow fadeIn animated">
-                            {{-- <input type="email" class="form-control bg-white font-small"
-                                placeholder="Enter your email" />
-                            <button class="btn bg-dark text-white" type="submit">
-                                Subscribe
-                            </button> --}}
+                            
                         </form>
                         <!-- End Subscribe Form -->
                     </div>
@@ -727,7 +742,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="widget-about font-md mb-md-5 mb-lg-0">
                             <div class="logo logo-width-1 wow fadeIn animated">
-                                <a href="{{ route('frontend.home') }}"><img src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}"
+                                <a href="<?php echo e(route('frontend.home')); ?>"><img src="<?php echo e(asset('frontend/assets/imgs/theme/bluelogo-vision.png')); ?>"
                                         alt="logo" /></a>
                             </div>
                             <h5 class="mt-20 mb-10 fw-600 text-grey-4 wow fadeIn animated">
@@ -747,13 +762,13 @@
                             </h5>
                             <div class="mobile-social-icon wow fadeIn animated mb-sm-5 mb-md-0">
                                <a href="https://www.facebook.com/VisionPlusOpticianPK" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-facebook.svg') }}" alt="Facebook logo" />
+  <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-facebook.svg')); ?>" alt="Facebook logo" />
 </a>
 <a href="https://www.instagram.com/visionplusopticianspk/" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-instagram.svg') }}" alt="Instagram logo" loading="lazy"/>
+  <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-instagram.svg')); ?>" alt="Instagram logo" loading="lazy"/>
 </a>
-<a href="https://www.youtube.com/@@VisionPlusOptician" target="_blank">
-  <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-youtube.svg') }}" alt="YouTube logo" loading="lazy"/>
+<a href="https://www.youtube.com/@VisionPlusOptician" target="_blank">
+  <img src="<?php echo e(asset('frontend/assets/imgs/theme/icons/icon-youtube.svg')); ?>" alt="YouTube logo" loading="lazy"/>
 </a>
 
                             </div>
@@ -762,11 +777,11 @@
                     <div class="col-lg-2 col-md-3">
                         <h5 class="widget-title wow fadeIn animated">About</h5>
                         <ul class="footer-list wow fadeIn animated mb-sm-5 mb-md-0">
-                            <li><a href="{{ route('frontend.aboutUs') }}">About Us</a></li>
-                            <li><a href="{{ route('frontend.contactUs') }}">Our Location</a></li>
-                            <li><a href="{{ route('frontend.privacyPolicy') }}">Privacy Policy</a></li>
-                            <li><a href="{{ route('frontend.termsConditions') }}">Terms &amp; Conditions</a></li>
-                            <li><a href="{{ route('frontend.contactUs') }}">Contact Us</a></li>
+                            <li><a href="<?php echo e(route('frontend.aboutUs')); ?>">About Us</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Our Location</a></li>
+                            <li><a href="<?php echo e(route('frontend.privacyPolicy')); ?>">Privacy Policy</a></li>
+                            <li><a href="<?php echo e(route('frontend.termsConditions')); ?>">Terms &amp; Conditions</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Contact Us</a></li>
                             <li>
                                 <a href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20need%20assistance%20regarding%20my%20order,%20shipping,%20or%20product%20information.%20Please%20help%20me. "
                                     target="_blank">Support Center</a>
@@ -776,11 +791,11 @@
                     <div class="col-lg-2 col-md-3">
                         <h5 class="widget-title wow fadeIn animated">My Account</h5>
                         <ul class="footer-list wow fadeIn animated">
-                            <li><a href="{{ route('login') }}">Sign In</a></li>
-                            <li><a href="{{ route('frontend.cart') }}">View Cart</a></li>
-                            <li><a href="{{ route('frontend.wishList') }}">My Wishlist</a></li>
-                            <li><a href="{{ route('frontend.perchaseGuide') }}">Help</a></li>
-                            <li><a href="{{ route('frontend.contactUs') }}">Our Outlets</a></li>
+                            <li><a href="<?php echo e(route('login')); ?>">Sign In</a></li>
+                            <li><a href="<?php echo e(route('frontend.cart')); ?>">View Cart</a></li>
+                            <li><a href="<?php echo e(route('frontend.wishList')); ?>">My Wishlist</a></li>
+                            <li><a href="<?php echo e(route('frontend.perchaseGuide')); ?>">Help</a></li>
+                            <li><a href="<?php echo e(route('frontend.contactUs')); ?>">Our Outlets</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-4">
@@ -797,9 +812,9 @@
                                         target="_blank" class="hover-up"><img src="frontend/assets/imgs/theme/WP.jpg" alt=""></a>
                                 </div> -->
                                 <div class="selec-btns" style="display: flex; gap: 10px; flex-wrap: wrap">
-                                    <a class="select-lens" href="{{ route('frontend.perchaseGuide') }}">How to
+                                    <a class="select-lens" href="<?php echo e(route('frontend.perchaseGuide')); ?>">How to
                                         Order</a>
-                                    <a class="select-lens" href="{{ route('frontend.blog') }}">Blog</a>
+                                    <a class="select-lens" href="<?php echo e(route('frontend.blog')); ?>">Blog</a>
                                 </div>
                             </div>
                             <div class="col-md-4 col-lg-12 mt-md-3 mt-lg-0">
@@ -807,7 +822,7 @@
                                     Secured Payment Gateways
                                 </p>
                                 <img class="wow fadeIn animated"
-                                    src="{{ asset('frontend/assets/imgs/theme/payment-method.png') }}" alt="payment method" loading="lazy" />
+                                    src="<?php echo e(asset('frontend/assets/imgs/theme/payment-method.png')); ?>" alt="payment method" loading="lazy" />
                             </div>
                         </div>
                     </div>
@@ -859,11 +874,11 @@
                 const itemId = $(this).data('id');
 
                 $.ajax({
-                    url: '{{ route('frontend.removeCartItem') }}',
+                    url: '<?php echo e(route('frontend.removeCartItem')); ?>',
                     type: 'POST',
                     data: {
                         id: itemId,
-                        _token: '{{ csrf_token() }}'
+                        _token: '<?php echo e(csrf_token()); ?>'
                     },
                     success: function (response) {
                         if (response.success) {
@@ -972,7 +987,7 @@
             });
 
             // Highlight current category
-            const currentCategory = "{{ request()->input('category') }}";
+            const currentCategory = "<?php echo e(request()->input('category')); ?>";
             if (currentCategory) {
                 document.querySelectorAll(`a[href*="${currentCategory}"]`).forEach(link => {
                     let parent = link.closest('.menu-item-has-children');
@@ -1017,7 +1032,7 @@
                         data: {
                             query: query,
                             category: category,
-                            _token: '{{ csrf_token() }}'
+                            _token: '<?php echo e(csrf_token()); ?>'
                         },
                         success: function (response) {
                             if (response.success) {
@@ -1065,40 +1080,41 @@
             });
         });
     </script>
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 
     <!-- Search Functionality -->
 
     
     
   <!-- Vendor JS -->
-    <script src="{{ asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/vendor/bootstrap.bundle.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/slick.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.syotimer.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/wow.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery-ui.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/perfect-scrollbar.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/magnific-popup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/select2.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/waypoints.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/counterup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.countdown.min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/images-loaded.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/isotope.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/scrollup.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.vticker-min.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.theia.sticky.js') }}" defer ></script>
-    <script src="{{ asset('frontend/assets/js/plugins/jquery.elevatezoom.js') }}" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/jquery-3.6.0.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/vendor/bootstrap.bundle.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/slick.js')); ?>"></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.syotimer.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/wow.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery-ui.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/perfect-scrollbar.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/magnific-popup.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/select2.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/waypoints.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/counterup.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.countdown.min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/images-loaded.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/isotope.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/scrollup.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.vticker-min.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.theia.sticky.js')); ?>" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/plugins/jquery.elevatezoom.js')); ?>" defer ></script>
 
     <!-- Template JS -->
-    <script src="{{ asset('frontend/assets/js/main.js') }}?v=3.5" defer ></script>
-    <script src="{{ asset('frontend/assets/js/shop.js') }}?v=3.5" defer ></script>
-    <script src="{{ asset('frontend/assets/js/custom.js') }}?v=3.5" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/main.js')); ?>?v=3.5" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/shop.js')); ?>?v=3.5" defer ></script>
+    <script src="<?php echo e(asset('frontend/assets/js/custom.js')); ?>?v=3.5" defer ></script>
     
 
 </body>
 
 </html>
+<?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views/frontend/layouts/app.blade.php ENDPATH**/ ?>

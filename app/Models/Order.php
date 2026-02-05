@@ -15,6 +15,8 @@ class Order extends Model
         'order_number',
         'session_id',
         'total_amount',
+        'coupon_code',
+        'discount_amount',
         'payment_method',
         'status',
         'first_name',

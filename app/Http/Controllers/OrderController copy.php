@@ -10,8 +10,6 @@ use App\Models\Customer;
 use App\Models\Prescription;
 use App\Models\LensesPrescription;
 use App\Models\Product;
-use App\Models\Payment;
-use App\PaymentMethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -153,8 +151,7 @@ class OrderController extends Controller
 
     public function placeOrder(Request $request)
     {
-        // Dynamic validation based on payment method
-        $validationRules = [
+        $validated = $request->validate([
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -163,20 +160,8 @@ class OrderController extends Controller
             'state' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'payment_option' => 'required|in:' . implode(',', array_column(PaymentMethod::cases(), 'value')),
-        ];
-
-        // Add conditional validation based on payment method
-        if ($request->payment_option === PaymentMethod::JAZZCASH->value) {
-            $validationRules['jazzcash_transaction_id'] = 'nullable|string|max:100';
-            $validationRules['jazzcash_screenshot'] = 'required|file|image|max:5120';
-        } elseif ($request->payment_option === PaymentMethod::MEEZAN_BANK->value) {
-            $validationRules['meezan_transaction_id'] = 'nullable|string|max:100';
-            $validationRules['meezan_screenshot'] = 'required|file|image|max:5120';
-        }
-
-        $validated = $request->validate($validationRules);
-
+            'payment_option' => 'required',
+        ]);
 
         return DB::transaction(function () use ($request, $validated) {
             $userId = Auth::id();
@@ -200,20 +185,20 @@ class OrderController extends Controller
                 ]
             );
 
-            // Always get fresh cart items with categories loaded
-            $cartItems = Cart::with('product.categories')
+            // Always get fresh cart items
+            $cartItems = Cart::with('product')
                 ->where(function ($query) use ($userId, $sessionId) {
                     $userId ? $query->where('user_id', $userId)
                         : $query->where('session_id', $sessionId);
                 })->get();
 
-            // Get fresh prescription data with categories loaded
+            // Get fresh prescription data
             $prescription = $request->session()->get('prescription_id')
-                ? Prescription::with('product.categories')->find($request->session()->get('prescription_id'))
+                ? Prescription::find($request->session()->get('prescription_id'))
                 : null;
 
             $lensPrescription = $request->session()->get('lenses_prescription_id')
-                ? LensesPrescription::with('product.categories')->find($request->session()->get('lenses_prescription_id'))
+                ? LensesPrescription::find($request->session()->get('lenses_prescription_id'))
                 : null;
 
             if ($cartItems->isEmpty() && !$prescription && !$lensPrescription) {
@@ -221,6 +206,11 @@ class OrderController extends Controller
                     'cart' => 'Your cart is empty',
                 ]);
             }
+
+            // Generate unique order number
+            do {
+                $orderNumber = 'ORD-' . strtoupper(uniqid());
+            } while (Order::where('order_number', $orderNumber)->exists());
 
             // Calculate base total
             $baseTotal = $cartItems->sum('total_price')
@@ -231,10 +221,10 @@ class OrderController extends Controller
             $couponCode = $request->input('coupon_code');
             $couponDiscount = 0;
             $coupon = null;
-            $couponId = null;
 
             if ($couponCode) {
                 try {
+                    \Log::info('PlaceOrder: coupon received', ['coupon_code' => $couponCode]);
                     $couponService = new \App\Services\CouponService();
                     
                     // Prepare cart items for coupon validation
@@ -247,42 +237,20 @@ class OrderController extends Controller
                         ];
                     })->toArray();
 
-                    // Add prescription to cart items if exists
-                    if ($prescription && $prescription->product) {
-                        $cartItemsForCoupon[] = [
-                            'product' => $prescription->product,
-                            'price' => $prescription->total_price,
-                            'quantity' => 1,
-                            'total_price' => $prescription->total_price,
-                        ];
-                    }
-
-                    // Add lens prescription to cart items if exists
-                    if ($lensPrescription && $lensPrescription->product) {
-                        $cartItemsForCoupon[] = [
-                            'product' => $lensPrescription->product,
-                            'price' => $lensPrescription->total_price,
-                            'quantity' => 1,
-                            'total_price' => $lensPrescription->total_price,
-                        ];
-                    }
-
                     $user = Auth::user();
-                    // Get phone and email from request for guest customer validation
-                    // Normalize phone number (remove spaces, dashes, etc.)
-                    $phone = isset($validated['phone']) ? preg_replace('/[^0-9]/', '', trim($validated['phone'])) : null;
-                    $email = isset($validated['email']) ? trim(strtolower($validated['email'])) : null;
-                    $validation = $couponService->validate($couponCode, $cartItemsForCoupon, $user, $phone, $email);
+                    $validation = $couponService->validate($couponCode, $cartItemsForCoupon, $user);
+
+                    \Log::info('PlaceOrder: coupon validation result', [
+                        'coupon_code' => $couponCode,
+                        'validation' => $validation,
+                        'cart_items_count' => count($cartItemsForCoupon),
+                        'cart_items' => array_map(function($it) { return ['product_id' => $it['product']->id ?? null, 'total_price' => $it['total_price'] ?? null]; }, $cartItemsForCoupon)
+                    ]);
                     
                     if ($validation['valid']) {
                         $coupon = \App\Models\Coupon::where('code', strtoupper(trim($couponCode)))->first();
-                        if ($coupon) {
-                            $couponId = $coupon->id;
-                            $couponDiscount = $validation['discount_amount'];
-                            
-                            // Apply coupon (increment usage count)
-                            $couponService->apply($coupon, $cartItemsForCoupon, $user, null);
-                        }
+                        $couponDiscount = $validation['discount_amount'];
+                        \Log::info('PlaceOrder: coupon discount applied', ['coupon_code' => $couponCode, 'discount' => $couponDiscount]);
                     }
                 } catch (\Exception $e) {
                     // Coupon validation failed, continue without coupon
@@ -290,14 +258,7 @@ class OrderController extends Controller
                 }
             }
 
-            // Calculate final total and always round up (e.g., 245.05 → 246)
             $finalTotal = max(0, $baseTotal - $couponDiscount);
-            $finalTotal = ceil($finalTotal);
-
-            // Generate unique order number
-            do {
-                $orderNumber = 'ORD-' . strtoupper(uniqid());
-            } while (Order::where('order_number', $orderNumber)->exists());
 
             // Create new order
             $order = Order::create([
@@ -327,15 +288,6 @@ class OrderController extends Controller
                 'shipping_state' => $request->shipping_state,
                 'shipping_zipcode' => $request->shipping_zipcode,
             ]);
-            
-            // Update coupon usage with order_id if coupon was applied
-            if ($coupon && $order->id) {
-                \App\Models\CouponUsage::where('coupon_id', $coupon->id)
-                    ->whereNull('order_id')
-                    ->latest()
-                    ->first()
-                    ?->update(['order_id' => $order->id]);
-            }
 
             // Create new order items
             foreach ($cartItems as $item) {
@@ -373,42 +325,19 @@ class OrderController extends Controller
                 ]);
             }
 
-            // If payment method involves proof, store payment record
-            $method = $request->payment_option;
-            
-            if (in_array($method, [PaymentMethod::JAZZCASH->value, PaymentMethod::MEEZAN_BANK->value])) {
-                $screenshotPath = null;
-                $transactionId = null;
+            // Apply coupon if valid
+            if ($coupon && $couponDiscount > 0) {
+                $couponService = new \App\Services\CouponService();
+                $cartItemsForCoupon = $cartItems->map(function($item) {
+                    return [
+                        'product' => $item->product,
+                        'price' => $item->total_price / $item->quantity,
+                        'quantity' => $item->quantity,
+                        'total_price' => $item->total_price,
+                    ];
+                })->toArray();
                 
-                try {
-                    if ($method === PaymentMethod::JAZZCASH->value) {
-                        if ($request->hasFile('jazzcash_screenshot')) {
-                            $file = $request->file('jazzcash_screenshot');
-                            $filename = 'payment_' . time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-                            $file->move(public_path('payments'), $filename);
-                            $screenshotPath = 'payments/' . $filename; // saved under public/payments
-                        }
-                        $transactionId = $request->jazzcash_transaction_id;
-                    } elseif ($method === PaymentMethod::MEEZAN_BANK->value) {
-                        if ($request->hasFile('meezan_screenshot')) {
-                            $file = $request->file('meezan_screenshot');
-                            $filename = 'payment_' . time() . '_' . Str::random(8) . '.' . $file->getClientOriginalExtension();
-                            $file->move(public_path('payments'), $filename);
-                            $screenshotPath = 'payments/' . $filename; // saved under public/payments
-                        }
-                        $transactionId = $request->meezan_transaction_id;
-                    }
-
-                    $payment = Payment::create([
-                        'order_id' => $order->id,
-                        'method' => $method,
-                        'transaction_id' => $transactionId,
-                        'screenshot_path' => $screenshotPath ?: null,
-                    ]);
-
-                } catch (\Exception $e) {
-                    throw $e;
-                }
+                $couponService->apply($coupon, $cartItemsForCoupon, Auth::user(), $order->order_number);
             }
 
             // Clear cart and sessions
@@ -442,5 +371,4 @@ class OrderController extends Controller
 
         return view('backend.orders.print', compact('order'));
     }
-
 }

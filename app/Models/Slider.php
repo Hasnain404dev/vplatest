@@ -14,9 +14,21 @@ class Slider extends Model
         'heading',
         'sub_heading',
         'paragraph',
+        'heading_color',
+        'sub_heading_color',
+        'paragraph_color',
         'button_name',
         'button_link',
+        'button_text_color',
+        'button_bg_color',
+        'background_opacity',
+        'text_color',
+        'button_color',
         'order',
         'is_active'
+    ];
+
+    protected $casts = [
+        'background_opacity' => 'float',
     ];
 }

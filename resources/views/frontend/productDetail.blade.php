@@ -67,46 +67,6 @@
             display: block;
         }
     </style>
-    
-    <!--product schema code -->
-    
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "{{ $product->name }}",
-   "image": [
-    "{{ $product->image ? asset('uploads/products/' . $product->image) : asset('frontend/assets/imgs/theme/logo.svg') }}"
-  ],
-  "description": {!! json_encode(strip_tags($product->description)) !!},
-  "sku": "{{ $product->sku ?? $product->id }}",
-  "mpn": "{{ $product->mpn ?? $product->id }}",
-  "brand": {
-    "@type": "Brand",
-    "name": "Vision Plus"
-  },
-  "offers": {
-    "@type": "Offer",
-    "url": "{{ url()->current() }}",
-    "priceCurrency": "PKR",
-    "price": "{{ $product->discountprice ?? $product->price }}",
-    "availability": "https://schema.org/{{ $product->stock > 0 ? 'InStock' : 'OutOfStock' }}",
-    "itemCondition": "https://schema.org/NewCondition",
-    "seller": {
-      "@type": "Organization",
-      "name": "Vision Plus Optical"
-    }
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "{{ $product->rating ? $product->rating : 5 }}",
-    "reviewCount": "{{ $product->review_count ? $product->review_count : 1 }}"
-  }
-}
-</script>
-
-    
-    
     <main class="main">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -139,7 +99,7 @@
                                             <figure class="border-radius-10 zoom-container">
                                                 <img id="main-product-image"
                                                     src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                    alt="{{ $product->name }}" class="zoom-target"  loading="lazy">
+                                                    alt="{{ $product->name }}" class="zoom-target">
                                             </figure>
                                             @if ($product->colors->isNotEmpty())
                                                 @foreach ($product->colors as $color)
@@ -147,7 +107,7 @@
                                                         <figure class="border-radius-10 zoom-container">
                                                             <img src="{{ asset('uploads/products/colors/' . $color->image) }}"
                                                                 alt="{{ $product->name }} - {{ $color->color_name }}"
-                                                                class="zoom-target"  loading="lazy">
+                                                                class="zoom-target">
                                                         </figure>
                                                     @endif
                                                 @endforeach
@@ -158,7 +118,7 @@
                                             <div>
                                                 <img src="{{ asset('uploads/products/' . $product->main_image) }}"
                                                     alt="{{ $product->name }}" class="thumbnail"
-                                                    data-image="{{ asset('uploads/products/' . $product->main_image) }}"  loading="lazy">
+                                                    data-image="{{ asset('uploads/products/' . $product->main_image) }}">
                                             </div>
                                             @foreach ($product->colors as $color)
                                                 @if ($color->image)
@@ -166,7 +126,7 @@
                                                         <img src="{{ asset('uploads/products/colors/' . $color->image) }}"
                                                             alt="{{ $product->name }} - {{ $color->color_name }}"
                                                             class="thumbnail"
-                                                            data-image="{{ asset('uploads/products/colors/' . $color->image) }}" loading="lazy" >
+                                                            data-image="{{ asset('uploads/products/colors/' . $color->image) }}">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -218,7 +178,7 @@
                                                                 @if ($loop->first) checked @endif
                                                                 data-image="{{ asset('uploads/products/colors/' . $color->image) }}">
                                                             <label for="color-{{ $color->id }}"
-                                                                style="background-color: {{ App\Http\Controllers\ProductController::getColorValue($color->color_name) }};"
+                                                                style="background-color: {{ strtolower($color->color_name) }};"
                                                                 title="{{ ucfirst($color->color_name) }}">
                                                                 <span
                                                                     class="color-name">{{ ucfirst($color->color_name) }}</span>
@@ -245,7 +205,7 @@
 
                                             <div class="product-extra-link2">
                                                 <form action="{{ route('frontend.addToCart') }}" method="POST"
-                                                    style="display: inline;">
+                                                    style="display: inline;" id="add-to-cart-form-{{ $product->id }}">
                                                     @csrf
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                     <input type="hidden" name="quantity" value="1"
@@ -253,7 +213,7 @@
                                                     <!-- This will be updated by the JavaScript -->
                                                     <input type="hidden" name="color_name" id="selected-color"
                                                         value="">
-                                                    <button type="submit" class="button button-add-to-cart ">Add to
+                                                    <button type="submit" class="button button-add-to-cart add-to-cart-btn" data-product-id="{{ $product->id }}" id="add-to-cart-btn-{{ $product->id }}">Add to
                                                         cart</button>
                                                 </form>
 
@@ -270,24 +230,7 @@
                                             </div>
                                         </div>
                                         <div class="selec-btns" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                           @php
-                                                // Check if product belongs to Eyeglasses category or any of its subcategories
-                                                $isEyeglasses = $product->categories->contains(function ($category) {
-                                                    // Check if this is the main Eyeglasses category
-                                                    if ($category->name === 'Eyeglasses') {
-                                                        return true;
-                                                    }
-
-                                                    // Check if this is a subcategory of Eyeglasses
-                                                    if ($category->parent) {
-                                                        return $category->parent->name === 'Eyeglasses';
-                                                    }
-
-                                                    return false;
-                                                });
-                                            @endphp
-
-                                            @if ($isEyeglasses)
+                                            @if ($product->categories->contains('name', 'Eyeglasses'))
                                                 <a class="select-lens mt-2"
                                                     href="{{ route('prescription.show', $product->id) }}">Select Lens</a>
                                             @endif
@@ -311,12 +254,12 @@
                                             @endif
                                             @if ($product->threeD_try_on_name)
                                                 <a class="select-lens mt-2"
-                                                    href="{{ route('virtual.try.on.3d', $product->slug) }}" target="_blank">3D Try
+                                                    href="{{ route('virtual.try.on.3d', $product->slug) }}">3D Try
                                                     On</a>
                                             @endif
                                         </div>
                                         <ul class="product-meta font-xs color-grey mt-50">
-                                            <!--<li class="mb-5">SKU: <a href="#">{{ $product->id }}</a></li>-->
+                                            <li class="mb-5">SKU: <a href="#">{{ $product->id }}</a></li>
                                             <li class="mb-5">Categories:
                                                 @foreach ($product->categories as $category)
                                                     <a href="#" rel="tag">{{ $category->name }}</a>
@@ -422,7 +365,7 @@
                                                             <div class="user justify-content-between d-flex">
                                                                 <div class="thumb text-center">
                                                                     <img src="{{ asset('frontend/assets/imgs/page/avatar-6.jpg') }}"
-                                                                        alt="{{ $review->name }}" loading="lazy"> 
+                                                                        alt="{{ $review->name }}">
                                                                     <h6><a href="#">{{ $review->name }}</a></h6>
                                                                     <p class="font-xxs">
                                                                         {{ $review->created_at->format('M Y') }}
@@ -446,7 +389,7 @@
                                                                                             target="_blank">
                                                                                             <img src="{{ asset('uploads/reviews/' . $image->image) }}"
                                                                                                 alt="Review Image"
-                                                                                                class="img-fluid rounded w-100" loading="lazy">
+                                                                                                class="img-fluid rounded w-100">
                                                                                         </a>
                                                                                     </div>
                                                                                 @endforeach
@@ -557,7 +500,7 @@
                                                                 tabindex="0">
                                                                 <img class="default-img"
                                                                     src="{{ asset('uploads/products/' . $relatedProduct->main_image) }}"
-                                                                    alt="{{ $relatedProduct->name }}" loading="lazy" >
+                                                                    alt="{{ $relatedProduct->name }}">
                                                             </a>
                                                         </div>
                                                         <div class="product-action-1">

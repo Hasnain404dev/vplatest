@@ -1,17 +1,9 @@
-@extends('frontend.layouts.app')
-
-@push('head')
-@if(isset($sliders) && $sliders->isNotEmpty())
-<link rel="preload" as="image" href="{{ asset($sliders->first()->image) }}">
-@endif
-@endpush
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
     <main class="main">
 
-     <div id="preloader-active" class="preloader" aria-hidden="true">
+     <div id="preloader-active" class="preloader">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="text-center">
@@ -25,20 +17,11 @@
             </div>
         </div>
     </div>
-    <script>
-        (function(){
-            var preloader = document.getElementById('preloader-active');
-            function hidePreloader(){ if(preloader) preloader.style.display = 'none'; }
-            if (document.readyState === 'complete') hidePreloader();
-            else window.addEventListener('load', hidePreloader);
-            setTimeout(hidePreloader, 2500);
-        })();
-    </script>
 
 
-        {{-- popup section --}}
+        
 
-        @if ($activePopup)
+        <?php if($activePopup): ?>
             <!-- Modal -->
             <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel"
                 aria-hidden="true">
@@ -46,25 +29,25 @@
                     <div class="modal-content">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="modal-body">
-                            <div class="deal" style="background-image: url('{{ asset($activePopup->image_path) }}')">
+                            <div class="deal" style="background-image: url('<?php echo e(asset($activePopup->image_path)); ?>')">
                                 <div class="deal-top">
-                                    <h2 class="text-brand">{{ $activePopup->title }}</h2>
-                                    <h5>{{ $activePopup->description }}</h5>
+                                    <h2 class="text-brand"><?php echo e($activePopup->title); ?></h2>
+                                    <h5><?php echo e($activePopup->description); ?></h5>
                                 </div>
                                 <div class="deal-content">
                                     <div class="product-price">
-                                        <span class="new-price fw-bold">Just {{ $activePopup->new_price }} PKR!</span>
-                                        @if ($activePopup->old_price)
-                                            <span class="old-price fw-bold">{{ $activePopup->old_price }}/-</span>
-                                        @endif
+                                        <span class="new-price fw-bold">Just <?php echo e($activePopup->new_price); ?> PKR!</span>
+                                        <?php if($activePopup->old_price): ?>
+                                            <span class="old-price fw-bold"><?php echo e($activePopup->old_price); ?>/-</span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
 
                                 <div class="deal-bottom">
                                     <p>Hurry Up! Offer End In:</p>
                                     <div class="deals-countdown"
-                                        data-countdown="{{ $activePopup->offer_ends_at->format('Y/m/d H:i:s') }}"></div>
-                                    <a href="{{ $activePopup->offer_link }}" class="btn hover-up">Shop Now <i
+                                        data-countdown="<?php echo e($activePopup->offer_ends_at->format('Y/m/d H:i:s')); ?>"></div>
+                                    <a href="<?php echo e($activePopup->offer_link); ?>" class="btn hover-up">Shop Now <i
                                             class="fi-rs-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -82,111 +65,57 @@
                     }
                 });
             </script>
-        @endif
+        <?php endif; ?>
 
 
-        {{-- Hero carousel (Bootstrap, dynamic from backend) --}}
-        @if($sliders->isNotEmpty())
-        <section class="hero-carousel-section position-relative">
-            <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-                <div class="carousel-indicators">
-                    @foreach($sliders as $index => $slide)
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
-                    @endforeach
-                </div>
-                <div class="carousel-inner">
-                    @foreach($sliders as $index => $slider)
-                        @php
-                            $overlayOpacity = $slider->background_opacity !== null ? (float) $slider->background_opacity : 0.4;
-                                $textColor = $slider->text_color ?? '#ffffff';
-                                $headingColor = $slider->heading_color ?? $textColor;
-                                $subHeadingColor = $slider->sub_heading_color ?? $textColor;
-                                $paragraphColor = $slider->paragraph_color ?? $textColor;
-                                $btnBgColor = $slider->button_bg_color ?? ($slider->button_color ?? '#0d6efd');
-                                $btnTextColor = $slider->button_text_color ?? '#ffffff';
-                            $imgUrl = asset($slider->image);
-                            $eagerLoad = $index === 0;
-                        @endphp
-                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-slide-index="{{ $index }}">
-                            <div class="hero-slide-bg" @if($eagerLoad) style="background-image: url('{{ $imgUrl }}');" @else data-bg="{{ $imgUrl }}" @endif role="img" aria-label="{{ $slider->heading ?? 'Slide' }}"></div>
-                            <div class="hero-slide-overlay" style="background: rgba(0,0,0, {{ $overlayOpacity }});"></div>
-                            <div class="carousel-caption hero-caption" style="color: {{ $textColor }};">
-                                <div class="container text-center">
-                                    @if($slider->heading)
-                                        <p class="hero-heading mb-1" style="color: {{ $headingColor }};">{{ $slider->heading }}</p>
-                                    @endif
-                                    @if($slider->sub_heading)
-                                        <h1 class="hero-title mb-2" style="color: {{ $subHeadingColor }};">{{ $slider->sub_heading }}</h1>
-                                    @endif
-                                    @if($slider->paragraph)
-                                        <p class="hero-text d-none d-md-block mb-3 mx-auto" style="color: {{ $paragraphColor }};">{{ $slider->paragraph }}</p>
-                                    @endif
-                                    @if($slider->button_name && $slider->button_link)
-                                        <a href="{{ $slider->button_link }}" class="btn btn-lg hero-cta" style="background-color: {{ $btnBgColor }}; border-color: {{ $btnBgColor }}; color: {{ $btnTextColor }};">{{ $slider->button_name }}</a>
-                                    @endif
+        
+        <section class="home-slider position-relative pt-50">
+            <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+                <?php $__currentLoopData = $sliders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="single-hero-slider single-animation-wrap">
+                        <div class="container">
+                            <div class="row  align-items-center slider-animated-1">
+                                <div class="col-lg-5 col-md-5 col-12">
+                                    <div class="hero-slider-content-2">
+                                        <?php if($slider->heading): ?>
+                                            <h4 class="animated"><?php echo e($slider->heading); ?></h4>
+                                        <?php endif; ?>
+                                        <?php if($slider->sub_heading): ?>
+                                            <h2 class="animated fw-900 text-7"><?php echo e($slider->sub_heading); ?></h2>
+                                        <?php endif; ?>
+                                        <p class="animated overflow-hidden">
+                                            <?php echo e($slider->paragraph); ?>
+
+                                        </p>
+                                        <?php if($slider->button_name && $slider->button_link): ?>
+                                            <a class="animated btn btn-brush btn-brush-3"
+                                                href="<?php echo e($slider->button_link); ?>">
+                                                <?php echo e($slider->button_name); ?>
+
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-12">
+                                    <div class="single-slider-img single-slider-img-1">
+                                        <img class="animated slider-1-1"
+                                        src="<?php echo e(asset($slider->image)); ?>"
+                                            alt="<?php echo e($slider->heading); ?>" 
+                                              
+                                              fetchpriority="high"
+                                            />
+                                            
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-                @if($sliders->count() > 1)
-                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                @endif
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-            <style>
-                .hero-carousel-section { min-height: 380px; }
-                .hero-carousel-section .carousel-item { min-height: 380px; position: relative; }
-                /* Background image element for each slide */
-                .hero-slide-bg {
-                    position: absolute;
-                    inset: 0;
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    opacity: 0;
-                    transition: opacity 0.8s ease-in-out;
-                }
-                /* Cross-fade the background between slides (Bootstrap transition states) */
-                .hero-carousel-section .carousel-item.active .hero-slide-bg,
-                .hero-carousel-section .carousel-item-next.carousel-item-start .hero-slide-bg,
-                .hero-carousel-section .carousel-item-prev.carousel-item-end .hero-slide-bg { opacity: 1; }
-                .hero-carousel-section .active.carousel-item-end .hero-slide-bg,
-                .hero-carousel-section .active.carousel-item-start .hero-slide-bg { opacity: 0; }
-
-                .hero-slide-overlay { position: absolute; inset: 0; pointer-events: none; }
-                .hero-caption { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-bottom: 2rem; }
-                .hero-caption .container { max-width: 36rem; }
-                .hero-heading { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.95; }
-                .hero-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-                .hero-text { max-width: 28rem; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
-                .hero-cta { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-                @@media (min-width: 768px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 420px; } }
-                @@media (min-width: 992px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 480px; } }
-            </style>
-            <script>
-                (function() {
-                    var carousel = document.getElementById('heroCarousel');
-                    if (!carousel) return;
-                    carousel.addEventListener('slid.bs.carousel', function(e) {
-                        var bg = e.relatedTarget && e.relatedTarget.querySelector('.hero-slide-bg[data-bg]');
-                        if (bg && bg.getAttribute('data-bg')) {
-                            bg.style.backgroundImage = "url('" + bg.getAttribute('data-bg').replace(/'/g, "\\'") + "')";
-                            bg.removeAttribute('data-bg');
-                        }
-                    });
-                })();
-            </script>
+            <div class="slider-arrow hero-slider-1-arrow"></div>
         </section>
-        @endif
 
-        {{-- featured section --}}
+        
         <!--<section class="featured section-padding position-relative">-->
         <!--    <div class="container">-->
         <!--        <div class="row justify-content-center">-->
@@ -218,7 +147,7 @@
         <!--    </div>-->
         <!--</section>-->
 
-        {{-- product section --}}
+        
         <section class="product-tabs section-padding position-relative wow fadeIn animated">
             <div class="bg-square"></div>
             <div class="container">
@@ -243,7 +172,7 @@
                             </button>
                         </li>
                     </ul>
-                    <!--<a href="{{ route('frontend.shop') }}" class="view-more d-none d-md-flex">View More<i-->
+                    <!--<a href="<?php echo e(route('frontend.shop')); ?>" class="view-more d-none d-md-flex">View More<i-->
                     <!--        class="fi-rs-angle-double-small-right"></i></a>-->
                              <a href="https://visionplus.pk/shop?category=eyeglasses" class="view-more d-none d-md-flex">View More<i
                             class="fi-rs-angle-double-small-right"></i></a>
@@ -252,87 +181,88 @@
                 <div class="tab-content wow fadeIn animated" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
                         <div class="row product-grid-4">
-                            @foreach ($featuredProducts as $product)
+                            <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                     <!-- updated card for product -->
                                     <div class="product-cart-wrap mb-30">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
-                                                <a href="{{ route('frontend.productDetail', $product) }}">
+                                                <a href="<?php echo e(route('frontend.productDetail', $product)); ?>">
                                                     <img class="default-img"
-                                                        src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" decoding="async"  />
+                                                        src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                        alt="<?php echo e($product->name); ?>" loading="lazy"  />
 
-                                                    @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
+                                                    <?php if($product->colors->isNotEmpty() && $product->colors[0]->image): ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                                    @else
+                                                            src="<?php echo e(asset('uploads/products/colors/' . $product->colors[0]->image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                                    <?php else: ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
-                                                    @endif
+                                                            src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy"  />
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
                                                 <a aria-label="Quick view" class="action-btn hover-up quick-view-btn "
-                                                    href="{{ route('frontend.quick-view', $product) }}"
+                                                    href="<?php echo e(route('frontend.quick-view', $product)); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#quickViewModal"
-                                                    data-product-id="{{ $product->id }}">
+                                                    data-product-id="<?php echo e($product->id); ?>">
                                                     <i class="fi-rs-eye"></i>
                                                 </a>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up"
                                                     href="javascript:void(0);"
-                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-{{ $product->id }}').submit();">
+                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-<?php echo e($product->id); ?>').submit();">
                                                     <i class="fi-rs-heart"></i>
                                                 </a>
-                                                <form id="add-to-wishlist-{{ $product->id }}"
-                                                    action="{{ route('frontend.addToWishList', $product) }}"
+                                                <form id="add-to-wishlist-<?php echo e($product->id); ?>"
+                                                    action="<?php echo e(route('frontend.addToWishList', $product)); ?>"
                                                     method="POST" style="display: none;">
-                                                    @csrf
+                                                    <?php echo csrf_field(); ?>
                                                 </form>
                                             </div>
-                                            @if ($product->virtual_try_on_image)
+                                            <?php if($product->virtual_try_on_image): ?>
                                                 <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">
                                                         <a aria-label="" class=""
-                                                            href="{{ route('virtual.try.on', $product->slug) }}">Try
+                                                            href="<?php echo e(route('virtual.try.on', $product->slug)); ?>">Try
                                                             On</a></span>
                                                 </div>
-                                            @endif
-                                            @if ($product->discount)
+                                            <?php endif; ?>
+                                            <?php if($product->discount): ?>
                                                 <div class="product-badges product-badges-positionTwo product-badges-mrg">
-                                                    <span class="hot">{{ $product->discount }}% Off</span>
+                                                    <span class="hot"><?php echo e($product->discount); ?>% Off</span>
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <div class="product-content-wrap">
                                             <div class="product-category">
                                                 <a href="#">
-                                                    {{ $product->categories->pluck('name')->implode(', ') }}
+                                                    <?php echo e($product->categories->pluck('name')->implode(', ')); ?>
+
                                                 </a>
                                             </div>
                                             <h2>
                                                 <a
-                                                    href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?></a>
                                             </h2>
-                                            {{-- <span>{{ $product->discount }}% off</span> --}}
+                                            
 
                                             <div class="product-price">
-                                                <span>{{ $product->discountprice ?? $product->price }}</span>
-                                                @if ($product->discountprice)
-                                                    <span class="old-price">{{ $product->price }}</span>
-                                                @endif
+                                                <span><?php echo e($product->discountprice ?? $product->price); ?></span>
+                                                <?php if($product->discountprice): ?>
+                                                    <span class="old-price"><?php echo e($product->price); ?></span>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="product-action-1 show">
                                                 <a aria-label="Add To Cart" class="action-btn hover-up"
-                                                    href="{{ route('frontend.productDetail', $product) }}"><i
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><i
                                                         class="fi-rs-shopping-bag-add"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <!-- updated card for product end -->
                         </div>
                         <!--End product-grid-4-->
@@ -340,176 +270,179 @@
                     <!--En tab one (Featured)-->
                     <div class="tab-pane fade" id="tab-two" role="tabpanel" aria-labelledby="tab-two">
                         <div class="row product-grid-4">
-                            @foreach ($popularProducts as $product)
+                            <?php $__currentLoopData = $popularProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                     <!-- updated card for product -->
                                     <div class="product-cart-wrap mb-30">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
-                                                <a href="{{ route('frontend.productDetail', $product) }}">
+                                                <a href="<?php echo e(route('frontend.productDetail', $product)); ?>">
                                                     <img class="default-img"
-                                                        src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" decoding="async"  />
+                                                        src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                        alt="<?php echo e($product->name); ?>" loading="lazy"  />
 
-                                                    @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
+                                                    <?php if($product->colors->isNotEmpty() && $product->colors[0]->image): ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
-                                                    @else
+                                                            src="<?php echo e(asset('uploads/products/colors/' . $product->colors[0]->image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy"  />
+                                                    <?php else: ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
-                                                    @endif
+                                                            src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy"  />
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
                                                 <a aria-label="Quick view" class="action-btn hover-up quick-view-btn"
-                                                    href="{{ route('frontend.quick-view', $product) }}"
+                                                    href="<?php echo e(route('frontend.quick-view', $product)); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#quickViewModal"
-                                                    data-product-id="{{ $product->id }}">
+                                                    data-product-id="<?php echo e($product->id); ?>">
                                                     <i class="fi-rs-eye"></i>
                                                 </a>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up"
                                                     href="javascript:void(0);"
-                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-{{ $product->id }}').submit();">
+                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-<?php echo e($product->id); ?>').submit();">
                                                     <i class="fi-rs-heart"></i>
                                                 </a>
-                                                <form id="add-to-wishlist-{{ $product->id }}"
-                                                    action="{{ route('frontend.addToWishList', $product) }}"
+                                                <form id="add-to-wishlist-<?php echo e($product->id); ?>"
+                                                    action="<?php echo e(route('frontend.addToWishList', $product)); ?>"
                                                     method="POST" style="display: none;">
-                                                    @csrf
+                                                    <?php echo csrf_field(); ?>
                                                 </form>
                                             </div>
-                                            @if ($product->virtual_try_on_image)
+                                            <?php if($product->virtual_try_on_image): ?>
                                                 <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">
                                                         <a aria-label="" class=""
-                                                            href="{{ route('virtual.try.on', $product->slug) }}">Try
+                                                            href="<?php echo e(route('virtual.try.on', $product->slug)); ?>">Try
                                                             On</a></span>
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
 
-                                            @if ($product->discount)
+                                            <?php if($product->discount): ?>
                                                 <div class="product-badges product-badges-positionTwo product-badges-mrg">
-                                                    <span class="hot">{{ $product->discount }}% Off</span>
+                                                    <span class="hot"><?php echo e($product->discount); ?>% Off</span>
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
 
                                         </div>
                                         <div class="product-content-wrap">
                                             <div class="product-category">
                                                 <a href="#">
-                                                    {{ $product->categories->pluck('name')->implode(', ') }}
+                                                    <?php echo e($product->categories->pluck('name')->implode(', ')); ?>
+
                                                 </a>
                                             </div>
                                             <h2>
-                                                <a href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}
+                                                <a href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?>
+
                                                 </a>
                                             </h2>
-                                            {{-- <span>{{ $product->discount }}% off</span> --}}
+                                            
 
                                             <div class="product-price">
-                                                <span>{{ $product->discountprice ?? $product->price }}</span>
-                                                @if ($product->discountprice)
-                                                    <span class="old-price">{{ $product->price }} </span>
-                                                @endif
+                                                <span><?php echo e($product->discountprice ?? $product->price); ?></span>
+                                                <?php if($product->discountprice): ?>
+                                                    <span class="old-price"><?php echo e($product->price); ?> </span>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="product-action-1 show">
                                                 <a aria-label="Add To Cart" class="action-btn hover-up"
-                                                    href="{{ route('frontend.productDetail', $product) }}"><i
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><i
                                                         class="fi-rs-shopping-bag-add"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         <!--End product-grid-4-->
                     </div>
                     <!--En tab two (Popular)-->
                     <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
                         <div class="row product-grid-4">
-                            @foreach ($newProducts as $product)
+                            <?php $__currentLoopData = $newProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                     <!-- updated card for product -->
                                     <div class="product-cart-wrap mb-30">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
-                                                <a href="{{ route('frontend.productDetail', $product) }}">
+                                                <a href="<?php echo e(route('frontend.productDetail', $product)); ?>">
                                                     <img class="default-img"
-                                                        src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
+                                                        src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                        alt="<?php echo e($product->name); ?>" loading="lazy" />
 
-                                                    @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
+                                                    <?php if($product->colors->isNotEmpty() && $product->colors[0]->image): ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async"  />
-                                                    @else
+                                                            src="<?php echo e(asset('uploads/products/colors/' . $product->colors[0]->image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy"  />
+                                                    <?php else: ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                                    @endif
+                                                            src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
                                                 <a aria-label="Quick view" class="action-btn hover-up quick-view-btn"
-                                                    href="{{ route('frontend.quick-view', $product) }}"
+                                                    href="<?php echo e(route('frontend.quick-view', $product)); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#quickViewModal"
-                                                    data-product-id="{{ $product->id }}">
+                                                    data-product-id="<?php echo e($product->id); ?>">
                                                     <i class="fi-rs-eye"></i>
                                                 </a>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up"
                                                     href="javascript:void(0);"
-                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-{{ $product->id }}').submit();">
+                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-<?php echo e($product->id); ?>').submit();">
                                                     <i class="fi-rs-heart"></i>
                                                 </a>
-                                                <form id="add-to-wishlist-{{ $product->id }}"
-                                                    action="{{ route('frontend.addToWishList', $product) }}"
+                                                <form id="add-to-wishlist-<?php echo e($product->id); ?>"
+                                                    action="<?php echo e(route('frontend.addToWishList', $product)); ?>"
                                                     method="POST" style="display: none;">
-                                                    @csrf
+                                                    <?php echo csrf_field(); ?>
                                                 </form>
                                             </div>
-                                            @if ($product->virtual_try_on_image)
+                                            <?php if($product->virtual_try_on_image): ?>
                                                 <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">
                                                         <a aria-label="" class=""
-                                                            href="{{ route('virtual.try.on', $product->slug) }}">Try
+                                                            href="<?php echo e(route('virtual.try.on', $product->slug)); ?>">Try
                                                             On</a></span>
                                                 </div>
-                                            @endif
-                                            @if ($product->discount)
+                                            <?php endif; ?>
+                                            <?php if($product->discount): ?>
                                                 <div class="product-badges product-badges-positionTwo product-badges-mrg">
-                                                    <span class="hot">{{ $product->discount }}% Off</span>
+                                                    <span class="hot"><?php echo e($product->discount); ?>% Off</span>
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <div class="product-content-wrap">
                                             <div class="product-category">
                                                 <a href="#">
-                                                    {{ $product->categories->pluck('name')->implode(', ') }}
+                                                    <?php echo e($product->categories->pluck('name')->implode(', ')); ?>
+
                                                 </a>
                                             </div>
                                             <h2>
                                                 <a
-                                                    href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?></a>
                                             </h2>
-                                            {{-- <span>{{ $product->discount }}% off</span> --}}
+                                            
 
                                             <div class="product-price">
-                                                <span>{{ $product->discountprice ?? $product->price }}</span>
-                                                @if ($product->discountprice)
-                                                    <span class="old-price">{{ $product->price }}</span>
-                                                @endif
+                                                <span><?php echo e($product->discountprice ?? $product->price); ?></span>
+                                                <?php if($product->discountprice): ?>
+                                                    <span class="old-price"><?php echo e($product->price); ?></span>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="product-action-1 show">
                                                 <a aria-label="Add To Cart" class="action-btn hover-up"
-                                                    href="{{ route('frontend.productDetail', $product) }}"><i
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><i
                                                         class="fi-rs-shopping-bag-add"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         <!--End product-grid-4-->
                     </div>
@@ -550,7 +483,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/men-img.png"
                                         alt=" men's prescription eyeglasses "
-                                        loading="lazy" decoding="async">
+                                        loading="lazy" >
 
                                 </div>
                             </div>
@@ -573,7 +506,7 @@
                                     <h3 class="easysight-card-title-text text-center">Men</h3>
                                 </div>
                                 <div>
-                                    <a href="{{ url('/shop') }}?category=eyeglasses&type=menss-eyeglasses"
+                                    <a href="<?php echo e(url('/shop')); ?>?category=eyeglasses&type=menss-eyeglasses"
                                         class="easysight-shop-btn">
                                         Shop Now
                                     </a>
@@ -622,7 +555,7 @@
                                     <!-- <p class="easysight-card-subtitle">The Premium Feel</p> -->
                                 </div>
                                 <div>
-                                    <a href="{{ url('/shop') }}?category=eyeglasses&type=womens-eyeglasses"
+                                    <a href="<?php echo e(url('/shop')); ?>?category=eyeglasses&type=womens-eyeglasses"
                                         class="easysight-shop-btn">
                                         Shop Now
                                     </a>
@@ -647,7 +580,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/kids-img.png"
                                         alt=" eyewear for children"
-                                        loading="lazy" decoding="async">
+                                        loading="lazy" >
 
                                 </div>
                             </div>
@@ -671,7 +604,7 @@
                                     <!-- <p class="easysight-card-subtitle">The Premium Feel</p> -->
                                 </div>
                                 <div>
-                                    <a href="{{ url('/shop') }}?category=eyeglasses&type=kids-eyeglasses"
+                                    <a href="<?php echo e(url('/shop')); ?>?category=eyeglasses&type=kids-eyeglasses"
                                         class="easysight-shop-btn">
                                         Shop Now
                                     </a>
@@ -696,7 +629,7 @@
                                 <div class="easysight-image-placeholder">
                                     <img src="frontend/assets/imgs/cards/model-card-img.png"
                                         alt="blue light blocking screen glasses"
-                                        loading="lazy" decoding="async">
+                                        loading="lazy" >
 
                                 </div>
                             </div>
@@ -721,7 +654,7 @@
                                     </h3>
                                 </div>
                                 <div>
-                                    <a href="{{ url('/shop') }}?category=contact-lenses"
+                                    <a href="<?php echo e(url('/shop')); ?>?category=contact-lenses"
                                         class="easysight-shop-btn">Shop Now</a>
                                 </div>
                             </div>
@@ -738,17 +671,17 @@
                     <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-arrows">
                     </div>
                     <div class="carausel-6-columns" id="carausel-6-columns">
-                        @foreach ($popularProducts as $product)
+                        <?php $__currentLoopData = $popularProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="card-1">
                                 <figure class="img-hover-scale overflow-hidden">
-                                    <a href="{{ route('frontend.productDetail', $product) }}"><img
-                                            src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                            alt="{{ $product->name }}" loading="lazy" decoding="async" /></a>
+                                    <a href="<?php echo e(route('frontend.productDetail', $product)); ?>"><img
+                                            src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                            alt="" loading="lazy" /></a>
                                 </figure>
-                                <h5><a href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
+                                <h5><a href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?></a>
                                 </h5>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </div>
                 </div>
@@ -762,66 +695,64 @@
                     <div class="slider-arrow slider-arrow-2 carausel-6-columns-arrow" id="carausel-6-columns-2-arrows">
                     </div>
                     <div class="carausel-6-columns carausel-arrow-center" id="carausel-6-columns-2">
-                        @foreach ($newProducts as $product)
+                        <?php $__currentLoopData = $newProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <div class="product-cart-wrap small hover-up">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="{{ route('frontend.productDetail', $product) }}">
+                                        <a href="<?php echo e(route('frontend.productDetail', $product)); ?>">
                                             <img class="default-img"
-                                                src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                alt="{{ $product->name }}" loading="lazy" decoding="async" />
+                                                src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                alt="<?php echo e($product->name); ?>" loading="lazy" />
 
-                                            @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
+                                            <?php if($product->colors->isNotEmpty() && $product->colors[0]->image): ?>
                                                 <img class="hover-img"
-                                                    src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                    alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                            @else
+                                                    src="<?php echo e(asset('uploads/products/colors/' . $product->colors[0]->image)); ?>"
+                                                    alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                            <?php else: ?>
                                                 <img class="hover-img"
-                                                    src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                    alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                            @endif
+                                                    src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                    alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                            <?php endif; ?>
                                         </a>
                                     </div>
                                     <div class="product-action-1">
                                         <a aria-label="Quick view" class="action-btn hover-up quick-view-btn"
-                                            href="{{ route('frontend.quick-view', $product) }}" data-bs-toggle="modal"
-                                            data-bs-target="#quickViewModal" data-product-id="{{ $product->id }}">
+                                            href="<?php echo e(route('frontend.quick-view', $product)); ?>" data-bs-toggle="modal"
+                                            data-bs-target="#quickViewModal" data-product-id="<?php echo e($product->id); ?>">
                                             <i class="fi-rs-eye"></i>
                                         </a>
                                         <a aria-label="Add To Wishlist" class="action-btn hover-up"
                                             href="javascript:void(0);"
-                                            onclick="event.preventDefault(); document.getElementById('add-to-wishlist-{{ $product->id }}').submit();">
+                                            onclick="event.preventDefault(); document.getElementById('add-to-wishlist-<?php echo e($product->id); ?>').submit();">
                                             <i class="fi-rs-heart"></i>
                                         </a>
-                                        <form id="add-to-wishlist-{{ $product->id }}"
-                                            action="{{ route('frontend.addToWishList', $product) }}" method="POST"
+                                        <form id="add-to-wishlist-<?php echo e($product->id); ?>"
+                                            action="<?php echo e(route('frontend.addToWishList', $product)); ?>" method="POST"
                                             style="display: none;">
-                                            @csrf
+                                            <?php echo csrf_field(); ?>
                                         </form>
                                     </div>
                                     <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">{{ $product->status }}</span>
+                                        <span class="hot"><?php echo e($product->status); ?></span>
                                     </div>
                                 </div>
                                 <div class="product-content-wrap">
                                     <h2>
                                         <a
-                                            href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
+                                            href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?></a>
                                     </h2>
-                                    {{-- <div class="rating-result" title="90%">
-                                        <span> </span>
-                                    </div> --}}
+                                    
                                     <div class="product-price">
                                         <div class="product-price">
-                                            <span>{{ $product->discountprice ?? $product->price }}</span>
-                                            @if ($product->discountprice)
-                                                <span class="old-price">{{ $product->price }}</span>
-                                            @endif
+                                            <span><?php echo e($product->discountprice ?? $product->price); ?></span>
+                                            <?php if($product->discountprice): ?>
+                                                <span class="old-price"><?php echo e($product->price); ?></span>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
@@ -837,7 +768,7 @@
                             <div class="deal-bottom  text-center">
                                 <h1 class="sunglass-heading">Men Sunglasses</h1>
                                 <!-- <div class="deals-countdown" data-countdown="2025/03/25 00:00:00"></div> -->
-                                <a href="{{ url('/shop') }}?category=sunglasses&type=mens-sunglasses" class="sunglass-btn">Shop Now</a>
+                                <a href="<?php echo e(url('/shop')); ?>?category=sunglasses&type=mens-sunglasses" class="sunglass-btn">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -847,7 +778,7 @@
                             <div class="deal-bottom  text-center">
                                 <h2 class="sunglass-heading">Women Sunglasses</h2>
                                 <!-- <div class="deals-countdown" data-countdown="2025/03/25 00:00:00"></div> -->
-                                <a href="{{ url('/shop') }}?category=sunglasses&type=womens-sunglasses" class="sunglass-btn">Shop Now</a>
+                                <a href="<?php echo e(url('/shop')); ?>?category=sunglasses&type=womens-sunglasses" class="sunglass-btn">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -866,27 +797,27 @@
                     <div class="carausel-6-columns text-center" id="carausel-6-columns-3">
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/ziesslogo.jpg" alt="ziesslogo" loading="lazy" decoding="async" />
+                                src="frontend/assets/imgs/banner/ziesslogo.jpg" alt="ziesslogo" loading="lazy" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/privologo.png" alt="privologo" loading="lazy" decoding="async"/>
+                                src="frontend/assets/imgs/banner/privologo.png" alt="privologo" loading="lazy"/>
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/freshlook.png" alt="freshlook" loading="lazy" decoding="async"/>
+                                src="frontend/assets/imgs/banner/freshlook.png" alt="freshlook" loading="lazy"/>
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/freshkonlogo.png" alt="freshkonlogo" loading="lazy" decoding="async" />
+                                src="frontend/assets/imgs/banner/freshkonlogo.png" alt="freshkonlogo" loading="lazy"  />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/cooperlogo.jpg" alt="cooperlogo" loading="lazy" decoding="async" />
+                                src="frontend/assets/imgs/banner/cooperlogo.jpg" alt="cooperlogo" loading="lazy" />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
-                                src="frontend/assets/imgs/banner/optianologo.jpg" alt="optianologo" loading="lazy" decoding="async" />
+                                src="frontend/assets/imgs/banner/optianologo.jpg" alt="optianologo" loading="lazy"  />
                         </div>
                         <div class="brand-logo">
                             <img class="img-grey-hover-brand img-grey-hover"
@@ -909,7 +840,7 @@
                 <div class="row">
                     <div class="col-lg-3 d-none d-lg-flex">
                         <div class="banner-img style-2 wow fadeIn animated">
-                            <img src="frontend/assets/imgs/banner/contact-lens-model.png" alt="contact-lens-model" loading="lazy" decoding="async" />
+                            <img src="frontend/assets/imgs/banner/contact-lens-model.png" alt="contact-lens-model" loading="lazy"  />
                             <div class="banner-text">
                                 <a href="https://visionplus.pk/shop?category=contact-lenses" class="text-white">Shop Now <i class="fi-rs-arrow-right"></i></a>
                             </div>
@@ -920,89 +851,86 @@
                             <div class="slider-arrow slider-arrow-2 carausel-4-columns-arrow"
                                 id="carausel-4-columns-arrows"></div>
                             <div class="carausel-4-columns carausel-arrow-center" id="carausel-4-columns">
-                                @foreach ($products as $product)
+                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="product-cart-wrap">
                                         <div class="product-img-action-wrap">
                                             <div class="product-img product-img-zoom">
-                                                <a href="{{ route('frontend.productDetail', $product) }}">
+                                                <a href="<?php echo e(route('frontend.productDetail', $product)); ?>">
                                                     <img class="default-img"
-                                                        src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
+                                                        src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                        alt="<?php echo e($product->name); ?>" loading="lazy" />
 
-                                                    @if ($product->colors->isNotEmpty() && $product->colors[0]->image)
+                                                    <?php if($product->colors->isNotEmpty() && $product->colors[0]->image): ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/colors/' . $product->colors[0]->image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                                    @else
+                                                            src="<?php echo e(asset('uploads/products/colors/' . $product->colors[0]->image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                                    <?php else: ?>
                                                         <img class="hover-img"
-                                                            src="{{ asset('uploads/products/' . $product->main_image) }}"
-                                                            alt="{{ $product->name }}" loading="lazy" decoding="async" />
-                                                    @endif
+                                                            src="<?php echo e(asset('uploads/products/' . $product->main_image)); ?>"
+                                                            alt="<?php echo e($product->name); ?>" loading="lazy" />
+                                                    <?php endif; ?>
                                                 </a>
                                             </div>
                                             <div class="product-action-1">
                                                 <a aria-label="Quick view" class="action-btn hover-up quick-view-btn"
-                                                    href="{{ route('frontend.quick-view', $product) }}"
+                                                    href="<?php echo e(route('frontend.quick-view', $product)); ?>"
                                                     data-bs-toggle="modal" data-bs-target="#quickViewModal"
-                                                    data-product-id="{{ $product->id }}">
+                                                    data-product-id="<?php echo e($product->id); ?>">
                                                     <i class="fi-rs-eye"></i>
                                                 </a>
                                                 <a aria-label="Add To Wishlist" class="action-btn hover-up"
                                                     href="javascript:void(0);"
-                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-{{ $product->id }}').submit();">
+                                                    onclick="event.preventDefault(); document.getElementById('add-to-wishlist-<?php echo e($product->id); ?>').submit();">
                                                     <i class="fi-rs-heart"></i>
                                                 </a>
-                                                <form id="add-to-wishlist-{{ $product->id }}"
-                                                    action="{{ route('frontend.addToWishList', $product) }}"
+                                                <form id="add-to-wishlist-<?php echo e($product->id); ?>"
+                                                    action="<?php echo e(route('frontend.addToWishList', $product)); ?>"
                                                     method="POST" style="display: none;">
-                                                    @csrf
+                                                    <?php echo csrf_field(); ?>
                                                 </form>
                                             </div>
-                                            @if ($product->virtual_try_on_image)
+                                            <?php if($product->virtual_try_on_image): ?>
                                                 <div class="product-badges product-badges-position product-badges-mrg">
                                                     <span class="hot">
                                                         <a aria-label="" class=""
-                                                            href="{{ route('virtual.try.on', $product->slug) }}">Try
+                                                            href="<?php echo e(route('virtual.try.on', $product->slug)); ?>">Try
                                                             On</a></span>
                                                 </div>
-                                            @endif
-                                            {{-- @if ($product->discount)
-                                            <div class="product-badges product-badges-positionTwo product-badges-mrg">
-                                                <span class="hot">{{ $product->discount }}% Off</span>
-                                            </div>
-                                            @endif --}}
+                                            <?php endif; ?>
+                                            
                                         </div>
                                         <div class="product-content-wrap">
                                             <div class="product-category">
                                                 <a href="#">
-                                                    {{ $product->categories->pluck('name')->implode(', ') }}
+                                                    <?php echo e($product->categories->pluck('name')->implode(', ')); ?>
+
                                                 </a>
                                             </div>
                                             <h2>
                                                 <a
-                                                    href="{{ route('frontend.productDetail', $product) }}">{{ $product->name }}</a>
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><?php echo e($product->name); ?></a>
                                             </h2>
 
-                                            @if ($product->discount)
-                                                <span>{{ $product->discount }}% off</span>
-                                            @endif
+                                            <?php if($product->discount): ?>
+                                                <span><?php echo e($product->discount); ?>% off</span>
+                                            <?php endif; ?>
 
                                             <div class="product-price">
                                                 <div class="product-price">
-                                                    <span>{{ $product->discountprice ?? $product->price }}</span>
-                                                    @if ($product->discountprice)
-                                                        <span class="old-price">{{ $product->price }}</span>
-                                                    @endif
+                                                    <span><?php echo e($product->discountprice ?? $product->price); ?></span>
+                                                    <?php if($product->discountprice): ?>
+                                                        <span class="old-price"><?php echo e($product->price); ?></span>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <div class="product-action-1 show">
                                                 <a aria-label="Add To Cart" class="action-btn hover-up"
-                                                    href="{{ route('frontend.productDetail', $product) }}"><i
+                                                    href="<?php echo e(route('frontend.productDetail', $product)); ?>"><i
                                                         class="fi-rs-shopping-bag-add"></i></a>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
                     </div>
@@ -1029,12 +957,12 @@
                 <div class="prod-card fader-effect delay-1">
                     <img src="frontend/assets/imgs/cards/new-card-img-2.jpg"
                         alt="Limited edition men's designer sunglasses by VisionPlus – stylish UV protection"
-                        loading="lazy" decoding="async" class="prod-img prod-img-2">
+                        loading="lazy"  class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
                     <!-- <div class="prod-badge">Trending</div> -->
                     <div class="prod-btn-wrap">
-                        <!--<a href="{{ url('/shop') }}?category=sunglasses&type=mens-sunglasses" class="prod-btn">Shop Now</a>-->
+                        <!--<a href="<?php echo e(url('/shop')); ?>?category=sunglasses&type=mens-sunglasses" class="prod-btn">Shop Now</a>-->
                         <a href="https://visionplus.pk/product-detail/rayban-wayfarer" class="prod-btn">Shop Now</a>
                         
                     </div>
@@ -1048,7 +976,7 @@
                     <div class="prod-shine"></div>
                     <!-- <div class="prod-badge">New Arrival</div> -->
                     <div class="prod-btn-wrap">
-                        <!--<a href="{{ url('/shop') }}?category=eyeglasses&type=womens-eyeglasses" class="prod-btn">Shop Now</a>-->
+                        <!--<a href="<?php echo e(url('/shop')); ?>?category=eyeglasses&type=womens-eyeglasses" class="prod-btn">Shop Now</a>-->
                         <a href="https://visionplus.pk/product-detail/urban-bridge" class="prod-btn">Shop Now</a>
                     </div>
                 </div>
@@ -1056,26 +984,26 @@
                 <!-- card-3 -->
                 <div class="prod-card fader-effect">
                     <img src="frontend/assets/imgs/cards/new-card-img-4.jpg"
-                        alt="Men's Clubmaster-style eyeglasses – limited edition VisionPlus frame" loading="lazy" decoding="async"
+                        alt="Men's Clubmaster-style eyeglasses – limited edition VisionPlus frame" loading="lazy" 
                         class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
                     <!-- <div class="prod-badge">Premium</div> -->
                     <div class="prod-btn-wrap">
-                        <!--<a href="{{ url('/shop') }}?category=eyeglasses&type=mens-eyeglasses" class="prod-btn">Shop Now</a>-->
+                        <!--<a href="<?php echo e(url('/shop')); ?>?category=eyeglasses&type=mens-eyeglasses" class="prod-btn">Shop Now</a>-->
                         <a href="https://visionplus.pk/product-detail/clubmaster-silver" class="prod-btn">Shop Now</a>
                     </div>
                 </div>
                 <!-- Card 4 -->
                 <div class="prod-card fader-effect delay-3">
                     <img src="frontend/assets/imgs/cards/new-card-img-1.jpg"
-                        alt="Limited edition women's fashion sunglasses – UV-protected by VisionPlus" loading="lazy" decoding="async"
+                        alt="Limited edition women's fashion sunglasses – UV-protected by VisionPlus" loading="lazy"
                         class="prod-img prod-img-2">
                     <div class="prod-overlay"></div>
                     <div class="prod-shine"></div>
                     <!-- <div class="prod-badge">Best Seller</div> -->
                     <div class="prod-btn-wrap">
-                        <!--<a href="{{ url('/shop') }}?category=sunglasses&type=womens-sunglasses" class="prod-btn">Shop Now</a>-->
+                        <!--<a href="<?php echo e(url('/shop')); ?>?category=sunglasses&type=womens-sunglasses" class="prod-btn">Shop Now</a>-->
                         <a href="https://visionplus.pk/product-detail/chanel-ladies" class="prod-btn">Shop Now</a>
                     </div>
                 </div>
@@ -1108,7 +1036,7 @@
             });
 
             // Highlight current category
-            const currentCategory = "{{ request()->input('category') }}";
+            const currentCategory = "<?php echo e(request()->input('category')); ?>";
             if (currentCategory) {
                 document.querySelectorAll(`a[href*="${currentCategory}"]`).forEach(link => {
                     let parent = link.closest('.menu-item-has-children');
@@ -1121,4 +1049,6 @@
             }
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\visionPlus\visionPlus-new\vplatest\resources\views/frontend/index.blade.php ENDPATH**/ ?>

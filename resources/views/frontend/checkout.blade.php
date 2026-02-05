@@ -51,23 +51,68 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="toggle_info">
-                            <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a
-                                    href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click
-                                    here to enter your code</a></span>
-                        </div>
-                        <div class="panel-collapse collapse coupon_form " id="coupon">
-                            <div class="panel-body">
-                                <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
-                                <form method="post">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter Coupon Code...">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn  btn-md" name="login">Apply Coupon</button>
-                                    </div>
-                                </form>
+                        @if(isset($saleCoupons) && $saleCoupons->count() > 0)
+                            <div class="mb-3">
+                                <h5 class="mb-3">Special Offers</h5>
+                                <div class="row g-2">
+                                    @foreach($saleCoupons as $saleCoupon)
+                                        <div class="col-12">
+                                            <div class="sale-card border rounded p-3 cursor-pointer" 
+                                                 style="
+                                                    @if($saleCoupon->card_gradient_from && $saleCoupon->card_gradient_to)
+                                                        background: linear-gradient(135deg, {{ $saleCoupon->card_gradient_from }} 0%, {{ $saleCoupon->card_gradient_to }} 100%);
+                                                    @elseif($saleCoupon->card_color)
+                                                        background: {{ $saleCoupon->card_color }};
+                                                    @else
+                                                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                                    @endif
+                                                    color: white; transition: transform 0.2s;"
+                                                 data-coupon-code="{{ $saleCoupon->code }}"
+                                                 onclick="applySaleCoupon('{{ $saleCoupon->code }}')">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1 fw-bold">{{ $saleCoupon->title }}</h6>
+                                                        <p class="mb-0 small">{{ $saleCoupon->description ?? 'Click to apply this offer' }}</p>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        @if($saleCoupon->discount_type === 'percentage')
+                                                            <span class="badge bg-light text-dark fs-6">{{ $saleCoupon->discount_value }}% OFF</span>
+                                                        @else
+                                                            <span class="badge bg-light text-dark fs-6">Rs. {{ $saleCoupon->discount_value }} OFF</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
+                        @endif
+                        <div class="coupon_form border rounded p-4" id="coupon">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fi-rs-label mr-10"></i>
+                                <div>
+                                    <span class="text-muted d-block">Have a coupon?</span>
+                                    <strong>Enter your code below</strong>
+                                </div>
+                            </div>
+                            <p class="mb-3 font-sm">If you have a coupon code, please apply it below.</p>
+                            <form id="coupon-form" method="post" onsubmit="return false;">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <input type="text" id="coupon_code" name="coupon_code_temp"
+                                        placeholder="Enter Coupon Code..." class="form-control" required autocomplete="off">
+                                    <div id="coupon_message" class="mt-2"></div>
+                                </div>
+                                <div class="form-group d-flex gap-2">
+                                    <button type="button" class="btn btn-md btn-brand flex-grow-1" id="apply_coupon_btn">
+                                        Apply Coupon
+                                    </button>
+                                    <button type="button" class="btn btn-md btn-danger" id="remove_coupon_btn" style="display:none;">
+                                        Remove
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -76,8 +121,9 @@
                         <div class="divider mt-50 mb-50"></div>
                     </div>
                 </div>
-                <form method="post" action="{{ route('frontend.placeOrder') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('frontend.placeOrder') }}" enctype="multipart/form-data" id="checkout-form">
                     @csrf
+                    <input type="hidden" name="coupon_code" id="coupon_code_input" value="">
                     <div class="row">
 
                         <div class="col-md-6">
@@ -354,11 +400,19 @@
                                                     : 0;
                                                 $grandTotal =
                                                     $cartTotal + $prescriptionTotal + $lensesPrescriptionTotal;
+                                                // Always round up the final payable amount (e.g., 245.05 → 246)
+                                                $grandTotal = ceil($grandTotal);
                                             @endphp
 
                                             <tr>
                                                 <th>SubTotal</th>
-                                                <td class="product-subtotal" colspan="2">Rs. {{ $cartTotal }}</td>
+                                                <td class="product-subtotal" colspan="2">Rs. <span id="subtotal">{{ $cartTotal }}</span></td>
+                                            </tr>
+                                            <tr id="coupon_discount_row" style="display:none;">
+                                                <th>Coupon Discount (<span id="coupon_code_display"></span>)</th>
+                                                <td colspan="2" class="text-success">
+                                                    -Rs. <span id="coupon_discount_amount">0</span>
+                                                </td>
                                             </tr>
 
                                             @if (isset($lensesPrescription) && $lensesPrescription)
@@ -375,7 +429,7 @@
                                             <tr>
                                                 <th>Total</th>
                                                 <td colspan="2" class="product-subtotal">
-                                                    <span class="font-xl text-brand fw-900">Rs. {{ $grandTotal }}</span>
+                                                    <span class="font-xl text-brand fw-900">Rs. <span id="grand_total">{{ $grandTotal }}</span></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -550,7 +604,7 @@
     </main>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <style>
         .payment-option-card {
             transition: all 0.3s ease;
@@ -618,76 +672,225 @@
         }
     </style>
     
+    <style>
+        .sale-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
     <script>
+        // Function to apply sale coupon when card is clicked
+        function applySaleCoupon(couponCode) {
+            // Set the coupon code in the input field
+            var couponInput = document.getElementById('coupon_code');
+            if (couponInput) {
+                couponInput.value = couponCode;
+            }
+            
+            // Trigger the apply button click
+            var applyBtn = document.getElementById('apply_coupon_btn');
+            if (applyBtn) {
+                applyBtn.click();
+            } else {
+                // Fallback: manually trigger the apply function
+                if (window.CheckoutCoupon && window.CheckoutCoupon.apply) {
+                    window.CheckoutCoupon.apply();
+                }
+            }
+        }
+        
+        // Provide original grand total for external coupon script
+        // Always round up the final payable amount (e.g., 245.05 → 246)
+        window.originalGrandTotal = (function(){
+            var el = document.getElementById('grand_total');
+            if(!el) return null;
+            var num = parseFloat(el.textContent.replace(/[^0-9.]/g,''));
+            return isNaN(num) ? null : Math.ceil(num);
+        })();
+        
+        // Debug: Verify elements exist
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to update visual indicators
-            function updatePaymentMethod(method) {
-                document.querySelectorAll('.payment-option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-                const currentCard = document.querySelector(`[data-payment="${method}"]`);
-                if (currentCard) {
-                    currentCard.classList.add('selected');
-                }
-                let indicator = document.getElementById('payment-method-indicator');
-                if (!indicator) {
-                    indicator = document.createElement('div');
-                    indicator.id = 'payment-method-indicator';
-                    document.body.appendChild(indicator);
-                }
-                indicator.textContent = `Selected: ${method}`;
-            }
-
-            // Radio change handling (posting name="payment_option")
-            const radios = document.querySelectorAll('input[name="payment_option"]');
-            radios.forEach(function(radio) {
-                radio.addEventListener('change', function() {
-                    if (this.checked) {
-                        updatePaymentMethod(this.value);
-                    }
-                });
-            });
-
-            const checkedRadio = document.querySelector('input[name="payment_option"]:checked');
-            if (checkedRadio) {
-                updatePaymentMethod(checkedRadio.value);
-            }
-
-            // File upload handlers for showing selected file names
-            const jazzFileInput = document.getElementById('jazzcash_screenshot');
-            const jazzFileName = document.getElementById('jazzcash_file_name');
-            if (jazzFileInput && jazzFileName) {
-                jazzFileInput.addEventListener('change', function() {
-                    if (this.files && this.files[0]) {
-                        jazzFileName.innerHTML = '<i class="fi-rs-check me-1"></i>Selected: ' + this.files[0].name;
-                    } else {
-                        jazzFileName.innerHTML = '';
-                    }
-                });
-            }
-            const meezanFileInput = document.getElementById('meezan_screenshot');
-            const meezanFileName = document.getElementById('meezan_file_name');
-            if (meezanFileInput && meezanFileName) {
-                meezanFileInput.addEventListener('change', function() {
-                    if (this.files && this.files[0]) {
-                        meezanFileName.innerHTML = '<i class="fi-rs-check me-1"></i>Selected: ' + this.files[0].name;
-                    } else {
-                        meezanFileName.innerHTML = '';
-                    }
-                });
-            }
-
-            const orderForm = document.querySelector('form[action*="placeOrder"]');
-            if (orderForm) {
-                orderForm.addEventListener('submit', function(e) {
-                    const selectedRadio = document.querySelector('input[name="payment_option"]:checked');
-                    if (!selectedRadio) {
-                        e.preventDefault();
-                        alert('Please select a payment method!');
-                        return false;
-                    }
-                });
-            }
+            console.log('Checkout: DOM loaded');
+            console.log('Checkout: Apply button exists?', !!document.getElementById('apply_coupon_btn'));
+            console.log('Checkout: Coupon input exists?', !!document.getElementById('coupon_code'));
+            console.log('Checkout: Coupon form exists?', !!document.getElementById('coupon-form'));
+            console.log('Checkout: CSRF token exists?', !!document.querySelector('meta[name="csrf-token"]'));
         });
     </script>
-@endsection
+    <script>
+        (function () {
+            var APPLY_ENDPOINT = '{{ url('/api/validate-coupon') }}';
+            var REMOVE_ENDPOINT = '{{ url('/api/remove-coupon') }}';
+            var csrfToken = (document.querySelector('meta[name="csrf-token"]') || {}).content || '{{ csrf_token() }}';
+            var state = { applying: false, originalTotal: null };
+
+            function $(id) { return document.getElementById(id); }
+            function getElements() {
+                return {
+                    input: $('coupon_code'),
+                    message: $('coupon_message'),
+                    applyBtn: $('apply_coupon_btn'),
+                    removeBtn: $('remove_coupon_btn'),
+                    subtotal: $('subtotal'),
+                    grandTotal: $('grand_total'),
+                    discountRow: $('coupon_discount_row'),
+                    discountAmount: $('coupon_discount_amount'),
+                    codeDisplay: $('coupon_code_display'),
+                    hiddenField: $('coupon_code_input')
+                };
+            }
+
+            function initState(els) {
+                if (els.grandTotal && state.originalTotal === null) {
+                    var val = parseFloat(els.grandTotal.textContent.replace(/[^0-9.]/g, ''));
+                    // Always round up the final payable amount (e.g., 245.05 → 246)
+                    state.originalTotal = isNaN(val) ? 0 : Math.ceil(val);
+                }
+            }
+
+            function setMessage(els, type, text) {
+                if (!els.message) return;
+                var classes = { success: 'text-success', error: 'text-danger', info: 'text-info', warning: 'text-warning' };
+                els.message.className = classes[type] || '';
+                els.message.textContent = text || '';
+            }
+
+            function toggleButtons(els, applied) {
+                if (els.applyBtn) {
+                    els.applyBtn.disabled = state.applying;
+                    els.applyBtn.style.display = applied ? 'none' : 'inline-block';
+                }
+                if (els.removeBtn) {
+                    els.removeBtn.style.display = applied ? 'inline-block' : 'none';
+                    els.removeBtn.disabled = state.applying && applied;
+                }
+                if (els.input) {
+                    els.input.readOnly = applied;
+                }
+            }
+
+            function updateTotals(els, discount, newTotal) {
+                if (els.discountAmount) {
+                    els.discountAmount.textContent = Number(discount || 0).toFixed(2);
+                }
+                if (els.discountRow) {
+                    els.discountRow.style.display = discount > 0 ? '' : 'none';
+                }
+                if (els.grandTotal && newTotal !== undefined) {
+                    // Always round up the final payable amount (e.g., 245.05 → 246)
+                    var roundedTotal = Math.ceil(Number(newTotal));
+                    els.grandTotal.textContent = roundedTotal;
+                }
+            }
+
+            function resetUI(els) {
+                updateTotals(els, 0, state.originalTotal);
+                toggleButtons(els, false);
+                if (els.codeDisplay) els.codeDisplay.textContent = '';
+                if (els.hiddenField) els.hiddenField.value = '';
+                if (els.input) {
+                    els.input.value = '';
+                    els.input.focus();
+                }
+                setMessage(els, '', '');
+            }
+
+            function handleApply(e) {
+                if (e && e.preventDefault) {
+                    e.preventDefault();
+                }
+                var els = getElements();
+                initState(els);
+                var code = (els.input ? els.input.value.trim() : '').toUpperCase();
+
+                if (!code) {
+                    setMessage(els, 'error', 'Please enter a coupon code');
+                    if (els.input) els.input.focus();
+                    return;
+                }
+
+                state.applying = true;
+                toggleButtons(els, false);
+                setMessage(els, 'info', 'Checking coupon...');
+
+                fetch(APPLY_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ code: code })
+                })
+                .then(function (resp) { return resp.json().then(function (body) { return { ok: resp.ok, body: body }; }); })
+                .then(function (res) {
+                    if (res.ok && res.body && res.body.success) {
+                        updateTotals(els, res.body.discount_amount, res.body.new_total);
+                        toggleButtons(els, true);
+                        setMessage(els, 'success', res.body.message || 'Coupon applied');
+                        if (els.codeDisplay) els.codeDisplay.textContent = code;
+                        if (els.hiddenField) els.hiddenField.value = code;
+                    } else {
+                        setMessage(els, 'error', (res.body && res.body.message) || 'Invalid coupon');
+                        if (els.input) {
+                            els.input.focus();
+                            els.input.select();
+                        }
+                    }
+                })
+                .catch(function (err) {
+                    console.error('Coupon apply error', err);
+                    setMessage(els, 'error', 'Network error. Please try again.');
+                })
+                .finally(function () {
+                    state.applying = false;
+                    toggleButtons(els, !!(els.hiddenField && els.hiddenField.value));
+                });
+            }
+
+            function handleRemove(e) {
+                e.preventDefault();
+                var els = getElements();
+                setMessage(els, 'info', 'Removing coupon...');
+
+                fetch(REMOVE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ code: els.hiddenField ? els.hiddenField.value : '' })
+                })
+                .catch(function () { /* ignore errors, just reset UI */ })
+                .finally(function () {
+                    resetUI(els);
+                    setMessage(els, 'success', 'Coupon removed');
+                });
+            }
+
+            function bind() {
+                var els = getElements();
+                initState(els);
+
+                if (els.applyBtn && !els.applyBtn.hasAttribute('data-simple-handler')) {
+                    els.applyBtn.addEventListener('click', handleApply);
+                    els.applyBtn.setAttribute('data-simple-handler', 'true');
+                }
+                if (els.removeBtn && !els.removeBtn.hasAttribute('data-simple-handler')) {
+                    els.removeBtn.addEventListener('click', handleRemove);
+                    els.removeBtn.setAttribute('data-simple-handler', 'true');
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bind);
+            } else {
+                bind();
+            }
+        })();
+    </script>
+@endpush
