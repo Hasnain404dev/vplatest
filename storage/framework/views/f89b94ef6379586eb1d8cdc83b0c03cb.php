@@ -1,6 +1,6 @@
 <?php $__env->startPush('head'); ?>
 <?php if(isset($sliders) && $sliders->isNotEmpty()): ?>
-<link rel="preload" as="image" href="<?php echo e(asset($sliders->first()->image)); ?>">
+<link rel="preload" as="image" href="<?php echo e(asset($sliders->first()->image_desktop ?? $sliders->first()->image)); ?>">
 <?php endif; ?>
 <?php $__env->stopPush(); ?>
 
@@ -102,11 +102,12 @@
                                 $paragraphColor = $slider->paragraph_color ?? $textColor;
                                 $btnBgColor = $slider->button_bg_color ?? ($slider->button_color ?? '#0d6efd');
                                 $btnTextColor = $slider->button_text_color ?? '#ffffff';
-                            $imgUrl = asset($slider->image);
+                            $desktopImg = asset($slider->image_desktop ?? $slider->image);
+                            $mobileImg  = asset($slider->image_mobile ?? ($slider->image_desktop ?? $slider->image));
                             $eagerLoad = $index === 0;
                         ?>
                         <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>" data-slide-index="<?php echo e($index); ?>">
-                            <div class="hero-slide-bg" <?php if($eagerLoad): ?> style="background-image: url('<?php echo e($imgUrl); ?>');" <?php else: ?> data-bg="<?php echo e($imgUrl); ?>" <?php endif; ?> role="img" aria-label="<?php echo e($slider->heading ?? 'Slide'); ?>"></div>
+                            <div class="hero-slide-bg" data-desktop="<?php echo e($desktopImg); ?>" data-mobile="<?php echo e($mobileImg); ?>" <?php if($eagerLoad): ?> style="background-image: url('<?php echo e($desktopImg); ?>');" <?php endif; ?> role="img" aria-label="<?php echo e($slider->heading ?? 'Slide'); ?>"></div>
                             <div class="hero-slide-overlay" style="background: rgba(0,0,0, <?php echo e($overlayOpacity); ?>);"></div>
                             <div class="carousel-caption hero-caption" style="color: <?php echo e($textColor); ?>;">
                                 <div class="container text-center">
@@ -139,19 +140,20 @@
                 <?php endif; ?>
             </div>
             <style>
-                .hero-carousel-section { min-height: 380px; }
-                .hero-carousel-section .carousel-item { min-height: 380px; position: relative; }
-                /* Background image element for each slide */
+                /* make carousel height adapt to image ratio instead of using fixed min-height */
+                .hero-carousel-section { position: relative; min-height: 0; }
+                .hero-carousel-section .carousel-item { position: relative; min-height: 0; overflow: hidden; /* default aspect ratio until JS calculates real one */ padding-top: 40%; }
+                /* Background image element for each slide - show full image without cropping */
                 .hero-slide-bg {
                     position: absolute;
                     inset: 0;
-                    background-size: cover;
+                    background-size: contain;
                     background-position: center;
                     background-repeat: no-repeat;
                     opacity: 0;
                     transition: opacity 0.8s ease-in-out;
                 }
-                /* Cross-fade the background between slides (Bootstrap transition states) */
+                /* ensure cross‑fade continues to work */
                 .hero-carousel-section .carousel-item.active .hero-slide-bg,
                 .hero-carousel-section .carousel-item-next.carousel-item-start .hero-slide-bg,
                 .hero-carousel-section .carousel-item-prev.carousel-item-end .hero-slide-bg { opacity: 1; }
@@ -165,8 +167,22 @@
                 .hero-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
                 .hero-text { max-width: 28rem; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
                 .hero-cta { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-                @media(min-width: 768px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 420px; } }
-                @media(min-width: 992px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 480px; } }
+                
+                /* @media(min-width: 768px) { }
+                @media(min-width: 992px) { } */
+
+                /* MOBILE layout adjustments */
+                @media(max-width: 767px) {
+                    .hero-caption { align-items: flex-end; padding-bottom: 3rem; text-align: center; }
+                    .hero-title { font-size: 1.6rem; }
+                    .hero-text { display: none; }
+                    .hero-cta { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+                }
+                /* DESKTOP layout adjustments */
+                @media(min-width: 992px) {
+                    .hero-caption { align-items: center; text-align: left; }
+                    .hero-title { font-size: 3rem; }
+                }
             </style>
             <script>
                 (function() {
@@ -179,6 +195,38 @@
                             bg.removeAttribute('data-bg');
                         }
                     });
+                })();
+            </script>
+            <script>
+                (function () {
+                    function updateHeroImages() {
+                        var isMobile = window.innerWidth < 768;
+                        document.querySelectorAll('.hero-slide-bg').forEach(function(bg) {
+                            var img = isMobile ? bg.dataset.mobile : bg.dataset.desktop;
+                            if (img) {
+                                bg.style.backgroundImage = "url('" + img.replace(/'/g, "\\'") + "')";
+
+                                // the full image (no cropping/zooming).
+                                var image = new Image();
+                                image.src = img;
+                                image.onload = function() {
+                                    var ratio = this.height / this.width;
+                                    var item = bg.closest('.carousel-item');
+                                    if (item) {
+                                        item.style.paddingTop = (ratio * 100) + '%';
+                                    }
+                                };
+                            }
+                        });
+                    }
+
+                    window.addEventListener('resize', updateHeroImages);
+                    document.addEventListener('DOMContentLoaded', updateHeroImages);
+                    // also recalc height when slide changes
+                    var carousel = document.getElementById('heroCarousel');
+                    if (carousel) {
+                        carousel.addEventListener('slid.bs.carousel', updateHeroImages);
+                    }
                 })();
             </script>
         </section>

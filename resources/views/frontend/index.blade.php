@@ -142,19 +142,20 @@
                 @endif
             </div>
             <style>
-                .hero-carousel-section { min-height: 380px; }
-                .hero-carousel-section .carousel-item { min-height: 380px; position: relative; }
-                /* Background image element for each slide */
+                /* make carousel height adapt to image ratio instead of using fixed min-height */
+                .hero-carousel-section { position: relative; min-height: 0; }
+                .hero-carousel-section .carousel-item { position: relative; min-height: 0; overflow: hidden; /* default aspect ratio until JS calculates real one */ padding-top: 40%; }
+                /* Background image element for each slide - show full image without cropping */
                 .hero-slide-bg {
                     position: absolute;
                     inset: 0;
-                    background-size: cover;
+                    background-size: contain;
                     background-position: center;
                     background-repeat: no-repeat;
                     opacity: 0;
                     transition: opacity 0.8s ease-in-out;
                 }
-                /* Cross-fade the background between slides (Bootstrap transition states) */
+                /* ensure cross‑fade continues to work */
                 .hero-carousel-section .carousel-item.active .hero-slide-bg,
                 .hero-carousel-section .carousel-item-next.carousel-item-start .hero-slide-bg,
                 .hero-carousel-section .carousel-item-prev.carousel-item-end .hero-slide-bg { opacity: 1; }
@@ -168,8 +169,9 @@
                 .hero-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
                 .hero-text { max-width: 28rem; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
                 .hero-cta { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-                @@media (min-width: 768px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 420px; } }
-                @@media (min-width: 992px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 480px; } }
+                
+                /* @@media (min-width: 768px) { }
+                @@media (min-width: 992px) { } */
 
                 /* MOBILE layout adjustments */
                 @@media (max-width: 767px) {
@@ -205,12 +207,28 @@
                             var img = isMobile ? bg.dataset.mobile : bg.dataset.desktop;
                             if (img) {
                                 bg.style.backgroundImage = "url('" + img.replace(/'/g, "\\'") + "')";
+
+                                // the full image (no cropping/zooming).
+                                var image = new Image();
+                                image.src = img;
+                                image.onload = function() {
+                                    var ratio = this.height / this.width;
+                                    var item = bg.closest('.carousel-item');
+                                    if (item) {
+                                        item.style.paddingTop = (ratio * 100) + '%';
+                                    }
+                                };
                             }
                         });
                     }
 
                     window.addEventListener('resize', updateHeroImages);
                     document.addEventListener('DOMContentLoaded', updateHeroImages);
+                    // also recalc height when slide changes
+                    var carousel = document.getElementById('heroCarousel');
+                    if (carousel) {
+                        carousel.addEventListener('slid.bs.carousel', updateHeroImages);
+                    }
                 })();
             </script>
         </section>
