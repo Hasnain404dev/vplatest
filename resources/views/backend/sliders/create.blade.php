@@ -30,12 +30,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label for="image" class="form-label required">Slider Image*  </label>
-                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" required>
-                                    @error('image')
+                                    <label for="image_desktop" class="form-label required">Desktop Banner*  </label>
+                                    <input type="file" class="form-control @error('image_desktop') is-invalid @enderror" id="image_desktop" name="image_desktop" required>
+                                    @error('image_desktop')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                    <small class="text-muted">Recommended size: 1200x600px (max 2MB)</small>
+                                    <small class="text-muted">Recommended: 1600×600 (JPEG/PNG/SVG, max 4MB)</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="image_mobile" class="form-label">Mobile Banner (optional)</label>
+                                    <input type="file" class="form-control @error('image_mobile') is-invalid @enderror" id="image_mobile" name="image_mobile">
+                                    @error('image_mobile')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Recommended: 750×1000 (portrait) (JPEG/PNG/SVG), otherwise desktop will be used</small>
                                 </div>
 
                                 <div class="form-group mb-3">

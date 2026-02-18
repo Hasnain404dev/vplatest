@@ -123,7 +123,7 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
+// Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
@@ -216,7 +216,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/admin/bulk-discounts/edit/{bulkDiscount}', [BulkDiscountController::class, 'edit'])->name('admin.bulk-discounts.edit');
     Route::put('/admin/bulk-discounts/update/{bulkDiscount}', [BulkDiscountController::class, 'update'])->name('admin.bulk-discounts.update');
     Route::delete('/admin/bulk-discounts/delete/{bulkDiscount}', [BulkDiscountController::class, 'destroy'])->name('admin.bulk-discounts.delete');
-});
+// });
 // Popup route - make sure this is outside any middleware groups
 Route::get('/get-active-popup', [PopupProductController::class, 'getActivePopup'])->name('get-active-popup');
 

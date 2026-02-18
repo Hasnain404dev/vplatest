@@ -2,7 +2,7 @@
 
 @push('head')
 @if(isset($sliders) && $sliders->isNotEmpty())
-<link rel="preload" as="image" href="{{ asset($sliders->first()->image) }}">
+<link rel="preload" as="image" href="{{ asset($sliders->first()->image_desktop ?? $sliders->first()->image) }}">
 @endif
 @endpush
 
@@ -104,11 +104,12 @@
                                 $paragraphColor = $slider->paragraph_color ?? $textColor;
                                 $btnBgColor = $slider->button_bg_color ?? ($slider->button_color ?? '#0d6efd');
                                 $btnTextColor = $slider->button_text_color ?? '#ffffff';
-                            $imgUrl = asset($slider->image);
+                            $desktopImg = asset($slider->image_desktop ?? $slider->image);
+                            $mobileImg  = asset($slider->image_mobile ?? ($slider->image_desktop ?? $slider->image));
                             $eagerLoad = $index === 0;
                         @endphp
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-slide-index="{{ $index }}">
-                            <div class="hero-slide-bg" @if($eagerLoad) style="background-image: url('{{ $imgUrl }}');" @else data-bg="{{ $imgUrl }}" @endif role="img" aria-label="{{ $slider->heading ?? 'Slide' }}"></div>
+                            <div class="hero-slide-bg" data-desktop="{{ $desktopImg }}" data-mobile="{{ $mobileImg }}" @if($eagerLoad) style="background-image: url('{{ $desktopImg }}');" @endif role="img" aria-label="{{ $slider->heading ?? 'Slide' }}"></div>
                             <div class="hero-slide-overlay" style="background: rgba(0,0,0, {{ $overlayOpacity }});"></div>
                             <div class="carousel-caption hero-caption" style="color: {{ $textColor }};">
                                 <div class="container text-center">
@@ -169,6 +170,19 @@
                 .hero-cta { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
                 @@media (min-width: 768px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 420px; } }
                 @@media (min-width: 992px) { .hero-carousel-section, .hero-carousel-section .carousel-item { min-height: 480px; } }
+
+                /* MOBILE layout adjustments */
+                @@media (max-width: 767px) {
+                    .hero-caption { align-items: flex-end; padding-bottom: 3rem; text-align: center; }
+                    .hero-title { font-size: 1.6rem; }
+                    .hero-text { display: none; }
+                    .hero-cta { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+                }
+                /* DESKTOP layout adjustments */
+                @@media (min-width: 992px) {
+                    .hero-caption { align-items: center; text-align: left; }
+                    .hero-title { font-size: 3rem; }
+                }
             </style>
             <script>
                 (function() {
@@ -181,6 +195,22 @@
                             bg.removeAttribute('data-bg');
                         }
                     });
+                })();
+            </script>
+            <script>
+                (function () {
+                    function updateHeroImages() {
+                        var isMobile = window.innerWidth < 768;
+                        document.querySelectorAll('.hero-slide-bg').forEach(function(bg) {
+                            var img = isMobile ? bg.dataset.mobile : bg.dataset.desktop;
+                            if (img) {
+                                bg.style.backgroundImage = "url('" + img.replace(/'/g, "\\'") + "')";
+                            }
+                        });
+                    }
+
+                    window.addEventListener('resize', updateHeroImages);
+                    document.addEventListener('DOMContentLoaded', updateHeroImages);
                 })();
             </script>
         </section>
