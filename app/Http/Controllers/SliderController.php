@@ -23,7 +23,8 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_desktop' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'image_mobile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'heading' => 'nullable|string|max:255',
             'sub_heading' => 'nullable|string|max:255',
             'paragraph' => 'nullable|string',
@@ -46,11 +47,21 @@ class SliderController extends Controller
             File::makeDirectory(public_path('slider'), 0755, true);
         }
 
-        $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('slider'), $imageName);
+        $desktopName = time().'_d'.'.'.$request->file('image_desktop')->extension();
+        $request->file('image_desktop')->move(public_path('slider'), $desktopName);
+
+        $mobilePath = null;
+        if ($request->hasFile('image_mobile')) {
+            $mobileName = time().'_m'.'.'.$request->file('image_mobile')->extension();
+            $request->file('image_mobile')->move(public_path('slider'), $mobileName);
+            $mobilePath = 'slider/' . $mobileName;
+        }
 
         Slider::create([
-            'image' => 'slider/' . $imageName,
+            // Keep legacy 'image' populated for backward-compat
+            'image' => 'slider/' . $desktopName,
+            'image_desktop' => 'slider/' . $desktopName,
+            'image_mobile' => $mobilePath,
             'heading' => $request->heading,
             'sub_heading' => $request->sub_heading,
             'paragraph' => $request->paragraph,
@@ -81,7 +92,8 @@ class SliderController extends Controller
     public function update(Request $request, Slider $slider)
     {
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_desktop' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            'image_mobile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             'heading' => 'nullable|string|max:255',
             'sub_heading' => 'nullable|string|max:255',
             'paragraph' => 'nullable|string',
@@ -117,16 +129,27 @@ class SliderController extends Controller
             'is_active' => $request->is_active ?? $slider->is_active,
         ];
 
-        if ($request->hasFile('image')) {
-            // Delete old image
-            if (File::exists(public_path($slider->image))) {
-                File::delete(public_path($slider->image));
+        if ($request->hasFile('image_desktop')) {
+            // Delete old desktop image if exists
+            $old = $slider->image_desktop ?? $slider->image;
+            if ($old && File::exists(public_path($old))) {
+                File::delete(public_path($old));
             }
+            $desktopName = time().'_d'.'.'.$request->file('image_desktop')->extension();
+            $request->file('image_desktop')->move(public_path('slider'), $desktopName);
+            $data['image_desktop'] = 'slider/'.$desktopName;
+            // keep legacy image in sync
+            $data['image'] = $data['image_desktop'];
+        }
 
-            // Store new image
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('slider'), $imageName);
-            $data['image'] = 'slider/'.$imageName;
+        if ($request->hasFile('image_mobile')) {
+            // Delete old mobile image if exists
+            if ($slider->image_mobile && File::exists(public_path($slider->image_mobile))) {
+                File::delete(public_path($slider->image_mobile));
+            }
+            $mobileName = time().'_m'.'.'.$request->file('image_mobile')->extension();
+            $request->file('image_mobile')->move(public_path('slider'), $mobileName);
+            $data['image_mobile'] = 'slider/'.$mobileName;
         }
 
         $slider->update($data);
@@ -137,9 +160,16 @@ class SliderController extends Controller
 
     public function destroy(Slider $slider)
     {
-        // Delete image from public folder
-        if (File::exists(public_path($slider->image))) {
-            File::delete(public_path($slider->image));
+        // Delete images from public folder
+        $paths = array_filter([
+            $slider->image,
+            $slider->image_desktop,
+            $slider->image_mobile,
+        ]);
+        foreach ($paths as $p) {
+            if ($p && File::exists(public_path($p))) {
+                File::delete(public_path($p));
+            }
         }
 
         $slider->delete();

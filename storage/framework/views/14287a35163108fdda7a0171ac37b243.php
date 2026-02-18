@@ -36,7 +36,7 @@
         content="Pakistan’s #1 online optical store for glasses, lenses, and sunglasses. Try online, buy with ease." />
     <!--<meta name="twitter:image" content="https://visionplus.pk/evara-frontend/assets/imgs/banner/banner.jpg" />-->
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
@@ -52,9 +52,7 @@
 </noscript>
 
 
-    <!--banner image preloader-->
-     <link rel="preload" as="image" href="<?php echo e(asset('slider/1755516715.jpg')); ?>">
-     
+    <?php echo $__env->yieldPushContent('head'); ?>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('frontend/assets/imgs/theme/vp_favicon.png')); ?>" />
     <!-- Template CSS -->
@@ -76,12 +74,7 @@
     <noscript><link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custom.css')); ?>"></noscript>
 
     <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/custome.css')); ?>" />
-    <!--new-->
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-        crossorigin="anonymous"></script>
-         
-         <!--schema-->
+    <!--schema-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

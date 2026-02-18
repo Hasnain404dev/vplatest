@@ -22,15 +22,33 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label for="image" class="form-label">Slider Image</label>
+                                    <label class="form-label">Current Desktop Banner</label>
                                     <div class="mb-2">
-                                        <img src="{{ asset($slider->image) }}" alt="Current Slider Image" class="img-thumbnail" style="max-height: 150px;">
+                                        <img src="{{ asset($slider->image_desktop ?? $slider->image) }}" alt="Desktop Banner" class="img-thumbnail" style="max-height: 150px;">
                                     </div>
-                                    <input type="file" class="form-control" id="image" name="image">
-                                    @error('image')
+                                    <label for="image_desktop" class="form-label">Replace Desktop Banner</label>
+                                    <input type="file" class="form-control" id="image_desktop" name="image_desktop">
+                                    @error('image_desktop')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                    <small class="text-muted">Leave blank to keep current image</small>
+                                    <small class="text-muted">Recommended: 1600×600 (JPEG/PNG/SVG, max 4MB). Leave blank to keep current desktop banner</small>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Current Mobile Banner</label>
+                                    <div class="mb-2">
+                                        @if($slider->image_mobile)
+                                            <img src="{{ asset($slider->image_mobile) }}" alt="Mobile Banner" class="img-thumbnail" style="max-height: 150px;">
+                                        @else
+                                            <span class="text-muted">None uploaded — desktop is used on mobile.</span>
+                                        @endif
+                                    </div>
+                                    <label for="image_mobile" class="form-label">Replace Mobile Banner</label>
+                                    <input type="file" class="form-control" id="image_mobile" name="image_mobile">
+                                    @error('image_mobile')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">Recommended: 750×1000 (portrait) (JPEG/PNG/SVG). Leave blank to keep current (or continue using desktop)</small>
                                 </div>
 
                                 <div class="form-group mb-3">
