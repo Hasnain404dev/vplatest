@@ -435,6 +435,20 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                    <div style="background:#fff8e1; 
+            border:1px solid #ffecb3; 
+            padding:14px; 
+            border-radius:6px; 
+            margin-top:15px; 
+            font-family:Arial, sans-serif; 
+            font-size:14px; 
+            color:#795548;">
+
+    <strong>Important Note:</strong> To process your prescription glasses order, we kindly request 
+    a <strong>50% advance payment</strong>. Once we receive it, we’ll start preparing your eyesight glasses right away. 
+    Thank you for choosing Vision Plus!
+</div>
+
                                 <div class="bt-1 border-color-1 mt-30 mb-30"></div>
                                 <div class="payment_method">
                                     <div class="mb-25">
