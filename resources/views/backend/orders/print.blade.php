@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="print-header">
-        <img src="{{ asset('backend/assets/imgs/theme/logo.svg') }}" alt="Company Logo">
+        <img src="{{ asset('frontend/assets/imgs/theme/bluelogo-vision.png') }}" alt="Company Logo">
         <h2>Order #{{ $order->order_number }}</h2>
         <p>Date: {{ $order->created_at->format('M j, Y h:i A') }}</p>
     </div>

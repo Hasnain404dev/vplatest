@@ -12,7 +12,7 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend/assets/imgs/theme/vp_favicon.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/assets/imgs/theme/faviconvp.ico')}}">
 
     <!-- Template CSS -->
     <link href="{{ asset('backend/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
@@ -26,7 +26,7 @@
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
             <a href="{{ route('admin.dashboard') }}" class="brand-wrap">
-                <img src="/backend/assets/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+                <img src="/frontend/assets/imgs/theme/bluelogo-vision.png" class="logo" alt="Evara Dashboard">
             </a>
             <div>
                 <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i>

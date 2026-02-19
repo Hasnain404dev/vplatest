@@ -242,9 +242,29 @@
                                                     Lenses
                                                     Prescription</a>
                                             @endif
-                                            <a class="select-lens mt-2"
-                                                href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20want%20to%20place%20an%20order%20for%20{{ urlencode($product->name) }}.%20Please%20assist%20me.">Order
-                                                On WhatsApp</a>
+                                            <!--<a class="select-lens mt-2"-->
+                                            <!--    href="https://wa.me/923391339339?text=Hi%20Vision%20Plus%20Optical,%20I%20want%20to%20place%20an%20order%20for%20{{ urlencode($product->name) }}.%20Please%20assist%20me.">Order-->
+                                            <!--    On WhatsApp</a>-->
+                                            @php
+    $productUrl = url()->current();
+    $productImage = asset('uploads/products/' . $product->main_image);
+    $price = $product->discountprice ?? $product->price;
+
+    $message = "Hi Vision Plus Optical,\n\n"
+        . "I want to place an order for:\n"
+        . "Product: {$product->name}\n"
+        . "Price: Rs {$price}\n\n"
+        . "Product Link:\n{$productUrl}\n\n"
+        . "Product Image:\n{$productImage}\n\n"
+        . "Please assist me.";
+@endphp
+
+<a class="select-lens mt-2"
+   target="_blank"
+   href="https://wa.me/923391339339?text={{ urlencode($message) }}">
+   Order On WhatsApp
+</a>
+
 
                                             @if ($product->virtual_try_on_image)
                                                 <a class="select-lens mt-2"
